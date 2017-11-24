@@ -1,13 +1,13 @@
-package com.hx.steven.util;
+package com.hx.steven.component;
 
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
-public class TimerCountUtil extends CountDownTimer {
+public class TimerCounter extends CountDownTimer {
     private TextView mBtn;
     private final static int TOTOL_TIME = 60;//倒计时60s
 
-    public TimerCountUtil( TextView btn) {
+    public TimerCounter(TextView btn) {
         super(TOTOL_TIME*1000, 1000);
         this.mBtn = btn;
         mBtn.setText("获取验证码");
