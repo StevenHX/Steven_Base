@@ -7,6 +7,9 @@ import com.hx.steven.component.MultipleStatusView;
 import com.hx.steven.util.LogUtil;
 import com.hx.steven.util.ToastUtil;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
@@ -20,6 +23,8 @@ public class MainActivity extends BaseActivity {
         LogUtil.e("11111111");
         setTitle("首页");
         showStatus(MultipleStatusView.STATUS_LOADING);
+        showStatus(MultipleStatusView.STATUS_CONTENT);
+
     }
 
     @Override

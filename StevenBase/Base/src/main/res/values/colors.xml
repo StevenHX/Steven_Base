@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--基色，标准色-->
+    <color name="base">#fa8d19</color>
+    <!--基色，标准色  深色-->
+    <color name="base_deep">#ed7913</color>
+
+</resources>

@@ -1,7 +1,9 @@
 package com.hx.steven.activity;
 
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,10 +14,12 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hx.steven.BroadCastReceiver.NetworkChangedReceiver;
 import com.hx.steven.R;
 import com.hx.steven.component.MultipleStatusView;
+import com.hx.steven.util.NetworkUtil;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements NetworkChangedReceiver.NetEvevt {
 
     private  static  final int TOP_HEIGHT = 48;
     private boolean isShowHeader = true;//是否显示导航栏(默认显示)
@@ -27,15 +31,28 @@ public abstract class BaseActivity extends AppCompatActivity {
     private TextView mHeaderRightTv;
 
     private MultipleStatusView multipleStatusView;//内容多状态视图
+    private NetworkChangedReceiver networkChangedReceiver;//网络状态广播接受者
+    public static NetworkChangedReceiver.NetEvevt evevt;//网络状态接口对象
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);//设置屏幕保持竖直
-        getSupportActionBar().hide();
         isShowHeader = isShowHeader();
         initContainer();
         setStatusColor(0x20000000);
         initView();
+
+        evevt = this;
+        networkChangedReceiver = new NetworkChangedReceiver();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangedReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(networkChangedReceiver);
     }
 
     protected abstract void initView();
@@ -174,6 +191,30 @@ public abstract class BaseActivity extends AppCompatActivity {
                 break;
             case MultipleStatusView.STATUS_ERROR:
                 multipleStatusView.showError();
+                break;
+            case MultipleStatusView.STATUS_CONTENT:
+                multipleStatusView.showContent();
+                break;
+        }
+    }
+
+    /**
+     * 实现网络连接变换的方法
+     * @param netMobile
+     */
+    @Override
+    public void onNetChange(int netMobile) {
+        switch (netMobile) {
+            case NetworkUtil.TYPE_NONE:
+                showStatus(MultipleStatusView.STATUS_NO_NETWORK);
+                break;
+            case NetworkUtil.TYPE_MOBILE:
+                showStatus(MultipleStatusView.STATUS_CONTENT);
+                break;
+            case NetworkUtil.TYPE_WIFI:
+                showStatus(MultipleStatusView.STATUS_CONTENT);
+                break;
+            default:
                 break;
         }
     }
