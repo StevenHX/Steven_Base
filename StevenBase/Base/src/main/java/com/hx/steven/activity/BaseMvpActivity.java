@@ -2,7 +2,7 @@ package com.hx.steven.activity;
 
 import android.os.Bundle;
 
-public class BaseMvpActivity extends BaseActivity {
+public abstract class BaseMvpActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

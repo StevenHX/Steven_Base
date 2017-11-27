@@ -1,19 +1,15 @@
 package com.hx.stevenbase;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
+import com.hx.steven.activity.BaseActivity;
+import com.hx.steven.component.MultipleStatusView;
 import com.hx.steven.util.LogUtil;
 import com.hx.steven.util.ToastUtil;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends BaseActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected void initView() {
         Button btn = (Button) findViewById(R.id.hello);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -22,5 +18,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         LogUtil.e("11111111");
+        setTitle("首页");
+        showStatus(MultipleStatusView.STATUS_LOADING);
+    }
+
+    @Override
+    protected int getContentId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected boolean isShowHeader() {
+        return true;
     }
 }
