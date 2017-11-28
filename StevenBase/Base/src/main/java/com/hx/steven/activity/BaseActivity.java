@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.hx.steven.BroadCastReceiver.NetworkChangedReceiver;
 import com.hx.steven.R;
 import com.hx.steven.component.MProgressDialog;
 import com.hx.steven.component.MultipleStatusView;
+import com.hx.steven.util.MPermissionUtil;
 import com.hx.steven.util.NetworkUtil;
 
 public abstract class BaseActivity extends AppCompatActivity implements NetworkChangedReceiver.NetEvevt {
@@ -128,9 +130,17 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkC
     }
     protected void headerRightClick(View view) {
     }
+    /**
+     * 6.0权限
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        MPermissionUtil.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
     /**
-     *==================================设置公共方法=======================================================
+     *   设置公共方法
      */
     public void  setTitle(String title){
         if(isShowHeader){
