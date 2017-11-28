@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.hx.steven.BroadCastReceiver.NetworkChangedReceiver;
 import com.hx.steven.R;
+import com.hx.steven.component.MProgressDialog;
 import com.hx.steven.component.MultipleStatusView;
 import com.hx.steven.util.NetworkUtil;
 
@@ -23,14 +24,16 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkC
 
     private  static  final int TOP_HEIGHT = 48;
     private boolean isShowHeader = true;//是否显示导航栏(默认显示)
-    private ViewGroup mContainer;
-    /////////////////////////////////////导航栏控件
-    private RelativeLayout mHeaderLayout;
+
+    private ViewGroup mContainer;//视图容器
+
+    private RelativeLayout mHeaderLayout;//导航栏控件
     private TextView mHeaderLeftTv;
     private TextView mHeaderTitleTv;
     private TextView mHeaderRightTv;
 
     private MultipleStatusView multipleStatusView;//内容多状态视图
+    private MProgressDialog mProgressDialog;//dialog
     private NetworkChangedReceiver networkChangedReceiver;//网络状态广播接受者
     public static NetworkChangedReceiver.NetEvevt evevt;//网络状态接口对象
 
@@ -43,10 +46,12 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkC
         setStatusColor(0x20000000);
         initView();
 
+        //注册网络变化的广播
         evevt = this;
         networkChangedReceiver = new NetworkChangedReceiver();
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangedReceiver, intentFilter);
+
     }
 
     @Override
@@ -217,5 +222,22 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkC
             default:
                 break;
         }
+    }
+    /**
+     * 显示dialog
+     */
+    public void showProgressDialog(){
+        if(mProgressDialog==null){
+            mProgressDialog = new MProgressDialog.Builder(this)
+                    .build();
+        }
+        mProgressDialog.show();
+    }
+
+    /**
+     * 隐藏dialog
+     */
+    public void dismissProgressDialog(){
+        mProgressDialog.dismiss();
     }
 }

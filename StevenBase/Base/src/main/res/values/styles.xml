@@ -13,7 +13,7 @@
         <item name="android:activityCloseEnterAnimation">@anim/slide_left_to_left_in</item>
         <item name="android:activityCloseExitAnimation">@anim/slide_left_to_right</item>
     </style>
-
+    <!--自定义多状态view-->
     <style name="MultipleStatusViewContent">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -21,5 +21,29 @@
         <item name="android:layout_margin">8dp</item>
         <item name="android:textColor">#a9b7b7</item>
         <item name="android:textSize">16sp</item>
+    </style>
+    <!--自定义进度view-->
+    <declare-styleable name="MNProgressWheel">
+        <attr name="mn_progressIndeterminate" format="boolean" />
+        <attr name="mn_barColor" format="color" />
+        <attr name="mn_rimColor" format="color" />
+        <attr name="mn_rimWidth" format="dimension" />
+        <attr name="mn_spinSpeed" format="float" />
+        <attr name="mn_barSpinCycleTime" format="integer" />
+        <attr name="mn_circleRadius" format="dimension" />
+        <attr name="mn_fillRadius" format="boolean" />
+        <attr name="mn_barWidth" format="dimension" />
+        <attr name="mn_linearProgress" format="boolean" />
+    </declare-styleable>
+    <!-- 自定义Dialog -->
+    <style name="MNCustomProgressDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 </resources>

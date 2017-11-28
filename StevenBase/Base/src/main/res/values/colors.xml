@@ -5,4 +5,11 @@
     <!--基色，标准色  深色-->
     <color name="base_deep">#ed7913</color>
 
+    <!--progressDialog-->
+    <color name="mn_colorDialogWindowBg">#00000000</color>
+    <color name="mn_colorDialogTextColor">#ffffff</color>
+    <color name="mn_colorDialogViewBg">#dd000000</color>
+    <color name="mn_colorDialogProgressBarColor">#ffffff</color>
+    <color name="mn_colorDialogTrans">#00000000</color>
+
 </resources>

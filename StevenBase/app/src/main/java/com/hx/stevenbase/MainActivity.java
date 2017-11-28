@@ -24,7 +24,7 @@ public class MainActivity extends BaseActivity {
         setTitle("首页");
         showStatus(MultipleStatusView.STATUS_LOADING);
         showStatus(MultipleStatusView.STATUS_CONTENT);
-
+//        showProgressDialog();
     }
 
     @Override
