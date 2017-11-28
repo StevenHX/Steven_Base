@@ -16,13 +16,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hx.steven.BroadCastReceiver.NetworkChangedReceiver;
+import com.hx.steven.Mvp.BaseMvpView;
 import com.hx.steven.R;
 import com.hx.steven.component.MProgressDialog;
 import com.hx.steven.component.MultipleStatusView;
 import com.hx.steven.util.MPermissionUtil;
 import com.hx.steven.util.NetworkUtil;
 
-public abstract class BaseActivity extends AppCompatActivity implements NetworkChangedReceiver.NetEvevt {
+public abstract class BaseActivity extends AppCompatActivity implements NetworkChangedReceiver.NetEvevt{
 
     private  static  final int TOP_HEIGHT = 48;
     private boolean isShowHeader = true;//是否显示导航栏(默认显示)
@@ -236,12 +237,12 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkC
     /**
      * 显示dialog
      */
-    public void showProgressDialog(){
+    public void showProgressDialog(String msg){
         if(mProgressDialog==null){
             mProgressDialog = new MProgressDialog.Builder(this)
                     .build();
         }
-        mProgressDialog.show();
+        mProgressDialog.show(msg);
     }
 
     /**
