@@ -9,6 +9,7 @@ import com.hx.steven.util.LogUtil;
 import com.hx.steven.util.MPermissionUtil;
 import com.hx.steven.util.ToastUtil;
 import com.hx.stevenbase.ui.Login.LoginActivity;
+import com.hx.stevenbase.ui.Set.SetActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,7 +24,8 @@ public class MainActivity extends BaseActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launch(MainActivity.this, LoginActivity.class);
+//                launch(MainActivity.this, LoginActivity.class);
+                launch(MainActivity.this, SetActivity.class);
                 ToastUtil.showCustomToast(MainActivity.this,"2333333");
             }
         });
