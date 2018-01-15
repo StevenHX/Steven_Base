@@ -1,5 +1,8 @@
 package com.hx.steven.activity;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
@@ -49,18 +52,18 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkC
         setStatusColor(0x20000000);
         initView();
 
-        //注册网络变化的广播
-        evevt = this;
-        networkChangedReceiver = new NetworkChangedReceiver();
-        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(networkChangedReceiver, intentFilter);
+//        注册网络变化的广播
+//        evevt = this;
+//        networkChangedReceiver = new NetworkChangedReceiver();
+//        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+//        registerReceiver(networkChangedReceiver, intentFilter);
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(networkChangedReceiver);
+//        if(networkChangedReceiver!=null) unregisterReceiver(networkChangedReceiver);
     }
 
     protected abstract void initView();
@@ -143,6 +146,9 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkC
     /**
      *   设置公共方法
      */
+    public MultipleStatusView getMultipleStatusView(){
+        return multipleStatusView;
+    }
     public void  setTitle(String title){
         if(isShowHeader){
             setHeaderVisibility(View.VISIBLE);
@@ -192,29 +198,6 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkC
     }
 
     /**
-     * 显示加载视图
-     */
-    public void showStatus(int type){
-        switch (type){
-            case MultipleStatusView.STATUS_LOADING:
-                multipleStatusView.showLoading();
-                break;
-            case MultipleStatusView.STATUS_EMPTY:
-                multipleStatusView.showEmpty();
-                break;
-            case MultipleStatusView.STATUS_NO_NETWORK:
-                multipleStatusView.showNoNetwork();
-                break;
-            case MultipleStatusView.STATUS_ERROR:
-                multipleStatusView.showError();
-                break;
-            case MultipleStatusView.STATUS_CONTENT:
-                multipleStatusView.showContent();
-                break;
-        }
-    }
-
-    /**
      * 实现网络连接变换的方法
      * @param netMobile
      */
@@ -222,13 +205,13 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkC
     public void onNetChange(int netMobile) {
         switch (netMobile) {
             case NetworkUtil.TYPE_NONE:
-                showStatus(MultipleStatusView.STATUS_NO_NETWORK);
+                multipleStatusView.showNoNetwork();
                 break;
             case NetworkUtil.TYPE_MOBILE:
-                showStatus(MultipleStatusView.STATUS_CONTENT);
+                multipleStatusView.showContent();
                 break;
             case NetworkUtil.TYPE_WIFI:
-                showStatus(MultipleStatusView.STATUS_CONTENT);
+                multipleStatusView.showContent();
                 break;
             default:
                 break;
@@ -250,5 +233,54 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkC
      */
     public void dismissProgressDialog(){
         mProgressDialog.dismiss();
+    }
+
+    /**
+     * 开启activity
+     */
+    public void launch(Context mContext, Bundle bundle, Class clazz) {
+        Intent mIntent = new Intent(mContext, clazz);
+        mIntent.putExtras(bundle);
+        launch(mContext, mIntent);
+    }
+
+    /**
+     * 开启activity
+     */
+    public void launch(Context mContext, Class clazz) {
+        Intent mIntent = new Intent(mContext, clazz);
+        launch(mContext, mIntent);
+    }
+
+    /**
+     * 开启activity
+     */
+    public void launch(Context mContext, Intent intent) {
+        mContext.startActivity(intent);
+    }
+    /**
+     * 开启activity
+     */
+    public void launch_FLAGS(Context mContext, Class clazz,int FLAGS) {
+        Intent intent = new Intent(mContext, clazz);
+        intent.addFlags(FLAGS);
+        mContext.startActivity(intent);
+    }
+    /**
+     * 打开activity并且获取回调
+     */
+    public void  launchForResult(Activity activity, Bundle bundle, Class clazz, int requestCode){
+        Intent mIntent = new Intent(activity,clazz);
+        mIntent.putExtras(bundle);
+        activity.startActivityForResult(mIntent,requestCode);
+    }
+    /**
+     * 打开activity并且获取回调
+     */
+    public void  launchForResult_FLAGS(Activity activity, Bundle bundle, Class clazz, int requestCode,int FLAGS){
+        Intent mIntent = new Intent(activity,clazz);
+        mIntent.putExtras(bundle);
+        mIntent.addFlags(FLAGS);
+        activity.startActivityForResult(mIntent,requestCode);
     }
 }

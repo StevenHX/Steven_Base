@@ -8,6 +8,7 @@ import com.hx.steven.component.MultipleStatusView;
 import com.hx.steven.util.LogUtil;
 import com.hx.steven.util.MPermissionUtil;
 import com.hx.steven.util.ToastUtil;
+import com.hx.stevenbase.ui.Login.LoginActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,26 +23,26 @@ public class MainActivity extends BaseActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtil.showCustomToast(MainActivity.this,"23232");
+                launch(MainActivity.this, LoginActivity.class);
+                ToastUtil.showCustomToast(MainActivity.this,"2333333");
             }
         });
         LogUtil.e("11111111");
         setTitle("首页");
-        showStatus(MultipleStatusView.STATUS_LOADING);
-        showStatus(MultipleStatusView.STATUS_CONTENT);
+        hideLeftIcon();
 //        showProgressDialog();
 
-        MPermissionUtil.requestPermissionsResult(this, 0,tips, new MPermissionUtil.OnPermissionListener() {
-                    @Override
-                    public void onPermissionGranted() {
-
-                    }
-
-                    @Override
-                    public void onPermissionDenied() {
-                        MPermissionUtil.showTipsDialog(MainActivity.this);
-                    }
-                });
+//        MPermissionUtil.requestPermissionsResult(this, 0,tips, new MPermissionUtil.OnPermissionListener() {
+//                    @Override
+//                    public void onPermissionGranted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onPermissionDenied() {
+//                        MPermissionUtil.showTipsDialog(MainActivity.this);
+//                    }
+//                });
     }
 
     @Override

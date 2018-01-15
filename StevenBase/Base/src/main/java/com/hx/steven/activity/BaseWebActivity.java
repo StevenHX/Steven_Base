@@ -2,6 +2,9 @@ package com.hx.steven.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,7 +19,8 @@ import android.widget.ProgressBar;
 import com.hx.steven.R;
 import com.hx.steven.util.LogUtil;
 
-public class BaseWebActivity extends BaseActivity {
+public abstract class BaseWebActivity extends BaseActivity {
+    public static final String SCHEME = "jscall:";
     public static final String URL = "H5_URL";
     public static final String TITLE = "H5_TITLE";
     public static final String CONTRACTNO = "CONTRACT_NO";
@@ -28,17 +32,19 @@ public class BaseWebActivity extends BaseActivity {
     private String title;
     private String contractNo = "";//合同号
     private boolean isshowHeader;//是否显示头部
-    @Override
-    protected void initView() {
-        webView = (WebView) findViewById(R.id.web_webView);
-        progressBar = (ProgressBar) findViewById(R.id.web_progressbar);
 
+    {
         url = getIntent().getStringExtra(URL);
         title = getIntent().getStringExtra(TITLE);
         contractNo = getIntent().getStringExtra(CONTRACTNO);
         isshowHeader = getIntent().getBooleanExtra(ISHASHEADER,true);
-        setTitle(title);
+    }
 
+    @Override
+    protected void initView() {
+        webView = (WebView) findViewById(R.id.web_webView);
+        progressBar = (ProgressBar) findViewById(R.id.web_progressbar);
+        setTitle(title);
         initWebView();
         webView.loadUrl(url);
         webView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -49,7 +55,8 @@ public class BaseWebActivity extends BaseActivity {
         });
     }
 
-    private void initWebView() {
+    private void initWebView()
+    {
         webView.getSettings().setJavaScriptEnabled(true);//是否允许执行js，默认为false。设置true时，会提醒可能造成XSS漏洞
         webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         webView.getSettings().setSupportZoom(true);
@@ -102,8 +109,9 @@ public class BaseWebActivity extends BaseActivity {
             }
 
             private boolean filterSpecialUrl(String url){
-                if(url.startsWith("jscall:")){
+                if(url.startsWith(SCHEME)){
                     //逻辑
+                    FilterLogic();
                     return true;
                 }
                 return false;
@@ -113,7 +121,7 @@ public class BaseWebActivity extends BaseActivity {
     }
 
 
-    public static void open(Context context, String title, String contractNo, String url,boolean isshowHeader)
+    public void open(Context context, String title, String contractNo, String url,boolean isshowHeader)
     {
         Intent intent = new Intent(context, BaseWebActivity.class);
         intent.putExtra(URL, url);
@@ -150,4 +158,9 @@ public class BaseWebActivity extends BaseActivity {
     protected boolean isShowHeader() {
         return isshowHeader;
     }
+
+    /**
+     * 拦截URL逻辑
+     */
+    protected abstract void FilterLogic();
 }

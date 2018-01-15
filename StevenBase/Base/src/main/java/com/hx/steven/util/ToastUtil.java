@@ -22,6 +22,7 @@ public class ToastUtil {
      * @param content 要显示的内容
      */
     public static void showToast(Context context, String content) {
+        content = content==null?"":content;
         if (toast == null) {
             toast = Toast.makeText(context, content, Toast.LENGTH_SHORT);
         } else {
@@ -43,6 +44,7 @@ public class ToastUtil {
      * 显示自定义view的Toast
      */
     public static void showCustomToast(Context context,String content){
+        content = content==null?"":content;
         View view = View.inflate(context,R.layout.custom_toast_view,null);
         if (toast == null) {
             toast = Toast.makeText(context,content , Toast.LENGTH_SHORT);

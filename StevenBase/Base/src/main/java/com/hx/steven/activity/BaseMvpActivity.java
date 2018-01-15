@@ -24,6 +24,16 @@ public abstract class BaseMvpActivity<P extends Presenter<V>,V extends BaseMvpVi
 
     @Override
     protected void initView() {
+        mPresenter = creatPresenter();
+        if(mPresenter!=null) mPresenter.attachView((V)this);
+        initMvpView();
+    }
 
+    public abstract P creatPresenter();
+    public abstract void initMvpView();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mPresenter!=null) mPresenter.detachView();
     }
 }
