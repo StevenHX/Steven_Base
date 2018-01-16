@@ -1,21 +1,41 @@
 package com.hx.steven.fragment;
 
-
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.hx.steven.R;
+import com.hx.steven.Mvp.BaseMvpView;
+import com.hx.steven.Mvp.Presenter;
+import com.hx.steven.util.ToastUtil;
 
-public class BaseMvpFragment extends BaseFragment {
+public  abstract class BaseMvpFragment<P extends Presenter<V>,V extends BaseMvpView> extends BaseFragment implements BaseMvpView{
+    protected P mPresenter;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(R.string.hello_blank_fragment);
-        return textView;
+    public void showLoding(String msg) {
+        showProgressDialog(msg);
     }
 
+    @Override
+    public void dismissLoding() {
+        dismissProgressDialog();
+    }
+
+    @Override
+    public void showErr(String err) {
+        ToastUtil.showToast(context,err);
+    }
+
+    @Override
+    protected void initView(View view) {
+        mPresenter = createPresenter();
+        if(mPresenter!=null) mPresenter.attachView((V)this);
+        initMvpView(view);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mPresenter!=null) mPresenter.detachView();
+    }
+
+    protected abstract P createPresenter();
+    public abstract void initMvpView(View view);
 }

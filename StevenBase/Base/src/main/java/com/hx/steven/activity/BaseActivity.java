@@ -149,6 +149,7 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkC
     public MultipleStatusView getMultipleStatusView(){
         return multipleStatusView;
     }
+
     public void  setTitle(String title){
         if(isShowHeader){
             setHeaderVisibility(View.VISIBLE);

@@ -1,10 +1,7 @@
 package com.hx.stevenbase.http;
 
-import android.util.Log;
-import com.hx.steven.app.BaseApplication;
 import com.hx.steven.http.BaseBean;
 import com.hx.steven.util.LogUtil;
-import com.hx.steven.util.ToastUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,13 +19,14 @@ public abstract class HttpCallback<T extends BaseBean> implements Callback<T> {
                     onSuccess(response.body());
                 }
             }
-       }else
-           LogUtil.e(response.body().getMessage());
-           onFailure(call, new RuntimeException(response.body().getMessage()));
+       }else{
+           LogUtil.e(response.raw().message());
+           onFailure(call, new RuntimeException(response.raw().message()));
+            }
        }
     @Override
     public void onFailure(Call<T> call, Throwable t) {
-        LogUtil.e(t.toString());
+        LogUtil.e(t.getMessage());
         onFail(call,t);
     }
 

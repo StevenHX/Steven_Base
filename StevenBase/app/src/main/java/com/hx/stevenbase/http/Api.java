@@ -24,7 +24,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Api {
-    static final String BASE_URL = "http://10.40.20.162:5557";
+    static final String BASE_URL = "http://10.20.20.35:5557";
 
 
      static private Api INSTANCE;

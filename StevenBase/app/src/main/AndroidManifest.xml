@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hx.stevenbase">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -18,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.Login.LoginActivity" />
-        <activity android:name=".ui.Set.SetActivity"></activity>
+        <activity android:name=".ui.Set.SetActivity"/>
     </application>
 
 </manifest>

@@ -3,12 +3,7 @@ package com.hx.steven.fragment;
 
 import android.os.Bundle;
 
-/**
- * Author: wangjie
- * Email: tiantian.china.2@gmail.com
- * Date: 1/23/15.
- */
-public class BaseLazyFragment extends BaseFragment {
+public abstract class BaseLazyFragment extends BaseFragment {
     private boolean isPrepared;
 
     @Override
@@ -74,32 +69,28 @@ public class BaseLazyFragment extends BaseFragment {
         }
     }
 
+
     /**
      * 第一次fragment可见（进行初始化工作）
      */
-    public void onFirstUserVisible() {
-
-    }
+    public abstract void onFirstUserVisible();
 
     /**
      * fragment可见（切换回来或者onResume）
      */
-    public void onUserVisible() {
-
-    }
+    public abstract void onUserVisible();
 
     /**
      * 第一次fragment不可见（不建议在此处理事件）
      */
-    public void onFirstUserInvisible() {
-
-    }
+    public abstract void onFirstUserInvisible() ;
 
     /**
      * fragment不可见（切换掉或者onPause）
      */
-    public void onUserInvisible() {
+    public abstract void onUserInvisible();
 
-    }
+
+
 
 }
