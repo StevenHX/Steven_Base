@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.MultipleStatusView;
+import com.hx.steven.util.CircleImageView;
 import com.hx.steven.util.LogUtil;
 import com.hx.steven.util.MPermissionUtil;
 import com.hx.steven.util.ToastUtil;
@@ -18,6 +19,7 @@ public class MainActivity extends BaseActivity {
     private String [] tips = new String[]{
             Manifest.permission.CAMERA,
             Manifest.permission.READ_CONTACTS};
+    private CircleImageView circleImageView;
     @Override
     protected void initView() {
         Button btn = (Button) findViewById(R.id.hello);
@@ -32,19 +34,8 @@ public class MainActivity extends BaseActivity {
         LogUtil.e("11111111");
         setTitle("首页");
         hideLeftIcon();
-//        showProgressDialog();
-
-//        MPermissionUtil.requestPermissionsResult(this, 0,tips, new MPermissionUtil.OnPermissionListener() {
-//                    @Override
-//                    public void onPermissionGranted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onPermissionDenied() {
-//                        MPermissionUtil.showTipsDialog(MainActivity.this);
-//                    }
-//                });
+        circleImageView = (CircleImageView) findViewById(R.id.circleImage);
+        circleImageView.setImageResource(R.drawable.hugh);
     }
 
     @Override
