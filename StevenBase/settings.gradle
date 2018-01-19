@@ -1,1 +1,1 @@
-include ':app', ':Base'
+include ':app', ':Base', ':selectordialog'

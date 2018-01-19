@@ -1,13 +1,13 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hx.stevenbase.ui.Set.question.questionFragment">
+    app:tr_wave_height="180dp"
+    app:tr_head_height="100dp"
+    android:id="@+id/refreshLayout_question">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/recycler_question"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+</com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
