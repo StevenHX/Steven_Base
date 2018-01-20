@@ -33,7 +33,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 //                launch(MainActivity.this, LoginActivity.class);
-//                launch(MainActivity.this, SetActivity.class);
+                launch(MainActivity.this, SetActivity.class);
 //                ToastUtil.showCustomToast(MainActivity.this,"2333333");
 
 //                new MDAlertDialog.Builder(MainActivity.this)
@@ -54,18 +54,18 @@ public class MainActivity extends BaseActivity {
 //
 //                        .build()
 //                        .show();
-                NormalSelectionDialog selectionDialog =  new NormalSelectionDialog.Builder(MainActivity.this)
-                        .setTitleText("消息")
-                        .setlTitleVisible(true)
-                        .setTitleTextColor(R.color.base_deep)
-                        .build();
-                ArrayList<String> data = new ArrayList<String>();
-                data.add("1111");
-                data.add("2222");
-                data.add("3333");
-                data.add("4444");
-                 selectionDialog.setDataList(data);
-                 selectionDialog.show();
+//                NormalSelectionDialog selectionDialog =  new NormalSelectionDialog.Builder(MainActivity.this)
+//                        .setTitleText("消息")
+//                        .setlTitleVisible(true)
+//                        .setTitleTextColor(R.color.base_deep)
+//                        .build();
+//                ArrayList<String> data = new ArrayList<String>();
+//                data.add("1111");
+//                data.add("2222");
+//                data.add("3333");
+//                data.add("4444");
+//                 selectionDialog.setDataList(data);
+//                 selectionDialog.show();
             }
         });
         LogUtil.e("11111111");
