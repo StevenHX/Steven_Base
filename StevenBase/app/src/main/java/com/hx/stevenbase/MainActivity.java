@@ -1,39 +1,32 @@
 package com.hx.stevenbase;
 
 import android.Manifest;
-import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+
 import com.hx.steven.activity.BaseActivity;
-import com.hx.steven.component.MultipleStatusView;
-import com.hx.steven.util.CircleImageView;
+import com.hx.steven.component.ButtonLayout;
+import com.hx.steven.component.CircleImageView;
 import com.hx.steven.util.LogUtil;
-import com.hx.steven.util.MPermissionUtil;
-import com.hx.steven.util.ToastUtil;
-import com.hx.stevenbase.ui.Login.LoginActivity;
-import com.hx.stevenbase.ui.Set.SetActivity;
-import com.wevey.selector.dialog.DialogOnClickListener;
-import com.wevey.selector.dialog.MDAlertDialog;
-import com.wevey.selector.dialog.NormalAlertDialog;
-import com.wevey.selector.dialog.NormalSelectionDialog;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
+    private static final String TAG = "MainActivity";
     private String [] tips = new String[]{
             Manifest.permission.CAMERA,
             Manifest.permission.READ_CONTACTS};
     private CircleImageView circleImageView;
+    private ButtonLayout btnlayout;
     @Override
     protected void initView() {
-        Button btn = (Button) findViewById(R.id.hello);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+//        Button btn = (Button) findViewById(R.id.hello);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
 //                launch(MainActivity.this, LoginActivity.class);
-                launch(MainActivity.this, SetActivity.class);
+//                launch(MainActivity.this, SetActivity.class);
 //                ToastUtil.showCustomToast(MainActivity.this,"2333333");
 
 //                new MDAlertDialog.Builder(MainActivity.this)
@@ -66,8 +59,8 @@ public class MainActivity extends BaseActivity {
 //                data.add("4444");
 //                 selectionDialog.setDataList(data);
 //                 selectionDialog.show();
-            }
-        });
+//            }
+//        });
         LogUtil.e("11111111");
         setTitle("首页");
         hideLeftIcon();
@@ -75,6 +68,45 @@ public class MainActivity extends BaseActivity {
         circleImageView.setImageResource(R.drawable.hugh);
 
 
+        btnlayout = (ButtonLayout) findViewById(R.id.btnlayout);
+        List<String> data = new ArrayList<>();
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+        data.add("1");
+//        btnlayout.setItemBackground(R.drawable.btnbg);
+        btnlayout.setItemTextSize(10);
+        btnlayout.setItemClickListener(new ButtonLayout.ItemClickListener() {
+            @Override
+            public void itemClick(View view, int position) {
+                Log.d(TAG, "itemClick: "+position);
+            }
+        });
+        btnlayout.setDatas(this,data,ButtonLayout.BUTTON_TYPE);
     }
 
     @Override
