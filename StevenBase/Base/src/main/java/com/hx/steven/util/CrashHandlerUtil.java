@@ -156,6 +156,11 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
                 infos.put("versionName", versionName);
                 infos.put("versionCode", versionCode);
             }
+
+            for (Map.Entry<String,String> entry:
+                    infos.entrySet()) {
+                Log.e(TAG,"key = "+entry.getKey()+",value = "+entry.getValue());
+            }
         } catch (PackageManager.NameNotFoundException e) {
             Log.e(TAG, "an error occured when collect package info", e);
         }
