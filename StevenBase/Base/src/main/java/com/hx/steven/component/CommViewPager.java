@@ -11,7 +11,10 @@ import android.view.MotionEvent;
  */
 
 public class CommViewPager extends ViewPager {
+
     private boolean noScroll = false;
+
+
     public void setNoScroll(boolean noScroll) {
         this.noScroll = noScroll;
     }

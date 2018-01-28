@@ -1,1 +1,1 @@
-include ':app', ':Base', ':selectordialog'
+include ':app', ':Base', ':selectordialog', ':flowTag', 'viewpager'
