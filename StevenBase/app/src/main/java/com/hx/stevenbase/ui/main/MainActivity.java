@@ -13,6 +13,7 @@ import com.hx.stevenbase.Bean.User;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.app.App;
 import com.hx.stevenbase.gen.DaoSession;
+import com.meituan.android.walle.WalleChannelReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,8 @@ public class MainActivity extends BaseActivity {
     private DaoSession daoSession;
     @Override
     protected void initView() {
+        String channel = WalleChannelReader.getChannel(this.getApplicationContext());
+        ToastUtil.showToast(this,channel);
         User userone = new User(null,"hx",25);
         daoSession = App.getDaoSession();
         try {
@@ -34,7 +37,7 @@ public class MainActivity extends BaseActivity {
         }catch (Exception e){
             ToastUtil.showToast(this, "插入数据失败");
         }
-        ToastUtil.showToast(this,"插入成功");
+//        ToastUtil.showToast(this,"插入成功");
 //        Button btn = (Button) findViewById(R.id.hello);
 //        btn.setOnClickListener(new View.OnClickListener() {
 //            @Override
