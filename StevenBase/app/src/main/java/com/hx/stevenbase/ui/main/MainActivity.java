@@ -16,6 +16,7 @@ import com.hx.steven.util.LogUtil;
 import com.hx.steven.util.ToastUtil;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.gen.DaoSession;
+import com.meituan.android.walle.WalleChannelReader;
 import com.hx.stevenbase.ui.Set.SetActivity;
 import com.zhy.magicviewpager.transformer.AlphaPageTransformer;
 import com.zhy.magicviewpager.transformer.NonPageTransformer;
@@ -40,6 +41,16 @@ public class MainActivity extends BaseActivity {
     private ViewPager viewPager;
     @Override
     protected void initView() {
+        String channel = WalleChannelReader.getChannel(this.getApplicationContext());
+        ToastUtil.showToast(this,channel);
+        User userone = new User(null,"hx",25);
+        daoSession = App.getDaoSession();
+        try {
+            daoSession.getUserDao().insert(userone);
+        }catch (Exception e){
+            ToastUtil.showToast(this, "插入数据失败");
+        }
+//        ToastUtil.showToast(this,"插入成功");
         flowTagLayout = (FlowTagLayout) findViewById(R.id.color_flow_layout);
         mColorTagAdapter = new TagAdapter<>(this);
         flowTagLayout.setAdapter(mColorTagAdapter);
@@ -65,7 +76,6 @@ public class MainActivity extends BaseActivity {
 //        btn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-
 //                launch(MainActivity.this, LoginActivity.class);
 //                launch(MainActivity.this, SetActivity.class);
 //                ToastUtil.showCustomToast(MainActivity.this,"2333333");
@@ -105,6 +115,8 @@ public class MainActivity extends BaseActivity {
         LogUtil.e("11111111");
         setTitle("首页");
         hideLeftIcon();
+        circleImageView = (CircleImageView) findViewById(R.id.circleImage);
+        circleImageView.setImageResource(R.drawable.hugh);
 
 
         viewPager = (ViewPager) findViewById(R.id.id_viewpager);
