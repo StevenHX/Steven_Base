@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/base_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/base_container">
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/header_view"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="#fff"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/header_title"
@@ -31,22 +31,22 @@
             android:id="@+id/header_left"
             android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:paddingLeft="12dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:drawableLeft="@drawable/back"
-            android:textColor="#fff"/>
+            android:paddingLeft="12dp"
+            android:textColor="#fff" />
 
 
         <TextView
             android:id="@+id/header_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
             android:textColor="#333333"
             android:visibility="gone" />
 
@@ -54,14 +54,14 @@
             android:id="@+id/header_line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#e5e5e5"
             android:layout_alignParentBottom="true"
-            />
+            android:background="#e5e5e5" />
     </RelativeLayout>
-<com.hx.steven.component.MultipleStatusView
-    android:id="@+id/base_multipleView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</com.hx.steven.component.MultipleStatusView>
+    <com.hx.steven.component.MultipleStatusView
+        android:id="@+id/base_multipleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.hx.steven.component.MultipleStatusView>
 </LinearLayout>
