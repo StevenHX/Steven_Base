@@ -14,7 +14,9 @@ import com.hx.steven.component.CircleImageView;
 import com.hx.steven.component.CommViewPager;
 import com.hx.steven.util.LogUtil;
 import com.hx.steven.util.ToastUtil;
+import com.hx.stevenbase.Bean.User;
 import com.hx.stevenbase.R;
+import com.hx.stevenbase.app.App;
 import com.hx.stevenbase.gen.DaoSession;
 import com.meituan.android.walle.WalleChannelReader;
 import com.hx.stevenbase.ui.Set.SetActivity;
@@ -33,7 +35,6 @@ public class MainActivity extends BaseActivity {
     private String [] tips = new String[]{
             Manifest.permission.CAMERA,
             Manifest.permission.READ_CONTACTS};
-    private CircleImageView circleImageView;
     private DaoSession daoSession;
 
     private TagAdapter<String> mColorTagAdapter;
@@ -64,14 +65,6 @@ public class MainActivity extends BaseActivity {
         });
        initColorData();
 
-//        User userone = new User(null,"hx",25);
-//        daoSession = App.getDaoSession();
-//        try {
-//            daoSession.getUserDao().insert(userone);
-//        }catch (Exception e){
-//            ToastUtil.showToast(this, "插入数据失败");
-//        }
-//        ToastUtil.showToast(this,"插入成功");
 //        Button btn = (Button) findViewById(R.id.hello);
 //        btn.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -115,8 +108,6 @@ public class MainActivity extends BaseActivity {
         LogUtil.e("11111111");
         setTitle("首页");
         hideLeftIcon();
-        circleImageView = (CircleImageView) findViewById(R.id.circleImage);
-        circleImageView.setImageResource(R.drawable.hugh);
 
 
         viewPager = (ViewPager) findViewById(R.id.id_viewpager);

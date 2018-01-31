@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.Login.LoginActivity" />
-        <activity android:name=".ui.Set.SetActivity"/>
+        <activity android:name=".ui.Set.SetActivity" />
+        <activity android:name=".annotation.InjectActivity"></activity>
     </application>
 
 </manifest>
