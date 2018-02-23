@@ -65,12 +65,12 @@ public class MainActivity extends BaseActivity {
         });
        initColorData();
 
-//        Button btn = (Button) findViewById(R.id.hello);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
+        Button btn = (Button) findViewById(R.id.hello);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 //                launch(MainActivity.this, LoginActivity.class);
-//                launch(MainActivity.this, SetActivity.class);
+                launch(MainActivity.this, SetActivity.class);
 //                ToastUtil.showCustomToast(MainActivity.this,"2333333");
 
 //                new MDAlertDialog.Builder(MainActivity.this)
@@ -103,8 +103,8 @@ public class MainActivity extends BaseActivity {
 //                data.add("4444");
 //                 selectionDialog.setDataList(data);
 //                 selectionDialog.show();
-//            }
-//        });
+            }
+        });
         LogUtil.e("11111111");
         setTitle("首页");
         hideLeftIcon();

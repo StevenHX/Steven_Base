@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.hx.steven.component.JellyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,10 @@
     android:orientation="vertical"
     android:clipChildren="false"
     android:layout_centerInParent="true">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <android.support.v4.view.ViewPager
             android:id="@+id/id_viewpager"
             android:layout_width="match_parent"
@@ -20,9 +23,17 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"/>
 
-     <com.hhl.library.FlowTagLayout
-         android:id="@+id/color_flow_layout"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/hello"
+            android:text="goto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <com.hhl.library.FlowTagLayout
+            android:id="@+id/color_flow_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-</LinearLayout>
+
+
+</com.hx.steven.component.JellyScrollView>
