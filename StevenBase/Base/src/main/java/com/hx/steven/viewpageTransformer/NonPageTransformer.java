@@ -1,6 +1,5 @@
-package com.zhy.magicviewpager.transformer;
+package com.hx.steven.viewpageTransformer;
 
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 

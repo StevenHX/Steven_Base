@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.hhl.library.OnInitSelectedPosition;
+import com.hx.steven.component.FlowTag.OnInitSelectedPosition;
 import com.hx.stevenbase.R;
 
 import java.util.ArrayList;

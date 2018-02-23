@@ -1,4 +1,4 @@
-package com.zhy.magicviewpager.transformer;
+package com.hx.steven.viewpageTransformer;
 
 import android.annotation.TargetApi;
 import android.os.Build;
