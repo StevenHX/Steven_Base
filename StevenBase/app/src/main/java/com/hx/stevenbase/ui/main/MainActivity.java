@@ -1,14 +1,14 @@
 package com.hx.stevenbase.ui.main;
 
-import android.Manifest;
-import android.support.design.widget.Snackbar;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
-import com.hx.steven.component.FlowTag.OnTagClickListener;
+import com.hx.steven.component.ProgressBarView;
 import com.hx.steven.util.LogUtil;
 import com.hx.steven.util.ToastUtil;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
@@ -16,102 +16,85 @@ import com.hx.stevenbase.Bean.User;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.app.App;
 import com.hx.stevenbase.gen.DaoSession;
-import com.meituan.android.walle.WalleChannelReader;
 import com.hx.stevenbase.ui.Set.SetActivity;
+import com.meituan.android.walle.WalleChannelReader;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends BaseActivity {
     private static final String TAG = "MainActivity";
-    private String [] tips = new String[]{
-            Manifest.permission.CAMERA,
-            Manifest.permission.READ_CONTACTS};
+    @BindView(R.id.id_viewpager)
+    ViewPager viewPager;
+    @BindView(R.id.hello)
+    Button hello;
+    @BindView(R.id.color_flow_layout)
+    FlowTagLayout colorFlowLayout;
+    @BindView(R.id.pbView)
+    ProgressBarView pbView;
+
     private DaoSession daoSession;
 
     private TagAdapter<String> mColorTagAdapter;
-    private FlowTagLayout flowTagLayout;
-    private ViewPager viewPager;
+
+    private ArrayList<Fragment> mFragments = new ArrayList<Fragment>();
+
     @Override
     protected void initView() {
-        String channel = WalleChannelReader.getChannel(this.getApplicationContext());
-        ToastUtil.showToast(this,channel);
-        User userone = new User(null,"hx",25);
-        daoSession = App.getDaoSession();
-        try {
-            daoSession.getUserDao().insert(userone);
-        }catch (Exception e){
-            ToastUtil.showToast(this, "插入数据失败");
-        }
-//        ToastUtil.showToast(this,"插入成功");
-        flowTagLayout = (FlowTagLayout) findViewById(R.id.color_flow_layout);
-        mColorTagAdapter = new TagAdapter<>(this);
-        flowTagLayout.setAdapter(mColorTagAdapter);
-        flowTagLayout.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_SINGLE);
-        flowTagLayout.setOnTagClickListener(new OnTagClickListener() {
-            @Override
-            public void onItemClick(FlowTagLayout parent, View view, int position) {
-                Snackbar.make(view, "颜色:" + parent.getAdapter().getItem(position), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-       initColorData();
-
-        Button btn = (Button) findViewById(R.id.hello);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                launch(MainActivity.this, LoginActivity.class);
-                launch(MainActivity.this, SetActivity.class);
-//                ToastUtil.showCustomToast(MainActivity.this,"2333333");
-
-//                new MDAlertDialog.Builder(MainActivity.this)
-//                        .setContentText("加载中...")
-//                        .setContentTextSize(30)
-//                        .setContentTextColor(R.color.base_deep)
-//                        .setOnclickListener(new DialogOnClickListener() {
-//                            @Override
-//                            public void clickLeftButton(View view) {
-//
-//                            }
-//
-//                            @Override
-//                            public void clickRightButton(View view) {
-//
-//                            }
-//                        })
-//
-//                        .build()
-//                        .show();
-//                NormalSelectionDialog selectionDialog =  new NormalSelectionDialog.Builder(MainActivity.this)
-//                        .setTitleText("消息")
-//                        .setlTitleVisible(true)
-//                        .setTitleTextColor(R.color.base_deep)
-//                        .build();
-//                ArrayList<String> data = new ArrayList<String>();
-//                data.add("1111");
-//                data.add("2222");
-//                data.add("3333");
-//                data.add("4444");
-//                 selectionDialog.setDataList(data);
-//                 selectionDialog.show();
-            }
-        });
         LogUtil.e("11111111");
         setTitle("首页");
         hideLeftIcon();
 
+        ButterKnife.bind(this);
+        String channel = WalleChannelReader.getChannel(this.getApplicationContext());
+        ToastUtil.showToast(this, channel);
+        User userone = new User(null, "hx", 25);
+        daoSession = App.getDaoSession();
+        try {
+            daoSession.getUserDao().insert(userone);
+        } catch (Exception e) {
+            ToastUtil.showToast(this, "插入数据失败");
+        }
+//        ToastUtil.showToast(this,"插入成功");
+//        mColorTagAdapter = new TagAdapter<>(this);
+//        flowTagLayout.setAdapter(mColorTagAdapter);
+//        flowTagLayout.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_SINGLE);
+//        flowTagLayout.setOnTagClickListener(new OnTagClickListener() {
+//            @Override
+//            public void onItemClick(FlowTagLayout parent, View view, int position) {
+//                Snackbar.make(view, "颜色:" + parent.getAdapter().getItem(position), Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+//       initColorData();
+
+
+
+
 
         viewPager = (ViewPager) findViewById(R.id.id_viewpager);
         viewPager.setOffscreenPageLimit(3);
-        adapter = new pageAdapter(this,images);
-        viewPager.setPageTransformer(false,new ScaleInTransformer());
+        adapter = new pageAdapter(this, images);
+        viewPager.setPageTransformer(false, new ScaleInTransformer());
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);
+
+        pbView.setMax(100);
+        pbView.setProgress(43);
+        pbView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pbView.setProgress(56);
+            }
+        });
     }
 
     private pageAdapter adapter;
-    private int[] images = new int[]{R.drawable.a,R.drawable.b,R.drawable.c,R.drawable.a,R.drawable.b,R.drawable.c};
+    private int[] images = new int[]{R.drawable.a, R.drawable.b, R.drawable.c, R.drawable.a, R.drawable.b, R.drawable.c};
 
     @Override
     protected int getContentId() {
@@ -126,12 +109,6 @@ public class MainActivity extends BaseActivity {
 
     private void initColorData() {
         List<String> dataSource = new ArrayList<>();
-//        dataSource.add("红色");
-//        dataSource.add("黑色");
-//        dataSource.add("花边色");
-//        dataSource.add("深蓝色");
-//        dataSource.add("白色");
-//        dataSource.add("玫瑰红色");
         dataSource.add("紫黑紫兰色");
         dataSource.add("葡萄红色");
         dataSource.add("屎黄色");
@@ -153,4 +130,41 @@ public class MainActivity extends BaseActivity {
         mColorTagAdapter.onlyAddAll(dataSource);
     }
 
+    @OnClick(R.id.hello)
+    public void onViewClicked() {
+        launch(MainActivity.this, SetActivity.class);
+        ToastUtil.showCustomToast(MainActivity.this, "2333333");
+
+        //                NormalSelectionDialog selectionDialog =  new NormalSelectionDialog.Builder(MainActivity.this)
+//                        .setTitleText("消息")
+//                        .setlTitleVisible(true)
+//                        .setTitleTextColor(R.color.base_deep)
+//                        .build();
+//                ArrayList<String> data = new ArrayList<String>();
+//                data.add("1111");
+//                data.add("2222");
+//                data.add("3333");
+//                data.add("4444");
+//                 selectionDialog.setDataList(data);
+//                 selectionDialog.show();
+
+        //                new MDAlertDialog.Builder(MainActivity.this)
+//                        .setContentText("加载中...")
+//                        .setContentTextSize(30)
+//                        .setContentTextColor(R.color.base_deep)
+//                        .setOnclickListener(new DialogOnClickListener() {
+//                            @Override
+//                            public void clickLeftButton(View view) {
+//
+//                            }
+//
+//                            @Override
+//                            public void clickRightButton(View view) {
+//
+//                            }
+//                        })
+//
+//                        .build()
+//                        .show();
+    }
 }

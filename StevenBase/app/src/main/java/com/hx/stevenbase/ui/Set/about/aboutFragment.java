@@ -34,6 +34,8 @@ public class aboutFragment extends BaseMvpFragment<aboutPresenter, aboutContract
     public void initMvpView(View view) {
         unbinder = ButterKnife.bind(this, view);
         aboutDto = new aboutDto();
+        aboutName.clearFocus();
+        aboutPwd.clearFocus();
     }
 
     @Override

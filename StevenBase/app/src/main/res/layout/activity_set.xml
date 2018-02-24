@@ -1,21 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hx.stevenbase.ui.Set.SetActivity">
+    android:orientation="vertical">
 
     <com.hx.steven.component.CommViewPager
         android:id="@+id/set_viewpager"
-        android:layout_width="368dp"
-        android:layout_height="551dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-</android.support.constraint.ConstraintLayout>
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <com.hx.steven.component.BottomBar.BottomBarLayout
+        android:id="@+id/set_bbl"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:background="@color/gray"
+        >
+
+        <com.hx.steven.component.BottomBar.BottomBarItem
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:iconNormal="@drawable/tab_home_normal"
+            app:iconSelected="@drawable/tab_home_selected"
+            app:iconWidth="34dp"
+            app:iconHeight="34dp"
+            app:itemText="首页"
+            app:textColorNormal="@color/tab_normal_color"
+            app:textColorSelected="@color/tab_selected_color"
+            app:itemTextSize="8sp"
+            app:itemMarginTop="-5dp"
+            app:openTouchBg="true"
+            app:touchDrawable="@drawable/selector_bg"
+            />
+
+        <com.hx.steven.component.BottomBar.BottomBarItem
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:iconNormal="@drawable/tab_video_normal"
+            app:iconSelected="@drawable/tab_video_selected"
+            app:iconWidth="34dp"
+            app:iconHeight="34dp"
+            app:itemText="视频"
+            app:textColorNormal="@color/tab_normal_color"
+            app:textColorSelected="@color/tab_selected_color"
+            app:itemTextSize="8sp"
+            app:itemMarginTop="-5dp"
+            app:openTouchBg="true"
+            app:unreadThreshold="999"
+            app:touchDrawable="@drawable/selector_bg"
+            />
+
+
+        <com.hx.steven.component.BottomBar.BottomBarItem
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:iconNormal="@drawable/tab_micro_normal"
+            app:iconSelected="@drawable/tab_micro_selected"
+            app:iconWidth="34dp"
+            app:iconHeight="34dp"
+            app:itemText="微头条"
+            app:textColorNormal="@color/tab_normal_color"
+            app:textColorSelected="@color/tab_selected_color"
+            app:itemTextSize="8sp"
+            app:itemMarginTop="-5dp"
+            app:openTouchBg="true"
+            app:touchDrawable="@drawable/selector_bg"
+            />
+
+        <com.hx.steven.component.BottomBar.BottomBarItem
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:iconNormal="@drawable/tab_me_normal"
+            app:iconSelected="@drawable/tab_me_selected"
+            app:iconWidth="34dp"
+            app:iconHeight="34dp"
+            app:itemText="我的"
+            app:textColorNormal="@color/tab_normal_color"
+            app:textColorSelected="@color/tab_selected_color"
+            app:itemTextSize="8sp"
+            app:itemMarginTop="-5dp"
+            app:openTouchBg="true"
+            app:touchDrawable="@drawable/selector_bg"
+            />
+
+    </com.hx.steven.component.BottomBar.BottomBarLayout>
+</LinearLayout>

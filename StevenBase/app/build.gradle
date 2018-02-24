@@ -16,7 +16,7 @@ android {
     }
 
     signingConfigs {
-        steven{
+        steven {
             storeFile file("../StevenBase.jks")
             storePassword "1234567890"
             keyAlias "stevenbase"
@@ -29,7 +29,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.steven
         }
-        debug{
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.steven
@@ -43,7 +43,7 @@ greendao {
     targetGenDir 'src/main/java'
 }
 
-walle{
+walle {
     //指定渠道包的输出路径
     apkOutputFolder = new File("${project.buildDir}/outputs/channels");
     //定制apk渠道包的名称
