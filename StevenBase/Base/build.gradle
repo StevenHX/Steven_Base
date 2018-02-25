@@ -33,7 +33,8 @@ dependencies {
     compile 'com.android.support:design:26.0.0-alpha1'
     compile 'com.lcodecorex:tkrefreshlayout:1.0.7'
 
-    
+    //logger
+    compile 'com.orhanobut:logger:2.1.1'
 
     //Retrofit
     compile 'com.squareup.retrofit2:retrofit:2.0.0'
