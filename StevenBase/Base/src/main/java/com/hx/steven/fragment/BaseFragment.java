@@ -4,6 +4,7 @@ package com.hx.steven.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.hx.steven.R;
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.MProgressDialog;
 import com.hx.steven.component.MultipleStatusView;
+import com.hx.steven.util.MPermissionUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,6 +46,14 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initView(View view);
     protected abstract int getContentId();
+    /**
+     *6.0权限
+    */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        MPermissionUtil.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
     /**
      *=====================================设置公共方法============================

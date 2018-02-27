@@ -5,6 +5,7 @@ import com.hx.stevenbase.ui.Login.LoginDto;
 import com.hx.stevenbase.ui.Set.about.aboutBean;
 import com.hx.stevenbase.ui.Set.about.aboutDto;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -22,5 +23,5 @@ public interface ApiService {
      * @return
      */
     @POST("/api-customer/center/login")
-    Call<aboutBean> about(@Body aboutDto about);
+    Observable<aboutBean> about(@Body aboutDto about);
 }

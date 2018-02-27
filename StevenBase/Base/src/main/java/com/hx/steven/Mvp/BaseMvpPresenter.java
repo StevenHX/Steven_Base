@@ -1,21 +1,36 @@
 package com.hx.steven.Mvp;
 
+import com.orhanobut.logger.Logger;
 
-import android.util.Log;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 public class BaseMvpPresenter<V extends BaseMvpView> implements Presenter<V> {
-    private static final String TAG = "BaseMvpPresenter";
     private V mvpView;
+    private CompositeDisposable composite = new CompositeDisposable();
+
     @Override
     public void attachView(V mvpView) {
-        Log.d(TAG, "attachView: ");
+        Logger.d("attachView: ");
         this.mvpView = mvpView;
     }
 
     @Override
     public void detachView() {
-        Log.d(TAG, "detachView: ");
+        Logger.d( "detachView: ");
         mvpView = null;
+    }
+
+    @Override
+    public void subscribe(Disposable disposable) {
+        Logger.d("subscribe");
+        composite.add(disposable);
+    }
+
+    @Override
+    public void unScribe() {
+        Logger.d("unScribe");
+        composite.clear();
     }
 
     /**

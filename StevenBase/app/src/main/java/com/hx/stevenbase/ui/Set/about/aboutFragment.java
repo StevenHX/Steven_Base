@@ -1,11 +1,14 @@
 package com.hx.stevenbase.ui.Set.about;
 
+import android.Manifest;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.hx.steven.fragment.BaseMvpFragment;
+import com.hx.steven.util.MPermissionUtil;
 import com.hx.stevenbase.R;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,8 +37,19 @@ public class aboutFragment extends BaseMvpFragment<aboutPresenter, aboutContract
     public void initMvpView(View view) {
         unbinder = ButterKnife.bind(this, view);
         aboutDto = new aboutDto();
-        aboutName.clearFocus();
-        aboutPwd.clearFocus();
+
+
+        MPermissionUtil.requestPermissionsResult(this, 0, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new MPermissionUtil.OnPermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                Logger.d(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE});
+            }
+
+            @Override
+            public void onPermissionDenied() {
+                MPermissionUtil.showTipsDialog(context);
+            }
+        });
     }
 
     @Override
@@ -65,7 +79,7 @@ public class aboutFragment extends BaseMvpFragment<aboutPresenter, aboutContract
         aboutDto.setMobile(aboutName.toString());
         aboutDto.setPassword(aboutPwd.toString());
         aboutDto.setSimulator(false);
-       showProgressDialog("加载中");
+        showProgressDialog("加载中");
         mPresenter.aboutRequest(aboutDto);
     }
 }

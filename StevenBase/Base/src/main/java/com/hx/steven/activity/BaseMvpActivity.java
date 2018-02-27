@@ -34,6 +34,9 @@ public abstract class BaseMvpActivity<P extends Presenter<V>,V extends BaseMvpVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mPresenter!=null) mPresenter.detachView();
+        if(mPresenter!=null) {
+            mPresenter.detachView();
+            mPresenter.unScribe();
+        }
     }
 }

@@ -6,7 +6,7 @@ import com.hx.steven.http.BaseBean;
  * Created by user on 2018/1/16.
  */
 
-public class aboutBean extends BaseBean {
+public class aboutBean extends BaseBean<aboutBean.Result> {
     public class Result{
         private double avaBalance;
         private int isCredit;

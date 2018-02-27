@@ -33,7 +33,10 @@ public  abstract class BaseMvpFragment<P extends Presenter<V>,V extends BaseMvpV
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mPresenter!=null) mPresenter.detachView();
+        if(mPresenter!=null) {
+            mPresenter.detachView();
+            mPresenter.unScribe();//解除Rxjava观察者和被观察者订阅关系
+        }
     }
 
     protected abstract P createPresenter();

@@ -1,5 +1,6 @@
 package com.hx.stevenbase.ui.main;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -10,15 +11,19 @@ import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.ProgressBarView;
 import com.hx.steven.util.LogUtil;
+import com.hx.steven.util.MPermissionUtil;
 import com.hx.steven.util.ToastUtil;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.Bean.User;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.app.App;
 import com.hx.stevenbase.gen.DaoSession;
+import com.hx.stevenbase.ui.Login.LoginActivity;
 import com.hx.stevenbase.ui.Set.SetActivity;
 import com.meituan.android.walle.WalleChannelReader;
 
+import java.security.Permission;
+import java.security.Permissions;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,8 +78,17 @@ public class MainActivity extends BaseActivity {
 //       initColorData();
 
 
-
-
+//        MPermissionUtil.requestPermissionsResult(this,0,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new MPermissionUtil.OnPermissionListener() {
+//            @Override
+//            public void onPermissionGranted() {
+//
+//            }
+//
+//            @Override
+//            public void onPermissionDenied() {
+//
+//            }
+//        });
 
         viewPager = (ViewPager) findViewById(R.id.id_viewpager);
         viewPager.setOffscreenPageLimit(3);

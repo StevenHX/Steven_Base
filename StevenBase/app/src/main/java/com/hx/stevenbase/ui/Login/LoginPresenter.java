@@ -12,8 +12,7 @@ import retrofit2.Call;
 public class LoginPresenter extends LoginContract.Presenter {
     @Override
     void loginRequest(LoginDto loginDto) {
-       checkViewAttach();
-        Api.getService().login(loginDto).enqueue(new HttpCallback<LoginBean>() {
+        Api.getInstance().getApiService().login(loginDto).enqueue(new HttpCallback<LoginBean>() {
             @Override
             public void onSuccess(LoginBean result) {
                 getMvpView().loginSuccess(result);

@@ -31,22 +31,30 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Api {
     static final String BASE_URL = "http://10.20.20.35:5557";
     private static final String TAG = "Api";
 
-
-    static private Api INSTANCE;
-     static private ApiService service;
+    private static Api mApiRetrofit;
+     static private ApiService mApiService;
      private Retrofit retrofit;
 
-    public static ApiService getService() {
-        if(INSTANCE==null){
-            INSTANCE = new Api();
+    public static Api getInstance() {
+        if (mApiRetrofit == null) {
+            synchronized (Object.class) {
+                if (mApiRetrofit == null) {
+                    mApiRetrofit = new Api();
+                }
+            }
         }
-        return service;
+        return mApiRetrofit;
+    }
+
+    public ApiService getApiService() {
+        return mApiService;
     }
 
     /**
@@ -133,7 +141,9 @@ public class Api {
 
 
         if (BuildConfig.DEBUG) {
-            builder.addInterceptor(logIntercepter);
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);//这里可以选择拦截级别
+            builder.addInterceptor(loggingInterceptor );
         }
 
         File cacheFile = new File(App.getAppContext().getCacheDir(), "cache");
@@ -159,9 +169,10 @@ public class Api {
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(BASE_URL)
                 .build();
-        service = retrofit.create(ApiService.class);
+        mApiService = retrofit.create(ApiService.class);
     }
 
 
