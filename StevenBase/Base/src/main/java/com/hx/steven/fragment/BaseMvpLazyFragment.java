@@ -31,13 +31,18 @@ public abstract class BaseMvpLazyFragment<P extends Presenter<V>,V extends BaseM
     protected void initView(View view) {
         mPresenter = createPresenter();
         if(mPresenter!=null) mPresenter.attachView((V)this);
+        initMvpLazyFragment(view);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mPresenter!=null) mPresenter.detachView();
+        if(mPresenter!=null) {
+            mPresenter.detachView();
+            mPresenter.unScribe();//解除Rxjava观察者和被观察者订阅关系
+        }
     }
 
+    protected abstract void initMvpLazyFragment(View view);
     protected abstract P createPresenter();
 }

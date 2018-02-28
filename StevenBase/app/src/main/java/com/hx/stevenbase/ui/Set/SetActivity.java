@@ -7,8 +7,8 @@ import com.hx.steven.component.BottomBar.BottomBarLayout;
 import com.hx.steven.component.CommViewPager;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.ui.Set.about.aboutFragment;
+import com.hx.stevenbase.ui.Set.home.homeFragment;
 import com.hx.stevenbase.ui.Set.me.MeFragment;
-import com.hx.stevenbase.ui.Set.question.questionFragment;
 import com.hx.stevenbase.ui.Set.talk.talkFragment;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class SetActivity extends BaseActivity implements BottomBarLayout.OnItemS
         setTitle("设置");
         ButterKnife.bind(this);
       mFragments.add(new aboutFragment());
-      mFragments.add(new questionFragment());
+      mFragments.add(new homeFragment());
       mFragments.add(new talkFragment());
       mFragments.add(new MeFragment());
       setViewpager.setAdapter(new SetPageAdapter(getSupportFragmentManager(),mFragments));

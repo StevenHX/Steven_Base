@@ -42,7 +42,7 @@ public class aboutFragment extends BaseMvpFragment<aboutPresenter, aboutContract
         MPermissionUtil.requestPermissionsResult(this, 0, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new MPermissionUtil.OnPermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Logger.d(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE});
+
             }
 
             @Override

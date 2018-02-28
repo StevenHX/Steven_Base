@@ -252,7 +252,7 @@ import java.util.ArrayList;
             mContentView = mInflater.inflate(mContentViewResId,null);
             addView(mContentView, 0, DEFAULT_LAYOUT_PARAMS);
         }
-//        showContentView();
+        showContentView();
     }
 
     private void showContentView() {

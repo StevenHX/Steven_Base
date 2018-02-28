@@ -5,40 +5,32 @@ package com.hx.steven.http;
  */
 
 public class BaseBean<T> {
-    private String code;
-    private String msg;
-    private boolean ok;
-    private T result;
 
-    public String getCode() {
-        return code;
+    private int errorCode;
+    private Object errorMsg;
+    private T data;
+
+    public int getErrorCode() {
+        return errorCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
     }
 
-    public String getMessage() {
-        return msg;
+    public Object getErrorMsg() {
+        return errorMsg;
     }
 
-    public void setMessage(String message) {
-        this.msg = message;
+    public void setErrorMsg(Object errorMsg) {
+        this.errorMsg = errorMsg;
     }
 
-    public boolean isOk() {
-        return ok;
+    public T getData() {
+        return data;
     }
 
-    public void setOk(boolean ok) {
-        this.ok = ok;
-    }
-
-    public T getResult() {
-        return result;
-    }
-
-    public void setResult(T result) {
-        this.result = result;
+    public void setData(T data) {
+        this.data = data;
     }
 }

@@ -35,7 +35,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Api {
-    static final String BASE_URL = "http://10.20.20.35:5557";
+    static final String BASE_URL = "http://www.wanandroid.com";
     private static final String TAG = "Api";
 
     private static Api mApiRetrofit;

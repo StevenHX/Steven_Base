@@ -1,7 +1,5 @@
 package com.hx.stevenbase.ui.main;
 
-import android.Manifest;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -10,20 +8,15 @@ import android.widget.Button;
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.ProgressBarView;
-import com.hx.steven.util.LogUtil;
-import com.hx.steven.util.MPermissionUtil;
 import com.hx.steven.util.ToastUtil;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.Bean.User;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.app.App;
 import com.hx.stevenbase.gen.DaoSession;
-import com.hx.stevenbase.ui.Login.LoginActivity;
 import com.hx.stevenbase.ui.Set.SetActivity;
 import com.meituan.android.walle.WalleChannelReader;
 
-import java.security.Permission;
-import java.security.Permissions;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +43,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        LogUtil.e("11111111");
         setTitle("首页");
         hideLeftIcon();
 
@@ -64,19 +56,7 @@ public class MainActivity extends BaseActivity {
         } catch (Exception e) {
             ToastUtil.showToast(this, "插入数据失败");
         }
-//        ToastUtil.showToast(this,"插入成功");
-//        mColorTagAdapter = new TagAdapter<>(this);
-//        flowTagLayout.setAdapter(mColorTagAdapter);
-//        flowTagLayout.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_SINGLE);
-//        flowTagLayout.setOnTagClickListener(new OnTagClickListener() {
-//            @Override
-//            public void onItemClick(FlowTagLayout parent, View view, int position) {
-//                Snackbar.make(view, "颜色:" + parent.getAdapter().getItem(position), Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-//       initColorData();
-
+        ToastUtil.showToast(this,"插入成功");
 
 //        MPermissionUtil.requestPermissionsResult(this,0,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new MPermissionUtil.OnPermissionListener() {
 //            @Override
@@ -120,29 +100,6 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
-
-    private void initColorData() {
-        List<String> dataSource = new ArrayList<>();
-        dataSource.add("紫黑紫兰色");
-        dataSource.add("葡萄红色");
-        dataSource.add("屎黄色");
-        dataSource.add("绿色");
-        dataSource.add("彩虹色");
-        dataSource.add("牡丹色");
-        dataSource.add("红色");
-        dataSource.add("黑色");
-        dataSource.add("1");
-        dataSource.add("2");
-        dataSource.add("3");
-        dataSource.add("7");
-        dataSource.add("8");
-        dataSource.add("12");
-        dataSource.add("15");
-        dataSource.add("17");
-        dataSource.add("18");
-        dataSource.add("19");
-        mColorTagAdapter.onlyAddAll(dataSource);
-    }
 
     @OnClick(R.id.hello)
     public void onViewClicked() {

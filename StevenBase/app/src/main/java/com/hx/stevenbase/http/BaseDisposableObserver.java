@@ -1,6 +1,7 @@
 package com.hx.stevenbase.http;
 
 import com.hx.steven.http.BaseBean;
+import com.orhanobut.logger.Logger;
 
 import io.reactivex.observers.DisposableObserver;
 
@@ -12,10 +13,10 @@ import io.reactivex.observers.DisposableObserver;
 public abstract class  BaseDisposableObserver<T extends BaseBean> extends DisposableObserver<T> {
     @Override
     public void onNext(T t) {
-        if(t.isOk()){
+        if(t.getErrorCode() == 0){
             onSuccess(t);
         }else{
-            onFail(t,new Exception("not ok"));
+            onFail(t,new Exception("fail"));
         }
     }
 

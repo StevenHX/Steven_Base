@@ -1,7 +1,8 @@
 package com.hx.stevenbase.http;
 
 import com.hx.steven.http.BaseBean;
-import com.hx.steven.util.LogUtil;
+import com.orhanobut.logger.Logger;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -11,22 +12,15 @@ public abstract class HttpCallback<T extends BaseBean> implements Callback<T> {
     @Override
     public  void onResponse(Call<T> call, Response<T> response) {
        if (response.raw().code()==200){
-            if(response.body().isOk()){
-                if(response.body().getResult()==null){//如果result为null
-                    LogUtil.e(response.body().getMessage());
-                    onFail(call,new RuntimeException(response.body().getMessage()));
-                }else{
-                    onSuccess(response.body());
-                }
-            }
+           onSuccess(response.body());
        }else{
-           LogUtil.e(response.raw().message());
+           Logger.e(response.raw().message());
            onFailure(call, new RuntimeException(response.raw().message()));
             }
        }
     @Override
     public void onFailure(Call<T> call, Throwable t) {
-        LogUtil.e(t.getMessage());
+        Logger.e(t.getMessage());
         onFail(call,t);
     }
 

@@ -2,10 +2,6 @@ package com.hx.steven.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JsResult;
@@ -17,7 +13,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.hx.steven.R;
-import com.hx.steven.util.LogUtil;
+import com.orhanobut.logger.Logger;
 
 public abstract class BaseWebActivity extends BaseActivity {
     public static final String SCHEME = "jscall:";
@@ -104,7 +100,7 @@ public abstract class BaseWebActivity extends BaseActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                LogUtil.d("shouldOverrideUrlLoading: "+"========================>" + url);
+                Logger.d("shouldOverrideUrlLoading: "+"========================>" + url);
                 return filterSpecialUrl(url);
             }
 

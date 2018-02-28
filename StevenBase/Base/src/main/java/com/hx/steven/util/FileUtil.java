@@ -107,6 +107,10 @@ public class FileUtil {
     }
 
 
+    /**
+     * 获取SD卡路径
+     * @return
+     */
     public static String getSDPath(){
         File sdDir = null;
         boolean sdCardExist = Environment.getExternalStorageState()
