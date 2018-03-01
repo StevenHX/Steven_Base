@@ -77,14 +77,14 @@ public class MainActivity extends BaseActivity {
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);
 
-        pbView.setMax(100);
-        pbView.setProgress(43);
-        pbView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pbView.setProgress(56);
-            }
-        });
+//        pbView.setMax(100);
+//        pbView.setProgress(43);
+//        pbView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                pbView.setProgress(56);
+//            }
+//        });
     }
 
     private pageAdapter adapter;

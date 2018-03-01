@@ -6,9 +6,7 @@ import com.hx.steven.http.BaseBean;
  * Created by user on 2018/1/15.
  */
 
-public class LoginBean extends BaseBean<LoginBean.Result>{
-
-    public class Result {
+public class LoginBean{
         private double avaBalance;
         private int isCredit;
         private String mobile;
@@ -63,5 +61,4 @@ public class LoginBean extends BaseBean<LoginBean.Result>{
         public void setToken(String token) {
             this.token = token;
         }
-    }
 }

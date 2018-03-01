@@ -1,5 +1,6 @@
 package com.hx.stevenbase.ui.Login;
 
+import com.hx.steven.http.BaseBean;
 import com.hx.stevenbase.http.Api;
 import com.hx.stevenbase.http.HttpCallback;
 
@@ -15,12 +16,12 @@ public class LoginPresenter extends LoginContract.Presenter {
         Api.getInstance().getApiService().login(loginDto).enqueue(new HttpCallback<LoginBean>() {
             @Override
             public void onSuccess(LoginBean result) {
-                getMvpView().loginSuccess(result);
+
             }
 
             @Override
-            public void onFail(Call<LoginBean> call, Throwable t) {
-                getMvpView().loginFail(t.getMessage());
+            public void onFail(Call<BaseBean<LoginBean>> call, Throwable t) {
+
             }
         });
     }

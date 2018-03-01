@@ -1,13 +1,10 @@
 package com.hx.stevenbase.ui.Set.about;
 
-import com.hx.steven.http.BaseBean;
-
 /**
  * Created by user on 2018/1/16.
  */
 
-public class aboutBean extends BaseBean<aboutBean.Result> {
-    public class Result{
+public class aboutBean  {
         private double avaBalance;
         private int isCredit;
         private String mobile;
@@ -62,5 +59,4 @@ public class aboutBean extends BaseBean<aboutBean.Result> {
         public void setToken(String token) {
             this.token = token;
         }
-    }
 }

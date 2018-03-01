@@ -10,13 +10,13 @@ import io.reactivex.observers.DisposableObserver;
  * Created by Steven on 2018/2/27.
  */
 
-public abstract class  BaseDisposableObserver<T extends BaseBean> extends DisposableObserver<T> {
+public abstract class  BaseDisposableObserver<T> extends DisposableObserver<BaseBean<T>> {
     @Override
-    public void onNext(T t) {
+    public void onNext(BaseBean<T> t) {
         if(t.getErrorCode() == 0){
-            onSuccess(t);
+            onSuccess(t.getData());
         }else{
-            onFail(t,new Exception("fail"));
+            onFail(t.getData(),new Exception("fail"));
         }
     }
 

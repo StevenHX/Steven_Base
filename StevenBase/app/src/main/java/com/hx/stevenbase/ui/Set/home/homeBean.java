@@ -1,15 +1,12 @@
 package com.hx.stevenbase.ui.Set.home;
 
-import com.hx.steven.http.BaseBean;
-
 import java.util.List;
 
 /**
  * Created by Steven on 2018/2/27.
  */
 
-public class homeBean extends BaseBean<homeBean.Result> {
-    public class Result{
+public class homeBean {
         private int offset;
         private int size;
         private int total;
@@ -229,5 +226,4 @@ public class homeBean extends BaseBean<homeBean.Result> {
                 this.collect = collect;
             }
         }
-    }
 }

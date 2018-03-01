@@ -22,38 +22,20 @@ public class aboutPresenter extends aboutContract.Presenter {
     void aboutRequest(final aboutDto about) {
 
         subscribe(Api.getInstance().getApiService()
-                .about(about)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseDisposableObserver<aboutBean>(){
+        .about(about)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeWith(new BaseDisposableObserver<aboutBean>(){
 
-                    @Override
-                    public void onSuccess(aboutBean result) {
-                        com.orhanobut.logger.Logger.d(result);
-                    }
+            @Override
+            public void onSuccess(aboutBean result) {
 
-                    @Override
-                    public void onFail(aboutBean result, Throwable t) {
-                        com.orhanobut.logger.Logger.d(t);
-                    }
-                }));
-//                .subscribeWith(new DisposableObserver<aboutBean>() {
-//                    @Override
-//                    public void onNext(aboutBean aboutBean) {
-//                        com.orhanobut.logger.Logger.d(aboutBean);
-//                        getMvpView().dismissLoding();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        com.orhanobut.logger.Logger.e(e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        com.orhanobut.logger.Logger.d("---------------complete-------------");
-//                    }
-//                })
-//        );
+            }
+
+            @Override
+            public void onFail(aboutBean result, Throwable t) {
+
+            }
+        }));
     }
 }

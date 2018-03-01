@@ -1,10 +1,14 @@
 package com.hx.stevenbase.http;
 
+import com.hx.steven.http.BaseBean;
 import com.hx.stevenbase.ui.Login.LoginBean;
 import com.hx.stevenbase.ui.Login.LoginDto;
 import com.hx.stevenbase.ui.Set.about.aboutBean;
 import com.hx.stevenbase.ui.Set.about.aboutDto;
+import com.hx.stevenbase.ui.Set.home.homeBannerBean;
 import com.hx.stevenbase.ui.Set.home.homeBean;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.Call;
@@ -20,13 +24,13 @@ public interface ApiService {
      * @return
      */
     @POST("/api-customer/center/login")
-    Call<LoginBean> login(@Body LoginDto loginDto);
+    Call<BaseBean<LoginBean>> login(@Body LoginDto loginDto);
     /**
      * about
      * @return
      */
     @POST("/api-customer/center/login")
-    Observable<aboutBean> about(@Body aboutDto about);
+    Observable<BaseBean<aboutBean>> about(@Body aboutDto about);
 
 
     /**
@@ -36,5 +40,10 @@ public interface ApiService {
      * @param page page
      */
     @GET("/article/list/{page}/json")
-    Observable<homeBean> getHomeArticles(@Path("page") int page);
+    Observable<BaseBean<homeBean>> getHomeArticles(@Path("page") int page);
+    /**
+     * 获取首页banner
+     */
+    @GET("/banner/json")
+    Observable<BaseBean<List<homeBannerBean>>> getHomeBanners();
 }

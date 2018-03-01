@@ -3,6 +3,8 @@ package com.hx.steven.fragment;
 
 import android.os.Bundle;
 
+import com.orhanobut.logger.Logger;
+
 public abstract class BaseLazyFragment extends BaseFragment {
     private boolean isPrepared;
 
@@ -50,13 +52,16 @@ public abstract class BaseLazyFragment extends BaseFragment {
                 initPrepare();
             } else {
                 onUserVisible();
+                Logger.e("onUserVisible()");
             }
         } else {
             if (isFirstInvisible) {
                 isFirstInvisible = false;
                 onFirstUserInvisible();
+                Logger.e("onFirstUserInvisible()");
             } else {
                 onUserInvisible();
+                Logger.e("onUserInvisible()");
             }
         }
     }
@@ -64,6 +69,7 @@ public abstract class BaseLazyFragment extends BaseFragment {
     public synchronized void initPrepare() {
         if (isPrepared) {
             onFirstUserVisible();
+            Logger.e("onFirstUserVisible()");
         } else {
             isPrepared = true;
         }
