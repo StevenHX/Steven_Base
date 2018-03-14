@@ -79,4 +79,33 @@
     <declare-styleable name="BottomBarLayout">
         <attr name="smoothScroll" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="HeaderView">
+        <!--左侧文字-->
+        <attr name="leftString" format="string"/>
+        <!--左侧文字颜色-->
+        <attr name="leftColor" format="color"/>
+        <!--左侧图标-->
+        <attr name="leftIcon" format="reference"/>
+        <!--标题文字-->
+        <attr name="titleString" format="string"/>
+        <!--标题颜色-->
+        <attr name="titleColor" format="color"/>
+        <!--右侧文字-->
+        <attr name="rightString" format="string"/>
+        <!--右侧文字颜色-->
+        <attr name="rightColor" format="color"/>
+        <!--右侧图标-->
+        <attr name="rightIcon" format="reference"/>
+        <!--是否显示左侧文字-->
+        <attr name="showLeftTv" format="boolean"/>
+        <!--是否显示左侧图标-->
+        <attr name="showLeftIcon" format="boolean"/>
+        <!--是否显示右侧文字-->
+        <attr name="showRightTv" format="boolean"/>
+        <!--是否显示右侧图标-->
+        <attr name="showRightIcon" format="boolean"/>
+        <!--是否显示标题-->
+        <attr name="showTitle" format="boolean"/>
+    </declare-styleable>
 </resources>

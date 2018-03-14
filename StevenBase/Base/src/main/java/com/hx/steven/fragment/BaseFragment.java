@@ -21,7 +21,7 @@ import com.hx.steven.util.MPermissionUtil;
 /**
  * A simple {@link Fragment} subclass.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements View.OnClickListener {
     public Context context;
     public Activity activity;
     private MultipleStatusView multipleStatusView;//内容多状态视图
@@ -38,7 +38,10 @@ public abstract class BaseFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragmemt_base,container,false);
         multipleStatusView = view.findViewById(R.id.base_frag_multipleView);
         View layout = inflater.inflate(getContentId(),null);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layout.setLayoutParams(params);
         multipleStatusView.addView(layout);
+        multipleStatusView.setOnRetryClickListener(this);
         initView(view);
         return view;
     }
@@ -84,5 +87,14 @@ public abstract class BaseFragment extends Fragment {
         if(activity instanceof BaseActivity){
             ((BaseActivity)activity).dismissProgressDialog();
         }
+    }
+
+    /**
+     * 点击加载错误重试
+     * @param view
+     */
+    @Override
+    public void onClick(View view) {
+
     }
 }

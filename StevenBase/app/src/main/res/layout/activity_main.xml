@@ -35,9 +35,16 @@
 
         <com.hx.steven.component.ProgressBarView
             android:id="@+id/pbView"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/head"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_launcher_round"/>
     </LinearLayout>
 
 

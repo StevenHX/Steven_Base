@@ -3,9 +3,7 @@ package com.hx.stevenbase.ui.Set.home;
 import com.hx.steven.util.LoadType;
 import com.hx.stevenbase.http.Api;
 import com.hx.stevenbase.http.BaseDisposableObserver;
-
 import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -35,7 +33,8 @@ public class homePresenter extends homeContract.Presenter {
 
                     @Override
                     public void onFail(homeBean result, Throwable t) {
-                        getMvpView().homeFail(t.getMessage());
+                        int loadType = mIsRefresh ? LoadType.TYPE_REFRESH_ERROR : LoadType.TYPE_LOAD_MORE_ERROR;
+                        getMvpView().homeFail(t.getMessage(),loadType);
                     }
                 })
         );
@@ -56,7 +55,7 @@ public class homePresenter extends homeContract.Presenter {
 
                     @Override
                     public void onFail(List<homeBannerBean> result, Throwable t) {
-                        getMvpView().homeFail(t.getMessage());
+                        getMvpView().homeFail(t.getMessage(),LoadType.TYPE_NONE);
                     }
                 })
         );
@@ -68,7 +67,7 @@ public class homePresenter extends homeContract.Presenter {
         mIsRefresh = true;
         loadHomeArticles(mPage);
         loadHomeBanner();
-    }
+       }
 
     @Override
     void loadMore() {

@@ -104,6 +104,7 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
                 refreshLayoutQuestion.finishRefreshing();
                 adapter.setNewData(home.getDatas());
                 getMultipleStatusView().showContent();
+                dismissLoding();
                 break;
             case LoadType.TYPE_LOAD_MORE_SUCCESS:
                if(home.getDatas()!=null) {
@@ -149,14 +150,16 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
     }
 
     @Override
-    public void homeFail(String msg) {
-        getMultipleStatusView().showError();
-        getMultipleStatusView().setOnRetryClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.reFresh();
-            }
-        });
+    public void homeFail(String msg,int mLoadType) {
+        switch (mLoadType){
+            case LoadType.TYPE_REFRESH_ERROR:
+                getMultipleStatusView().showError();
+                dismissLoding();
+                break;
+            case LoadType.TYPE_LOAD_MORE_ERROR:
+                refreshLayoutQuestion.finishLoadmore();
+                break;
+        }
     }
 
     @Override
@@ -184,5 +187,12 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         ToastUtil.showToast(context,"ItemClick");
+    }
+
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        showLoding("加载中");
+        mPresenter.reFresh();
     }
 }

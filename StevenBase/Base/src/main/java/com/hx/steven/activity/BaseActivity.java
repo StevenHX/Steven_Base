@@ -3,52 +3,39 @@ package com.hx.steven.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
-import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
 import android.os.Build;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.hx.steven.BroadCastReceiver.NetworkChangedReceiver;
-import com.hx.steven.Mvp.BaseMvpView;
+import android.widget.LinearLayout;
 import com.hx.steven.R;
+import com.hx.steven.component.HeaderView;
 import com.hx.steven.component.MProgressDialog;
 import com.hx.steven.component.MultipleStatusView;
 import com.hx.steven.util.MPermissionUtil;
-import com.hx.steven.util.NetworkUtil;
 
 public abstract class BaseActivity extends AppCompatActivity{
 
     private  static  final int TOP_HEIGHT = 48;
-    private boolean isShowHeader = true;//是否显示导航栏(默认显示)
-
     private ViewGroup mContainer;//视图容器
-
-    private RelativeLayout mHeaderLayout;//导航栏控件
-    private TextView mHeaderLeftTv;
-    private TextView mHeaderTitleTv;
-    private TextView mHeaderRightTv;
-
     private MultipleStatusView multipleStatusView;//内容多状态视图
     private MProgressDialog mProgressDialog;//dialog
-    public static NetworkChangedReceiver.NetEvevt evevt;//网络状态接口对象
+    private HeaderView headerView;//头部视图
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);//设置屏幕保持竖直
-        isShowHeader = isShowHeader();
         initContainer();
-        setStatusColor(0x20000000);
+        setInside();
+        excuteStatesBar();
         initView();
     }
 
@@ -61,66 +48,37 @@ public abstract class BaseActivity extends AppCompatActivity{
     protected abstract int getContentId();
     protected  abstract boolean isShowHeader();
     /**
-     * 设置状态栏颜色
+     * 设置沉浸式效果
      */
-    private void setStatusColor(int statusColor){
-        //操作系统的api版本大于21，才能改变状态栏的颜色
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            //设置状态栏的颜色
-            getWindow().setStatusBarColor(statusColor);
-        }
+    private void setInside(){
+        //透明状态栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        //透明导航栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
     }
 
-    /**
-     * 初始化内容视图
-     */
     private void initContainer() {
         setContentView(R.layout.activity_base);
         mContainer = (ViewGroup) findViewById(R.id.base_container);
-        multipleStatusView = (MultipleStatusView) findViewById(R.id.base_multipleView);
-        View layout = null;
-        LayoutInflater inflater = LayoutInflater.from(BaseActivity.this);
-        layout = inflater.inflate(getContentId(),null);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        params.weight = 1;
+        /**初始化多状态视图*/
+        multipleStatusView = new MultipleStatusView(this);
+        multipleStatusView.setLayoutParams(params);
+        /**初始化内容视图*/
+        View layout =  LayoutInflater.from(this).inflate(getContentId(),null);
         layout.setLayoutParams(params);
+        /**初始化头部视图*/
+        headerView = new HeaderView(this);
+        LinearLayout.LayoutParams headParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        headerView.setLayoutParams(headParams);
+        /**添加视图逻辑*/
+        if(isShowHeader()) mContainer.addView(headerView);
+        mContainer.addView(multipleStatusView);
         multipleStatusView.addView(layout);
 
-        if(isShowHeader){
-            mHeaderLayout = (RelativeLayout) findViewById(R.id.header_view);
-            mHeaderLayout.setVisibility(View.VISIBLE);
-            mHeaderLeftTv = (TextView) findViewById(R.id.header_left);
-            mHeaderTitleTv = (TextView) findViewById(R.id.header_title);
-            mHeaderRightTv = (TextView) findViewById(R.id.header_right);
-            View.OnClickListener headerListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int i = view.getId();
-                    if (i == R.id.header_left) {
-                        headerLeftClick(view);
 
-                    } else if (i == R.id.header_title) {
-                        headerTitleClick(view);
-
-                    } else if (i == R.id.header_right) {
-                        headerRightClick(view);
-
-                    }
-                }
-            };
-            mHeaderLeftTv.setOnClickListener(headerListener);
-            mHeaderTitleTv.setOnClickListener(headerListener);
-            mHeaderRightTv.setOnClickListener(headerListener);
-        }
-    }
-    protected void headerLeftClick(View view) {
-        onBackPressed();//（默认是返回，可以重写该方法）
-    }
-
-    protected void headerTitleClick(View view) {
-    }
-    protected void headerRightClick(View view) {
     }
     /**
      * 6.0权限
@@ -130,60 +88,50 @@ public abstract class BaseActivity extends AppCompatActivity{
         MPermissionUtil.onRequestPermissionsResult(requestCode,permissions,grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+    /**
+     * 解决4.4设置状态栏颜色之后，布局内容嵌入状态栏位置问题
+     */
+    private void excuteStatesBar(){
+        ViewGroup mContentView = (ViewGroup) getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+        View mChildView = mContentView.getChildAt(0);
+        if (mChildView != null) {
+            //注意不是设置 ContentView 的 FitsSystemWindows,
+            // 而是设置 ContentView 的第一个子 View ，预留出系统 View 的空间.
+            mChildView.setFitsSystemWindows(true);
+        }
+    }
 
     /**
-     *   设置公共方法
+     * ===================================================  设置公共方法=============================
      */
     public MultipleStatusView getMultipleStatusView(){
         return multipleStatusView;
     }
-
-    public void  setTitle(String title){
-        if(isShowHeader){
-            setHeaderVisibility(View.VISIBLE);
-            mHeaderTitleTv.setText(title);
-        }
+    public HeaderView getHeaderView(){
+            return headerView;
     }
 
-    public void  setTitle(int id){
-        if(isShowHeader){
-            setHeaderVisibility(View.VISIBLE);
-            mHeaderTitleTv.setText(getString(id));
-        }
-    }
+    public void setHeaderNormal(String title, String leftString, String rightString){
+        if(title!=null) getHeaderView().setTitleString(title);
+        if(leftString!=null) getHeaderView().setLeftString(leftString);
+        if(rightString!=null) getHeaderView().setRightString(rightString);
+        getHeaderView().setLeftIcon(R.drawable.back);
+        getHeaderView().setOnHeadClickListener(new HeaderView.OnHeadClickListener() {
+            @Override
+            public void ClickLeft() {
+                clickHeadLeft();
+            }
 
-    public void setLeftIcon(int resId){
-        Drawable drawable= getResources().getDrawable(resId);
-        if(drawable==null) return ;
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        if(isShowHeader) mHeaderLeftTv.setCompoundDrawables(drawable,null,null,null);
+            @Override
+            public void ClickRight() {
+                clickHeadRight();
+            }
+        });
     }
-    public void hideLeftIcon(){
-        if(isShowHeader) mHeaderLeftTv.setVisibility(View.INVISIBLE);
+    protected void clickHeadLeft(){
+        onBackPressed();
     }
-
-    public void setRightText(String text){
-        if(isShowHeader){
-            mHeaderRightTv.setVisibility(View.VISIBLE);
-            mHeaderRightTv.setText(text);
-        }
-    }
-    public void hideRightText(){
-        if(isShowHeader){
-            mHeaderRightTv.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    public void setHeaderVisibility(int visibility) {
-        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) multipleStatusView.getChildAt(0).getLayoutParams();
-        if (visibility == View.GONE) {
-            lp.topMargin = 0;
-            isShowHeader = false;
-        } else {
-            isShowHeader = true;
-        }
-        mHeaderLayout.setVisibility(visibility);
-    }
+    protected void clickHeadRight(){}
 
     /**
      * 显示dialog
@@ -200,7 +148,9 @@ public abstract class BaseActivity extends AppCompatActivity{
      * 隐藏dialog
      */
     public void dismissProgressDialog(){
-        mProgressDialog.dismiss();
+        if(mProgressDialog!=null){
+            mProgressDialog.dismiss();
+        }
     }
 
     /**

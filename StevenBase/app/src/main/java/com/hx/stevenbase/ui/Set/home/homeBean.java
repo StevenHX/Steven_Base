@@ -1,12 +1,16 @@
 package com.hx.stevenbase.ui.Set.home;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Steven on 2018/2/27.
  */
 
-public class homeBean {
+public class homeBean implements Parcelable {
         private int offset;
         private int size;
         private int total;
@@ -15,7 +19,28 @@ public class homeBean {
         private boolean over;
         private List<DatasBean> datas;
 
-        public int getOffset() {
+    protected homeBean(Parcel in) {
+        offset = in.readInt();
+        size = in.readInt();
+        total = in.readInt();
+        pageCount = in.readInt();
+        curPage = in.readInt();
+        over = in.readByte() != 0;
+    }
+
+    public static final Creator<homeBean> CREATOR = new Creator<homeBean>() {
+        @Override
+        public homeBean createFromParcel(Parcel in) {
+            return new homeBean(in);
+        }
+
+        @Override
+        public homeBean[] newArray(int size) {
+            return new homeBean[size];
+        }
+    };
+
+    public int getOffset() {
             return offset;
         }
 
@@ -71,7 +96,22 @@ public class homeBean {
             this.datas = datas;
         }
 
-        public  class DatasBean {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(offset);
+        parcel.writeInt(size);
+        parcel.writeInt(total);
+        parcel.writeInt(pageCount);
+        parcel.writeInt(curPage);
+        parcel.writeByte((byte) (over ? 1 : 0));
+    }
+
+    public  class DatasBean {
             /**
              * id : 1578
              * title : 这些 Drawable 的小技巧，你都了解吗？

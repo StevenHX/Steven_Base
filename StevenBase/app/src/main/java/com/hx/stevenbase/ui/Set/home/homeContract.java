@@ -14,7 +14,7 @@ public interface homeContract {
     interface View extends BaseMvpView {
         void setHomeSuccess(homeBean home,int LoadType);
         void setHomeBanner(List<homeBannerBean> homeBannerBeans);
-        void homeFail(String msg);
+        void homeFail(String msg,int LoadType);
 
     }
     abstract class Presenter extends BaseMvpPresenter<homeContract.View> {

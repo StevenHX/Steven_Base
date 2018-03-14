@@ -1,9 +1,15 @@
 package com.hx.stevenbase.ui.main;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.View;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
@@ -18,7 +24,6 @@ import com.hx.stevenbase.ui.Set.SetActivity;
 import com.meituan.android.walle.WalleChannelReader;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +39,8 @@ public class MainActivity extends BaseActivity {
     FlowTagLayout colorFlowLayout;
     @BindView(R.id.pbView)
     ProgressBarView pbView;
+    @BindView(R.id.head)
+    ImageView head;
 
     private DaoSession daoSession;
 
@@ -43,12 +50,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        setTitle("首页");
-        hideLeftIcon();
-
+        setHeaderNormal("是是是", "返还", null);
         ButterKnife.bind(this);
         String channel = WalleChannelReader.getChannel(this.getApplicationContext());
         ToastUtil.showToast(this, channel);
+
+
         User userone = new User(null, "hx", 25);
         daoSession = App.getDaoSession();
         try {
@@ -56,7 +63,7 @@ public class MainActivity extends BaseActivity {
         } catch (Exception e) {
             ToastUtil.showToast(this, "插入数据失败");
         }
-        ToastUtil.showToast(this,"插入成功");
+        ToastUtil.showToast(this, "插入成功");
 
 //        MPermissionUtil.requestPermissionsResult(this,0,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new MPermissionUtil.OnPermissionListener() {
 //            @Override
@@ -85,6 +92,25 @@ public class MainActivity extends BaseActivity {
 //                pbView.setProgress(56);
 //            }
 //        });
+
+        /**属性动画设置*/
+//        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(head, "translationY",  1000f, 0f);
+//        objectAnimator.setDuration(2000);
+//        objectAnimator.setInterpolator(new BounceInterpolator());
+//        objectAnimator.start();
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1000f,0f);
+        valueAnimator.setDuration(2000);
+        valueAnimator.setInterpolator(new OvershootInterpolator());
+        valueAnimator.setTarget(head);
+        valueAnimator.setRepeatCount(1);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float value = (float) valueAnimator.getAnimatedValue();
+                head.setTranslationY(value);
+            }
+        });
+        valueAnimator.start();
     }
 
     private pageAdapter adapter;
@@ -104,9 +130,9 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.hello)
     public void onViewClicked() {
         launch(MainActivity.this, SetActivity.class);
-        ToastUtil.showCustomToast(MainActivity.this, "2333333");
+//        launch(MainActivity.this, CJActivity.class);
 
-        //                NormalSelectionDialog selectionDialog =  new NormalSelectionDialog.Builder(MainActivity.this)
+//                NormalSelectionDialog selectionDialog =  new NormalSelectionDialog.Builder(MainActivity.this)
 //                        .setTitleText("消息")
 //                        .setlTitleVisible(true)
 //                        .setTitleTextColor(R.color.base_deep)
@@ -119,7 +145,7 @@ public class MainActivity extends BaseActivity {
 //                 selectionDialog.setDataList(data);
 //                 selectionDialog.show();
 
-        //                new MDAlertDialog.Builder(MainActivity.this)
+//                new MDAlertDialog.Builder(MainActivity.this)
 //                        .setContentText("加载中...")
 //                        .setContentTextSize(30)
 //                        .setContentTextColor(R.color.base_deep)
