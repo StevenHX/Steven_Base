@@ -1,13 +1,25 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.hx.stevenbase.ui.Set.me.MeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--<com.hx.steven.component.CircularViewPager.CircularViewpager-->
+        <!--android:id="@+id/vp_circle"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="180dp">-->
+    <!--</com.hx.steven.component.CircularViewPager.CircularViewpager>-->
+    <!--<com.hx.steven.component.CircularViewPager.ViewPagerIndicator-->
+        <!--android:background="@color/colorAccent"-->
+        <!--android:id="@+id/ll_dot"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="32dp"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_alignBottom="@+id/vp_circle">-->
+    <!--</com.hx.steven.component.CircularViewPager.ViewPagerIndicator>-->
+    <com.hx.steven.component.BannerView.BannerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+        android:layout_height="182dp"
+        android:id="@+id/bannerView">
+    </com.hx.steven.component.BannerView.BannerView>
+</RelativeLayout>
