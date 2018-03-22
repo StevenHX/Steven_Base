@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fl_beauty_login"
+        android:layout_width="270dp"
+        android:layout_height="36dp"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/sbbtn_selector"
+            android:gravity="center"
+            android:text="登录"
+            android:textColor="@android:color/white"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/iv_beauty_login_loading"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:src="@drawable/sbbtn_loading"
+            android:visibility="gone" />
+    </FrameLayout>

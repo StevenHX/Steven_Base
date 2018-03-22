@@ -16,7 +16,6 @@ import com.hx.steven.util.ToastUtil;
 import com.hx.stevenbase.R;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
-import com.orhanobut.logger.Logger;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -24,8 +23,6 @@ import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -116,6 +113,8 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
                     refreshLayoutQuestion.finishLoadmore();
                 }
                 break;
+                default:
+                    break;
         }
 
     }

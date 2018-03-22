@@ -1,8 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hx.stevenbase.ui.Set.me.MeFragment">
+    tools:context="com.hx.stevenbase.ui.Set.me.MeFragment"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
 
     <!--<com.hx.steven.component.CircularViewPager.CircularViewpager-->
         <!--android:id="@+id/vp_circle"-->
@@ -17,9 +19,10 @@
         <!--android:gravity="center"-->
         <!--android:layout_alignBottom="@+id/vp_circle">-->
     <!--</com.hx.steven.component.CircularViewPager.ViewPagerIndicator>-->
-    <com.hx.steven.component.BannerView.BannerView
-        android:layout_width="match_parent"
-        android:layout_height="182dp"
-        android:id="@+id/bannerView">
-    </com.hx.steven.component.BannerView.BannerView>
-</RelativeLayout>
+
+    <com.hx.steven.component.SubmitButton
+        android:layout_marginTop="50dp"
+        android:layout_width="270dp"
+        android:layout_height="39dp">
+    </com.hx.steven.component.SubmitButton>
+</LinearLayout>

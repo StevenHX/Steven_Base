@@ -4,13 +4,9 @@ package com.hx.stevenbase.ui.Set.me;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v4.app.Fragment;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.hx.steven.component.BannerView.BannerView;
 import com.hx.steven.fragment.BaseFragment;
 import com.hx.stevenbase.R;
 
@@ -18,12 +14,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * A simple {@link Fragment} subclass.
+ * @author huangxiao
+ * @date 2018.3.22
  */
 public class MeFragment extends BaseFragment {
 
@@ -32,8 +28,6 @@ public class MeFragment extends BaseFragment {
 //    @BindView(R.id.ll_dot)
 //    ViewPagerIndicator mLlDot;
     Unbinder unbinder;
-    @BindView(R.id.bannerView)
-    BannerView mBannerView;
 
     private List<View> bannerViews = new ArrayList<View>();
 
@@ -44,7 +38,6 @@ public class MeFragment extends BaseFragment {
     protected void initView(View view) {
         unbinder = ButterKnife.bind(this, view);
 //        initData();
-        iniData();
     }
 
     @Override
@@ -81,36 +74,6 @@ public class MeFragment extends BaseFragment {
 //        mLlDot.setViewPager(mVpCircle).setCount(imgs.length).create();
 
     }
-
-
-    private void iniData(){
-        int[] img_src = {R.drawable.a, R.drawable.b, R.drawable.c};
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT);
-        for (int i = 0; i < img_src.length+2; i++) {
-            ImageView imageView = new ImageView(context);
-            imageView.setLayoutParams(lp);
-//            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            if (i == 0){
-                imageView.setImageBitmap(readBitmap(context, img_src[img_src.length-1]));
-            } else if (i == img_src.length+1) {
-                imageView.setImageBitmap(readBitmap(context, img_src[0]));
-            } else {
-                imageView.setImageBitmap(readBitmap(context, img_src[i - 1]));
-            }
-            bannerViews.add(imageView);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-        }
-        mBannerView.setView(bannerViews/*,new int[]{R.drawable.ic_indicator_off, R.drawable.ic_indicator_on}*/);
-        mBannerView.startAutoPlay(4000);
-    }
-
     /**
      * 以最小内存读取本地资源图片
      * @param context
