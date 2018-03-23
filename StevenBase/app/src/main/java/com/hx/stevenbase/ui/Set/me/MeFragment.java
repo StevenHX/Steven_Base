@@ -4,12 +4,15 @@ package com.hx.stevenbase.ui.Set.me;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.hx.steven.component.BannerView.BannerView;
+import com.hx.steven.component.SubmitButton;
 import com.hx.steven.fragment.BaseFragment;
 import com.hx.stevenbase.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -18,22 +21,28 @@ import butterknife.Unbinder;
  * @date 2018.3.22
  */
 public class MeFragment extends BaseFragment {
-
-//    @BindView(R.id.vp_circle)
-//    CircularViewpager mVpCircle;
-//    @BindView(R.id.ll_dot)
-//    ViewPagerIndicator mLlDot;
+    /**
+     * butterKnife解绑对象
+     */
     Unbinder unbinder;
+    /**
+     * banner控件
+     */
+    @BindView(R.id.bannerView_me)
+    BannerView mBannerViewMe;
+    /**
+     * 登录按钮
+     */
+    @BindView(R.id.sbBtn_login)
+    SubmitButton mSbBtnLogin;
 
-    private List<View> bannerViews = new ArrayList<View>();
-
-    private ArrayList<ImageView> imageViews;
-    private int pirorDot;
+    private List<View> mImageViews = new ArrayList<>();
+    private int[] imgs = new int[]{R.drawable.a,R.drawable.b,R.drawable.c};
 
     @Override
     protected void initView(View view) {
         unbinder = ButterKnife.bind(this, view);
-//        initData();
+        initData();
     }
 
     @Override
@@ -47,29 +56,18 @@ public class MeFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-
+    /**
+     * 初始化数据
+     */
     private void initData() {
-//        imageViews = new ArrayList<>();
-//        int[] imgs = new int[]{R.drawable.a, R.drawable.b, R.drawable.c};
-//        for (int img : imgs) {
-//            //新建ImageView,并添加到集合中
-//            ImageView imageView = new ImageView(context);
-//            imageView.setImageResource(img);
-//            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//            imageViews.add(imageView);
-//        }
-//        CircularPagerAdaper adapter = new CircularPagerAdaper(imageViews);
-//        mVpCircle.setAdapter(adapter);
-//        //开始自动循环
-//        mVpCircle.start();
-//        mVpCircle.setOnPagerClickListener(imageViews.size(), new CircularViewpager.OnPagerClickListener() {
-//            @Override
-//            public void onPagerClick(int pagerPosition) {
-//            }
-//        });
-//        mLlDot.setViewPager(mVpCircle).setCount(imgs.length).create();
-
+        for (int img : imgs) {
+            //新建ImageView,并添加到集合中
+            ImageView imageView = new ImageView(context);
+            imageView.setImageResource(img);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            mImageViews.add(imageView);
+        }
+        mBannerViewMe.setView(mImageViews);
+        mBannerViewMe.startAutoPlay(3000);
     }
-
-
 }

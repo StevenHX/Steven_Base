@@ -68,7 +68,7 @@ public class SubmitButton extends FrameLayout {
         mButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSBBtnClickListerner.clickSubmitButton(v);
+                if(mSBBtnClickListerner!=null) mSBBtnClickListerner.clickSubmitButton(v);
             }
         });
     }

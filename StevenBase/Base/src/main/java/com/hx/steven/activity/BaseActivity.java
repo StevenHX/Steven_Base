@@ -3,14 +3,12 @@ package com.hx.steven.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +17,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hx.steven.BroadCastReceiver.NetworkChangedReceiver;
-import com.hx.steven.Mvp.BaseMvpView;
 import com.hx.steven.R;
 import com.hx.steven.component.MProgressDialog;
 import com.hx.steven.component.MultipleStatusView;
 import com.hx.steven.util.MPermissionUtil;
-import com.hx.steven.util.NetworkUtil;
 
 public abstract class BaseActivity extends AppCompatActivity{
 
@@ -200,6 +196,7 @@ public abstract class BaseActivity extends AppCompatActivity{
      * 隐藏dialog
      */
     public void dismissProgressDialog(){
+        if(mProgressDialog!=null)
         mProgressDialog.dismiss();
     }
 

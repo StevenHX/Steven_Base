@@ -14,13 +14,17 @@ import android.widget.RelativeLayout;
 
 import com.hx.steven.R;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Xiejq on 2018/3/21.
+ * 结合view pager和indicator的banner控件
+ *@author huangxiao
+ *@date 2018/3/21
  */
 
 public class BannerView extends RelativeLayout {
@@ -36,14 +40,17 @@ public class BannerView extends RelativeLayout {
     //指示器图片资源
     private int[] indicatorImgRes = {R.drawable.dot_blue_bg, R.drawable.dot_white_bg};
 
-    private Timer mTimer;
-    private Handler mHandle = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            //实现循环自动播放的效果
-            vp_banner.setCurrentItem(mPosition+1);
-        }
-    };
+    //定时任务
+    private ScheduledExecutorService scheduledExecutorService;
+    //弱引用view pager
+    private WeakReference<ViewPager> mWeakVP;
+    //定时任务线程
+    private SlideShowTask mSlideShowTask;
+    //handle
+    private MyHandle mHandle;
+    //当前item
+    private int currentItem;
+
 
     public BannerView(Context context) {
         super(context);
@@ -141,7 +148,7 @@ public class BannerView extends RelativeLayout {
         if (indicatorRes!=null && indicatorRes.length>=2){
             indicatorImgRes = indicatorRes;
         }
-        for (int i = 0; i < vp_views.size()-2; i++) {
+        for (int i = 0; i < vp_views.size(); i++) {
             ImageView imageView = new ImageView(mContext);
             if (i == 0){
                 imageView.setBackgroundResource(indicatorImgRes[0]);
@@ -180,14 +187,14 @@ public class BannerView extends RelativeLayout {
     public void startAutoPlay(long period){
         //banner的vp_views数量大于1时，才允许自动轮播
         if (vp_views.size()>1) {
-            mTimer = new Timer();
-            TimerTask timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    mHandle.sendEmptyMessage(1);
+            if (scheduledExecutorService == null) {
+                scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+                if (mSlideShowTask == null) {
+                    mSlideShowTask = new SlideShowTask(this);
+                    mHandle = new MyHandle(this);
                 }
-            };
-            mTimer.schedule(timerTask, 2000, period);
+                scheduledExecutorService.scheduleAtFixedRate(mSlideShowTask, 4, 4, TimeUnit.SECONDS);
+            }
         }
     }
 
@@ -195,8 +202,53 @@ public class BannerView extends RelativeLayout {
      * 关闭自动轮播
      */
     public void stopAutoPlay() {
-        if (mTimer != null) {
-            mTimer.cancel();
+        if (scheduledExecutorService != null){
+            scheduledExecutorService.shutdown();
+            mHandle = null;
+        }
+    }
+
+    /**
+     * 轮播任务线程
+     */
+    private static class SlideShowTask extends Thread {
+
+        private final WeakReference<BannerView> mAutoShowViewWeakReference;
+
+        private SlideShowTask(BannerView bannerView) {
+            mAutoShowViewWeakReference = new WeakReference<>(bannerView);
+        }
+
+        @Override
+        public void run() {
+            if (mAutoShowViewWeakReference.get() != null) {
+                BannerView bannerView = mAutoShowViewWeakReference.get();
+                synchronized (bannerView.vp_banner) {
+                    bannerView.currentItem = (bannerView.currentItem + 1) % bannerView.vp_views.size();
+                    bannerView.mHandle.obtainMessage().sendToTarget();
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Handle
+     */
+    private static class MyHandle extends Handler{
+        private WeakReference<BannerView> mAutoShowViewWeakReference;
+
+        private MyHandle(BannerView bannerView) {
+            mAutoShowViewWeakReference = new WeakReference<>(bannerView);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            BannerView bannerView = mAutoShowViewWeakReference.get();
+            if (bannerView.vp_banner != null) {
+                bannerView.vp_banner.setCurrentItem(bannerView.currentItem);
+            }
         }
     }
 }
