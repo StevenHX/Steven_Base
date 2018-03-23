@@ -10,11 +10,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.hx.steven.R;
 import com.hx.steven.activity.BaseActivity;
-import com.hx.steven.component.MProgressDialog;
 import com.hx.steven.component.MultipleStatusView;
 import com.hx.steven.util.MPermissionUtil;
 
@@ -38,6 +36,8 @@ public abstract class BaseFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragmemt_base,container,false);
         multipleStatusView = view.findViewById(R.id.base_frag_multipleView);
         View layout = inflater.inflate(getContentId(),null);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layout.setLayoutParams(params);
         multipleStatusView.addView(layout);
         initView(view);
         return view;

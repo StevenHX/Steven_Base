@@ -4,8 +4,13 @@
     android:layout_height="match_parent"
     tools:context="com.hx.stevenbase.ui.Set.me.MeFragment"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center">
 
+    <TextView
+        android:gravity="center"
+        android:text="ewwewewe"
+        android:layout_width="@dimen/x540"
+        android:layout_height="@dimen/x78"/>
     <!--<com.hx.steven.component.CircularViewPager.CircularViewpager-->
         <!--android:id="@+id/vp_circle"-->
         <!--android:layout_width="match_parent"-->
@@ -21,8 +26,7 @@
     <!--</com.hx.steven.component.CircularViewPager.ViewPagerIndicator>-->
 
     <com.hx.steven.component.SubmitButton
-        android:layout_marginTop="50dp"
-        android:layout_width="270dp"
-        android:layout_height="39dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     </com.hx.steven.component.SubmitButton>
 </LinearLayout>

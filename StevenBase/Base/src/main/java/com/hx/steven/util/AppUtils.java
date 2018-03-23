@@ -6,12 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.view.inputmethod.InputMethodManager;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
@@ -23,6 +24,21 @@ import java.text.DecimalFormat;
  * 个人博客：http://wuxiaolong.me/
  */
 public class AppUtils {
+
+    /**
+     * 以最小内存读取本地资源图片
+     * @param context
+     * @param bitmapResId
+     * @return
+     */
+    public static Bitmap readBitmap(Context context, int bitmapResId){
+        BitmapFactory.Options opt = new BitmapFactory.Options();
+        opt.inPreferredConfig = Bitmap.Config.RGB_565;
+        opt.inPurgeable = true;
+        opt.inInputShareable = true;
+        InputStream is = context.getResources().openRawResource(bitmapResId);
+        return BitmapFactory.decodeStream(is, null, opt);
+    }
     /**
      * 关闭键盘
      *

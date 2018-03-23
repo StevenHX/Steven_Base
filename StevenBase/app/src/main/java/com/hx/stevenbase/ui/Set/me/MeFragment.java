@@ -1,16 +1,12 @@
 package com.hx.stevenbase.ui.Set.me;
 
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.hx.steven.fragment.BaseFragment;
 import com.hx.stevenbase.R;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,19 +70,6 @@ public class MeFragment extends BaseFragment {
 //        mLlDot.setViewPager(mVpCircle).setCount(imgs.length).create();
 
     }
-    /**
-     * 以最小内存读取本地资源图片
-     * @param context
-     * @param bitmapResId
-     * @return
-     */
-    public static Bitmap readBitmap(Context context, int bitmapResId){
-        BitmapFactory.Options opt = new BitmapFactory.Options();
-        opt.inPreferredConfig = Bitmap.Config.RGB_565;
-        opt.inPurgeable = true;
-        opt.inInputShareable = true;
-        InputStream is = context.getResources().openRawResource(bitmapResId);
-        return BitmapFactory.decodeStream(is, null, opt);
-    }
+
 
 }
