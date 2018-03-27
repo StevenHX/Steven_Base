@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ import com.hx.steven.component.MProgressDialog;
 import com.hx.steven.component.MultipleStatusView;
 import com.hx.steven.util.MPermissionUtil;
 
-public abstract class BaseActivity extends AppCompatActivity{
+public abstract class BaseActivity extends SlidingActivity{
 
     private  static  final int TOP_HEIGHT = 48;
     private boolean isShowHeader = true;//是否显示导航栏(默认显示)

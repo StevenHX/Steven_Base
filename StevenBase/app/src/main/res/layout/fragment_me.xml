@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     tools:context="com.hx.stevenbase.ui.Set.me.MeFragment"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:background="@color/white">
 
     <com.hx.steven.component.BannerView.BannerView
         android:id="@+id/bannerView_me"

@@ -28,28 +28,26 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class BannerView extends RelativeLayout {
-    private int mPosition = 1;
     private Context mContext;
     public ViewPager vp_banner;
     private LinearLayout ll_indicator;
-
     //Banner展示的view
     private List<View> vp_views = new ArrayList<View>();
-    private List<ImageView> dot_imgs = new ArrayList<ImageView>();
 
+    private List<ImageView> dot_imgs = new ArrayList<ImageView>();
     //指示器图片资源
     private int[] indicatorImgRes = {R.drawable.dot_blue_bg, R.drawable.dot_white_bg};
 
     //定时任务
     private ScheduledExecutorService scheduledExecutorService;
-    //弱引用view pager
-    private WeakReference<ViewPager> mWeakVP;
+
     //定时任务线程
     private SlideShowTask mSlideShowTask;
     //handle
     private MyHandle mHandle;
     //当前item
-    private int currentItem;
+//    private int currentItem;
+    private int mPosition = 1;
 
 
     public BannerView(Context context) {
@@ -224,7 +222,7 @@ public class BannerView extends RelativeLayout {
             if (mAutoShowViewWeakReference.get() != null) {
                 BannerView bannerView = mAutoShowViewWeakReference.get();
                 synchronized (bannerView.vp_banner) {
-                    bannerView.currentItem = (bannerView.currentItem + 1) % bannerView.vp_views.size();
+                    bannerView.mPosition = (bannerView.mPosition + 1) % bannerView.vp_views.size();
                     bannerView.mHandle.obtainMessage().sendToTarget();
                 }
             }
@@ -247,7 +245,7 @@ public class BannerView extends RelativeLayout {
             super.handleMessage(msg);
             BannerView bannerView = mAutoShowViewWeakReference.get();
             if (bannerView.vp_banner != null) {
-                bannerView.vp_banner.setCurrentItem(bannerView.currentItem);
+                bannerView.vp_banner.setCurrentItem(bannerView.mPosition);
             }
         }
     }

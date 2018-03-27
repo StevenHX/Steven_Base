@@ -2,7 +2,6 @@ package com.hx.stevenbase.ui.main;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.widget.Button;
 
 import com.hx.steven.activity.BaseActivity;
@@ -18,7 +17,6 @@ import com.hx.stevenbase.ui.Set.SetActivity;
 import com.meituan.android.walle.WalleChannelReader;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +39,9 @@ public class MainActivity extends BaseActivity {
 
     private ArrayList<Fragment> mFragments = new ArrayList<Fragment>();
 
+    {
+        setEnableSliding(false);
+    }
     @Override
     protected void initView() {
         setTitle("首页");
@@ -103,8 +104,9 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.hello)
     public void onViewClicked() {
+//        launch(MainActivity.this, LoginActivity.class);
         launch(MainActivity.this, SetActivity.class);
-        ToastUtil.showCustomToast(MainActivity.this, "2333333");
+//        ToastUtil.showCustomToast(MainActivity.this, "2333333");
 
         //                NormalSelectionDialog selectionDialog =  new NormalSelectionDialog.Builder(MainActivity.this)
 //                        .setTitleText("消息")

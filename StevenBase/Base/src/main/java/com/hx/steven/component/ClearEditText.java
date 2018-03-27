@@ -44,7 +44,7 @@ public class ClearEditText extends AppCompatEditText implements
 
     public ClearEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        setBackgroundColor(0xffffffff);
+//        setBackgroundColor(0xffffffff);
         initLeftDrawable(context, attrs);
         initClearDrawable();
     }

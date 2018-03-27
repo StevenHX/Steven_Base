@@ -16,17 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.main.MainActivity">
-
-        </activity>
-        <activity android:name=".ui.Login.LoginActivity" />
-        <activity android:name=".ui.Set.SetActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".annotation.InjectActivity"></activity>
+        <activity android:name=".ui.Login.LoginActivity"
+            android:theme="@style/AppTheme.Slide"/>
+
+        <activity android:name=".ui.Set.SetActivity"
+            android:theme="@style/AppTheme.Slide"/>
+
+        <activity android:name=".annotation.InjectActivity"/>
     </application>
 
 </manifest>
