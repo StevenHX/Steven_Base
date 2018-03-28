@@ -43,7 +43,7 @@ public abstract class BaseActivity extends SlidingActivity{
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);//设置屏幕保持竖直
         isShowHeader = isShowHeader();
         initContainer();
-        setStatusColor(0x20000000);
+//        setStatusColor(0x20000000);
         initView();
     }
 

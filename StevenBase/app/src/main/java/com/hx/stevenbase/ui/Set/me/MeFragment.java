@@ -37,12 +37,18 @@ public class MeFragment extends BaseFragment {
     SubmitButton mSbBtnLogin;
 
     private List<View> mImageViews = new ArrayList<>();
-    private int[] imgs = new int[]{R.drawable.a,R.drawable.b,R.drawable.c};
+    private int[] imgs = new int[]{R.drawable.a,R.drawable.b,R.drawable.c,R.drawable.c,R.drawable.c};
 
     @Override
     protected void initView(View view) {
         unbinder = ButterKnife.bind(this, view);
         initData();
+        mSbBtnLogin.setOnSBBtnClickListener(new SubmitButton.SBBtnClickListerner() {
+            @Override
+            public void clickSubmitButton(View view) {
+                mBannerViewMe.stopAutoPlay();
+            }
+        });
     }
 
     @Override
@@ -60,6 +66,7 @@ public class MeFragment extends BaseFragment {
      * 初始化数据
      */
     private void initData() {
+        mImageViews.clear();
         for (int img : imgs) {
             //新建ImageView,并添加到集合中
             ImageView imageView = new ImageView(context);
@@ -67,7 +74,7 @@ public class MeFragment extends BaseFragment {
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             mImageViews.add(imageView);
         }
-        mBannerViewMe.setView(mImageViews);
-        mBannerViewMe.startAutoPlay(3000);
+        mBannerViewMe.setView(mImageViews)
+                .startAutoPlay(3000);
     }
 }

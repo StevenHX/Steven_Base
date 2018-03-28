@@ -133,12 +133,12 @@ public class SubmitButton extends FrameLayout {
         }
     }
 
-    interface SBBtnClickListerner{
+    public interface SBBtnClickListerner{
         void clickSubmitButton(View view);
     }
 
     private SBBtnClickListerner mSBBtnClickListerner;
-    private void setOnSBBtnClickListener(SBBtnClickListerner mSBBtnClickListener){
+    public void setOnSBBtnClickListener(SBBtnClickListerner mSBBtnClickListener){
         this.mSBBtnClickListerner = mSBBtnClickListener;
     }
 

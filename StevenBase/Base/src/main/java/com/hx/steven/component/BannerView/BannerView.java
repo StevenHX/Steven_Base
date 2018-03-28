@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -46,8 +45,7 @@ public class BannerView extends RelativeLayout {
     //handle
     private MyHandle mHandle;
     //当前item
-//    private int currentItem;
-    private int mPosition = 1;
+    private int mPosition = 0;
 
 
     public BannerView(Context context) {
@@ -87,8 +85,8 @@ public class BannerView extends RelativeLayout {
      * 设置banner展示的view，指示器图片为默认图片
      * @param views banner展示的view
      */
-    public void setView(List<View> views){
-        setView(views, null);
+    public BannerView setView(List<View> views){
+        return setView(views, null);
     }
 
     /**
@@ -96,14 +94,13 @@ public class BannerView extends RelativeLayout {
      * @param views banner展示的view
      * @param indicatorRes 指示器图片
      */
-    public void setView(List<View> views, int[] indicatorRes){
+    public BannerView setView(List<View> views, int[] indicatorRes){
         if (views != null){
             vp_views = views;
         }
-
         vp_banner.setAdapter(new ViewPagerAdapter(vp_views));
         vp_banner.setOffscreenPageLimit(1);
-        vp_banner.setCurrentItem(1);
+        vp_banner.setCurrentItem(0);
         vp_banner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -113,32 +110,34 @@ public class BannerView extends RelativeLayout {
 
             @Override
             public void onPageSelected(int position) {
-                //指示器跳转
                 mPosition = position;
                 int pageIndex = mPosition;
                 if(mPosition == 0){
-                    pageIndex = dot_imgs.size();
-                }else if(mPosition == dot_imgs.size() + 1){
-                    pageIndex = 1;
+//                    pageIndex = dot_imgs.size();
+                }
+                if(mPosition == dot_imgs.size()+1){
+//                    pageIndex = 1;
                 }
                 setIndicator(pageIndex);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                //ViewPager跳转
-                int pageIndex = mPosition;
-                if(mPosition == 0){
-                    pageIndex = dot_imgs.size();
-                }else if(mPosition == dot_imgs.size() + 1){
-                    pageIndex = 1;
+                switch (state){
+                    case ViewPager.SCROLL_STATE_IDLE:
+                        int pageIndex = mPosition;
+                        if(mPosition == 0){
+//                            pageIndex = dot_imgs.size()-1;
+                        }
+                         if(mPosition == dot_imgs.size()-1){//结束位置
+//                           pageIndex =0;
+                        }
+                        if (pageIndex != mPosition) {
+                            vp_banner.setCurrentItem(pageIndex, true);
+                            return;
+                        }
+                        break;
                 }
-                if (pageIndex != mPosition) {
-                    //无滑动动画，直接跳转
-                    vp_banner.setCurrentItem(pageIndex, false);
-                    return;
-                }
-
             }
         });
 
@@ -146,6 +145,7 @@ public class BannerView extends RelativeLayout {
         if (indicatorRes!=null && indicatorRes.length>=2){
             indicatorImgRes = indicatorRes;
         }
+        ll_indicator.removeAllViews();
         for (int i = 0; i < vp_views.size(); i++) {
             ImageView imageView = new ImageView(mContext);
             if (i == 0){
@@ -154,14 +154,13 @@ public class BannerView extends RelativeLayout {
                 imageView.setBackgroundResource(indicatorImgRes[1]);
             }
             dot_imgs.add(imageView);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-            int margin_h = (int)(0.016 * mContext.getResources().getDisplayMetrics().widthPixels);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(20,20);
+            int margin_h = (int)(0.008 * mContext.getResources().getDisplayMetrics().widthPixels);
             int margin_v = (int)(0.02 * mContext.getResources().getDisplayMetrics().widthPixels);
             lp.setMargins(margin_h, margin_v, margin_h, margin_v);
             ll_indicator.addView(imageView, lp);
         }
+        return this;
     }
 
     /**
@@ -170,7 +169,7 @@ public class BannerView extends RelativeLayout {
      */
     private void setIndicator(int position){
         for (int i = 0; i < dot_imgs.size(); i++) {
-            if (position == i+1){
+            if (position == i){
                 dot_imgs.get(i).setBackgroundResource(indicatorImgRes[0]);
             } else {
                 dot_imgs.get(i).setBackgroundResource(indicatorImgRes[1]);
@@ -222,7 +221,7 @@ public class BannerView extends RelativeLayout {
             if (mAutoShowViewWeakReference.get() != null) {
                 BannerView bannerView = mAutoShowViewWeakReference.get();
                 synchronized (bannerView.vp_banner) {
-                    bannerView.mPosition = (bannerView.mPosition + 1) % bannerView.vp_views.size();
+                    bannerView.mPosition = (bannerView.mPosition +1) % bannerView.vp_views.size();
                     bannerView.mHandle.obtainMessage().sendToTarget();
                 }
             }
@@ -245,7 +244,7 @@ public class BannerView extends RelativeLayout {
             super.handleMessage(msg);
             BannerView bannerView = mAutoShowViewWeakReference.get();
             if (bannerView.vp_banner != null) {
-                bannerView.vp_banner.setCurrentItem(bannerView.mPosition);
+                bannerView.vp_banner.setCurrentItem(bannerView.mPosition,true);
             }
         }
     }

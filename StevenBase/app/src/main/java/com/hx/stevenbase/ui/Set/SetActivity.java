@@ -27,12 +27,14 @@ public class SetActivity extends BaseActivity implements BottomBarLayout.OnItemS
     @Override
     protected void initView() {
         setTitle("设置");
+        hideLeftIcon();
         ButterKnife.bind(this);
       mFragments.add(new aboutFragment());
       mFragments.add(new homeFragment());
       mFragments.add(new talkFragment());
       mFragments.add(new MeFragment());
       setViewpager.setAdapter(new SetPageAdapter(getSupportFragmentManager(),mFragments));
+//      setViewpager.setOffscreenPageLimit(3);
      bottomBarLayout.setViewPager(setViewpager);
      bottomBarLayout.setOnItemSelectedListener(this);
      bottomBarLayout.setUnread(1,99);
