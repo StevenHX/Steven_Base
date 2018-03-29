@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +23,7 @@ import com.hx.steven.component.MProgressDialog;
 import com.hx.steven.component.MultipleStatusView;
 import com.hx.steven.util.MPermissionUtil;
 
-public abstract class BaseActivity extends AppCompatActivity{
+public abstract class BaseActivity extends SlidingActivity{
 
     private  static  final int TOP_HEIGHT = 48;
     private ViewGroup mContainer;//视图容器
@@ -36,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity{
         initContainer();
         setInside();
         excuteStatesBar();
+//        setStatusColor(0x20000000);
         initView();
     }
 

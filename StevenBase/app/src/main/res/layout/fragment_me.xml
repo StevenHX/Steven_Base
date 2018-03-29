@@ -1,13 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hx.stevenbase.ui.Set.me.MeFragment">
+    tools:context="com.hx.stevenbase.ui.Set.me.MeFragment"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/white">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.hx.steven.component.BannerView.BannerView
+        android:id="@+id/bannerView_me"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+        android:layout_height="@dimen/x350">
+    </com.hx.steven.component.BannerView.BannerView>
+    <com.hx.steven.component.SubmitButton
+        android:id="@+id/sbBtn_login"
+        android:layout_marginTop="@dimen/x100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </com.hx.steven.component.SubmitButton>
+</LinearLayout>

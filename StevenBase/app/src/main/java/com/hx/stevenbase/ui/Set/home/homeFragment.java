@@ -16,7 +16,6 @@ import com.hx.steven.util.ToastUtil;
 import com.hx.stevenbase.R;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
-import com.orhanobut.logger.Logger;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -24,8 +23,6 @@ import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,11 +50,13 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
         /**设置RecyclerView adapter*/
         recyclerQuestion.setLayoutManager(new LinearLayoutManager(context));
         adapter = new homeAdapter(R.layout.home_item,null);
-        adapter.setEnableLoadMore(false);
+        adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         recyclerQuestion.setAdapter(adapter);
         /**设置bannerView*/
         View   mHomeBannerHeadView = LayoutInflater.from(context).inflate(R.layout.home_banner_head, null);
         mBannerAds =  mHomeBannerHeadView.findViewById(R.id.banner_ads);
+        mBannerAds.setIndicatorGravity(BannerConfig.CENTER);
+        mBannerAds.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         adapter.addHeaderView(mHomeBannerHeadView);
 
         /**设置事件监听*/
@@ -75,6 +74,14 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
                 mPresenter.loadMore();
+            }
+        });
+        /**设置状态视图，错误时点击重试*/
+        getMultipleStatusView().setOnRetryClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLoding("加载中");
+                mPresenter.reFresh();
             }
         });
     }
@@ -117,6 +124,8 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
                     refreshLayoutQuestion.finishLoadmore();
                 }
                 break;
+                default:
+                    break;
         }
 
     }
@@ -124,14 +133,10 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
     @Override
     public void setHomeBanner(List<homeBannerBean> homeBannerBeans) {
         List<String> images = new ArrayList();
-        List<String> titles = new ArrayList();
         for (homeBannerBean banner : homeBannerBeans) {
             images.add(banner.getImagePath());
-            titles.add(banner.getTitle());
         }
         mBannerAds.setImages(images)
-                .setBannerTitles(titles)
-                .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
                 .setImageLoader(new ImageLoader() {
                     @Override
                     public void displayImage(Context context, Object path, ImageView imageView) {

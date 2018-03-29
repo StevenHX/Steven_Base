@@ -48,6 +48,9 @@ public class MainActivity extends BaseActivity {
 
     private ArrayList<Fragment> mFragments = new ArrayList<Fragment>();
 
+    {
+        setEnableSliding(false);
+    }
     @Override
     protected void initView() {
         setHeaderNormal("是是是", "返还", null);
@@ -129,8 +132,9 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.hello)
     public void onViewClicked() {
+//        launch(MainActivity.this, LoginActivity.class);
         launch(MainActivity.this, SetActivity.class);
-//        launch(MainActivity.this, CJActivity.class);
+//        ToastUtil.showCustomToast(MainActivity.this, "2333333");
 
 //                NormalSelectionDialog selectionDialog =  new NormalSelectionDialog.Builder(MainActivity.this)
 //                        .setTitleText("消息")

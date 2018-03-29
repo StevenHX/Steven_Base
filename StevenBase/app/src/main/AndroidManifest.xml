@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hx.stevenbase">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
 
     <application
         android:name=".app.App"
@@ -22,11 +22,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.Login.LoginActivity" />
-        <activity android:name=".ui.Set.SetActivity"></activity>
-        <activity android:name=".annotation.InjectActivity" />
-        <activity android:name=".ui.Splash.SplashActivity" />
-        <activity android:name=".ui.main.CJActivity"></activity>
+        <activity android:name=".ui.Login.LoginActivity"
+            android:theme="@style/AppTheme.Slide"/>
+
+        <activity android:name=".ui.Set.SetActivity"
+            android:theme="@style/AppTheme.Slide"/>
+
+        <activity android:name=".annotation.InjectActivity"/>
     </application>
 
 </manifest>
