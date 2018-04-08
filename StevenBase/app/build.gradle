@@ -71,4 +71,6 @@ dependencies {
     compile 'org.greenrobot:greendao-generator:3.0.0'
 
     compile 'com.meituan.android.walle:library:1.1.6'
+
+    compile 'com.facebook.stetho:stetho:1.5.0'
 }

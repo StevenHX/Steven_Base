@@ -1,7 +1,6 @@
 package com.hx.stevenbase.app;
 
-import android.content.Context;
-
+import com.facebook.stetho.Stetho;
 import com.hx.steven.app.BaseApplication;
 import com.hx.stevenbase.gen.DaoMaster;
 import com.hx.stevenbase.gen.DaoSession;
@@ -18,6 +17,7 @@ public class App extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         initDataBase(getAppContext());//配置数据库
+        Stetho.initializeWithDefaults(this);//初始化Stetho调试工具
     }
 
     /**

@@ -2,6 +2,7 @@ package com.hx.stevenbase.ui.main;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.Button;
 
 import com.hx.steven.activity.BaseActivity;
@@ -13,7 +14,7 @@ import com.hx.stevenbase.Bean.User;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.app.App;
 import com.hx.stevenbase.gen.DaoSession;
-import com.hx.stevenbase.ui.Set.SetActivity;
+import com.hx.stevenbase.ui.Login.LoginActivity;
 import com.meituan.android.walle.WalleChannelReader;
 
 import java.util.ArrayList;
@@ -46,10 +47,11 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
         setTitle("首页");
         hideLeftIcon();
-
         ButterKnife.bind(this);
+        /**瓦力多渠道打包*/
         String channel = WalleChannelReader.getChannel(this.getApplicationContext());
         ToastUtil.showToast(this, channel);
+        /**greenDao数据库操作*/
         User userone = new User(null, "hx", 25);
         daoSession = App.getDaoSession();
         try {
@@ -70,22 +72,22 @@ public class MainActivity extends BaseActivity {
 //
 //            }
 //        });
-
+        /**viewPager变换操作*/
         viewPager = (ViewPager) findViewById(R.id.id_viewpager);
         viewPager.setOffscreenPageLimit(3);
         adapter = new pageAdapter(this, images);
         viewPager.setPageTransformer(false, new ScaleInTransformer());
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);
-
-//        pbView.setMax(100);
-//        pbView.setProgress(43);
-//        pbView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                pbView.setProgress(56);
-//            }
-//        });
+        /**自定义progressView*/
+        pbView.setMax(100);
+        pbView.setProgress(43);
+        pbView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pbView.setProgress(88);
+            }
+        });
     }
 
     private pageAdapter adapter;
@@ -104,8 +106,8 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.hello)
     public void onViewClicked() {
-//        launch(MainActivity.this, LoginActivity.class);
-        launch(MainActivity.this, SetActivity.class);
+        launch(MainActivity.this, LoginActivity.class);
+//        launch(MainActivity.this, SetActivity.class);
 //        ToastUtil.showCustomToast(MainActivity.this, "2333333");
 
         //                NormalSelectionDialog selectionDialog =  new NormalSelectionDialog.Builder(MainActivity.this)
