@@ -11,7 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends BaseMvpActivity<LoginPresenter, LoginContract.View> implements LoginContract.View {
+public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements LoginContract.View {
 
 
     @BindView(R.id.login_icon)

@@ -37,7 +37,7 @@ public class MeFragment extends BaseFragment {
     SubmitButton mSbBtnLogin;
 
     private List<View> mImageViews = new ArrayList<>();
-    private int[] imgs = new int[]{R.drawable.a,R.drawable.b,R.drawable.c,R.drawable.c,R.drawable.c};
+    private int[] imgs = new int[]{R.drawable.a, R.drawable.b, R.drawable.c, R.drawable.c, R.drawable.c};
 
     @Override
     protected void initView(View view) {

@@ -1,5 +1,6 @@
 package com.hx.stevenbase.ui.Login;
 
+import com.hx.steven.Mvp.BaseMvpModel;
 import com.hx.steven.Mvp.BaseMvpPresenter;
 import com.hx.steven.Mvp.BaseMvpView;
 
@@ -16,5 +17,8 @@ public interface LoginContract {
     }
     abstract class Presenter extends BaseMvpPresenter<View> {
         abstract void loginRequest(LoginDto loginDto);
+    }
+    interface Model extends BaseMvpModel {
+        void doLogin(LoginBean loginBean);
     }
 }

@@ -31,9 +31,9 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract.View>
+public class homeFragment extends BaseMvpLazyFragment<homePresenter, homeContract.View>
         implements homeContract.View, BaseQuickAdapter.OnItemChildClickListener,
-        BaseQuickAdapter.OnItemClickListener{
+        BaseQuickAdapter.OnItemClickListener {
 
     @BindView(R.id.recycler_question)
     RecyclerView recyclerQuestion;
@@ -49,12 +49,12 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
         unbinder = ButterKnife.bind(this, view);
         /**设置RecyclerView adapter*/
         recyclerQuestion.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new homeAdapter(R.layout.home_item,null);
+        adapter = new homeAdapter(R.layout.home_item, null);
         adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         recyclerQuestion.setAdapter(adapter);
         /**设置bannerView*/
-        View   mHomeBannerHeadView = LayoutInflater.from(context).inflate(R.layout.home_banner_head, null);
-        mBannerAds =  mHomeBannerHeadView.findViewById(R.id.banner_ads);
+        View mHomeBannerHeadView = LayoutInflater.from(context).inflate(R.layout.home_banner_head, null);
+        mBannerAds = mHomeBannerHeadView.findViewById(R.id.banner_ads);
         mBannerAds.setIndicatorGravity(BannerConfig.CENTER);
         mBannerAds.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         adapter.addHeaderView(mHomeBannerHeadView);
@@ -90,10 +90,12 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
     protected homePresenter createPresenter() {
         return new homePresenter();
     }
+
     @Override
     protected int getContentId() {
         return R.layout.fragment_question;
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -101,12 +103,12 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
     }
 
     /**
-     *=======================================回调方法=======================================================
+     * =======================================回调方法=======================================================
      */
 
     @Override
-    public void setHomeSuccess(homeBean home,int mLoadType) {
-        switch (mLoadType){
+    public void setHomeSuccess(homeBean home, int mLoadType) {
+        switch (mLoadType) {
             case LoadType.TYPE_REFRESH_SUCCESS:
                 refreshLayoutQuestion.finishRefreshing();
                 adapter.setNewData(home.getDatas());
@@ -114,18 +116,18 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
                 dismissLoding();
                 break;
             case LoadType.TYPE_LOAD_MORE_SUCCESS:
-               if(home.getDatas()!=null) {
-                   adapter.addData(home.getDatas());
-               }
+                if (home.getDatas() != null) {
+                    adapter.addData(home.getDatas());
+                }
                 List<homeBean.DatasBean> list = home.getDatas();
-                if (list == null || list.isEmpty() || list.size() <20) {
-                   refreshLayoutQuestion.setEnableLoadmore(false);
+                if (list == null || list.isEmpty() || list.size() < 20) {
+                    refreshLayoutQuestion.setEnableLoadmore(false);
                 } else {
                     refreshLayoutQuestion.finishLoadmore();
                 }
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
 
     }
@@ -149,7 +151,7 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
         mBannerAds.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                ToastUtil.showToast(context,"bannerClick");
+                ToastUtil.showToast(context, "bannerClick");
             }
         });
     }
@@ -176,6 +178,7 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
     @Override
     public void onUserVisible() {
     }
+
     @Override
     public void onFirstUserInvisible() {
     }
@@ -186,12 +189,12 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter,homeContract
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        ToastUtil.showToast(context,"ItemChildClick");
+        ToastUtil.showToast(context, "ItemChildClick");
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        ToastUtil.showToast(context,"ItemClick");
+        ToastUtil.showToast(context, "ItemClick");
     }
 
     @Override
