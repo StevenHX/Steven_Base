@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         setTitle("首页");
-        hideLeftIcon();
+//        hideLeftIcon();
         ButterKnife.bind(this);
         /**瓦力多渠道打包*/
         String channel = WalleChannelReader.getChannel(this.getApplicationContext());

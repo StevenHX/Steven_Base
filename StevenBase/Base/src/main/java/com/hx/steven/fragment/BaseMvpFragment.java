@@ -2,11 +2,14 @@ package com.hx.steven.fragment;
 
 import android.view.View;
 
+import com.hx.steven.Mvp.BaseMvpModel;
 import com.hx.steven.Mvp.BaseMvpView;
 import com.hx.steven.Mvp.Presenter;
 import com.hx.steven.util.ToastUtil;
 
-public  abstract class BaseMvpFragment<P extends Presenter<V>,V extends BaseMvpView> extends BaseFragment implements BaseMvpView{
+import java.util.List;
+
+public  abstract class BaseMvpFragment<P extends Presenter> extends BaseFragment implements BaseMvpView{
     protected P mPresenter;
     @Override
     public void showLoding(String msg) {
@@ -26,19 +29,24 @@ public  abstract class BaseMvpFragment<P extends Presenter<V>,V extends BaseMvpV
     @Override
     protected void initView(View view) {
         mPresenter = createPresenter();
-        if(mPresenter!=null) mPresenter.attachView((V)this);
+        if(mPresenter!=null) {
+            mPresenter.attachView(this);
+            mPresenter.attachModels(createModels());
+        }
         initMvpView(view);
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if(mPresenter!=null) {
             mPresenter.detachView();
             mPresenter.unScribe();//解除Rxjava观察者和被观察者订阅关系
+            mPresenter.detachModel();
         }
+        super.onDestroy();
     }
 
-    protected abstract P createPresenter();
     public abstract void initMvpView(View view);
+    protected abstract P createPresenter();
+    public abstract List<BaseMvpModel> createModels();
 }

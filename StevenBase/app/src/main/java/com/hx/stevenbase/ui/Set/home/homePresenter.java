@@ -1,13 +1,11 @@
 package com.hx.stevenbase.ui.Set.home;
 
 import com.hx.steven.util.LoadType;
-import com.hx.stevenbase.http.Api;
-import com.hx.stevenbase.http.BaseDisposableObserver;
+
 import java.util.List;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
+ *
  * Created by Steven on 2018/2/27.
  */
 
@@ -18,47 +16,34 @@ public class homePresenter extends homeContract.Presenter {
 
     @Override
     void loadHomeArticles(int page) {
+        getModel(HomeModel.class).doLoadHomeArticles(page, new HomeListener.HomeArticleListener() {
+            @Override
+            public void homrArticleSuccess(homeBean home) {
+                int loadType = mIsRefresh ? LoadType.TYPE_REFRESH_SUCCESS : LoadType.TYPE_LOAD_MORE_SUCCESS;
+                getMvpView().setHomeSuccess(home,loadType);
+            }
 
-        subscribe(
-                Api.getInstance().getApiService().getHomeArticles(page)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseDisposableObserver<homeBean>(){
-
-                    @Override
-                    public void onSuccess(homeBean result) {
-                        int loadType = mIsRefresh ? LoadType.TYPE_REFRESH_SUCCESS : LoadType.TYPE_LOAD_MORE_SUCCESS;
-                        getMvpView().setHomeSuccess(result,loadType);
-                    }
-
-                    @Override
-                    public void onFail(homeBean result, Throwable t) {
-                        int loadType = mIsRefresh ? LoadType.TYPE_REFRESH_ERROR : LoadType.TYPE_LOAD_MORE_ERROR;
-                        getMvpView().homeFail(t.getMessage(),loadType);
-                    }
-                })
-        );
+            @Override
+            public void homrArticleFail(Throwable t) {
+                int loadType = mIsRefresh ? LoadType.TYPE_REFRESH_ERROR : LoadType.TYPE_LOAD_MORE_ERROR;
+                getMvpView().homeFail(t.getMessage(),loadType);
+            }
+        });
     }
 
     @Override
     void loadHomeBanner() {
-        subscribe(
-                Api.getInstance().getApiService().getHomeBanners()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseDisposableObserver<List<homeBannerBean>>(){
+        getModel(HomeModel.class).doLoadHomeBanner(new HomeListener.HomeBannerListener() {
+            @Override
+            public void bannerSuccess(List<homeBannerBean> result) {
+                getMvpView().setHomeBanner(result);
+            }
 
-                    @Override
-                    public void onSuccess(List<homeBannerBean> result) {
-                        getMvpView().setHomeBanner(result);
-                    }
-
-                    @Override
-                    public void onFail(List<homeBannerBean> result, Throwable t) {
-                        getMvpView().homeFail(t.getMessage(),LoadType.TYPE_NONE);
-                    }
-                })
-        );
+            @Override
+            public void bannerFail(Throwable t) {
+                getMvpView().homeFail(t.getMessage(),LoadType.TYPE_NONE);
+            }
+        });
     }
 
     @Override

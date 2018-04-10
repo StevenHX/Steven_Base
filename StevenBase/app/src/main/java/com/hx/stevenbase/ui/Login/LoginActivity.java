@@ -3,9 +3,13 @@ package com.hx.stevenbase.ui.Login;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.hx.steven.Mvp.BaseMvpModel;
 import com.hx.steven.activity.BaseMvpActivity;
 import com.hx.steven.component.ClearEditText;
 import com.hx.stevenbase.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +28,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     Button loginOk;
 
     private LoginDto loginDto;
+
     @Override
     protected int getContentId() {
         return R.layout.activity_login;
@@ -35,34 +40,41 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     }
 
     @Override
-    public void initMvpView() {
-        ButterKnife.bind(this);
-        setTitle("登录");
-        loginDto = new LoginDto();
-    }
-
-    @Override
     public void loginSuccess(LoginBean loginBean) {
-        getMultipleStatusView().showContent();
+
     }
 
     @Override
     public void loginFail(String msg) {
-        getMultipleStatusView().showError();
+        
     }
 
     @Override
-    public LoginPresenter creatPresenter() {
+    public void initMvpView() {
+        ButterKnife.bind(this);
+        setTitle("登录");
+        loginDto = new LoginDto();
+        loginName.setShakeAnimation();
+    }
+
+    @Override
+    public LoginPresenter createPresenter() {
         return new LoginPresenter();
     }
 
+    @Override
+    public List<BaseMvpModel> createModels() {
+        List<BaseMvpModel> models = new ArrayList<>();
+        models.add(new LoginModel());
+        return models;
+    }
 
     @OnClick(R.id.login_ok)
     public void onViewClicked() {
-        loginDto.setMobile(loginName.toString());
-        loginDto.setPassword(loginPwd.toString());
+        loginDto.setMobile(loginName.getText().toString());
+        loginDto.setPassword(loginPwd.getText().toString());
         loginDto.setSimulator(false);
-        getMultipleStatusView().showLoading();
+
         mPresenter.loginRequest(loginDto);
     }
 }

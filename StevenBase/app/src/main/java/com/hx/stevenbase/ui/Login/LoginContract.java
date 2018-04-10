@@ -10,15 +10,18 @@ import com.hx.steven.Mvp.BaseMvpView;
  */
 
 public interface LoginContract {
-
+    /**activity或者fragment实现，负责UI的展示*/
     interface View extends BaseMvpView {
         void loginSuccess(LoginBean loginBean);
         void loginFail(String msg);
     }
-    abstract class Presenter extends BaseMvpPresenter<View> {
+    /**只进行各种逻辑的判断，调用model和view的方法*/
+    abstract class Presenter extends BaseMvpPresenter<LoginActivity> {
         abstract void loginRequest(LoginDto loginDto);
     }
+    /**进行具体的数据操作*/
     interface Model extends BaseMvpModel {
-        void doLogin(LoginBean loginBean);
+        boolean doCheck(LoginDto loginDto);
+        void doLogin(LoginDto loginDto,LoginListener listener);
     }
 }

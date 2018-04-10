@@ -1,5 +1,6 @@
 package com.hx.stevenbase.ui.Set.home;
 
+import com.hx.steven.Mvp.BaseMvpModel;
 import com.hx.steven.Mvp.BaseMvpPresenter;
 import com.hx.steven.Mvp.BaseMvpView;
 
@@ -15,7 +16,6 @@ public interface homeContract {
         void setHomeSuccess(homeBean home,int LoadType);
         void setHomeBanner(List<homeBannerBean> homeBannerBeans);
         void homeFail(String msg,int LoadType);
-
     }
     abstract class Presenter extends BaseMvpPresenter<homeContract.View> {
         /**获取首页列表*/
@@ -27,4 +27,10 @@ public interface homeContract {
         /**加载更多*/
         abstract void loadMore();
     }
+    interface Model extends BaseMvpModel{
+        void doLoadHomeArticles(int page,HomeListener.HomeArticleListener listener);
+        void doLoadHomeBanner(HomeListener.HomeBannerListener listener);
+    }
+
 }
+

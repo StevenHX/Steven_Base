@@ -40,10 +40,10 @@ public interface ApiService {
      * @param page page
      */
     @GET("/article/list/{page}/json")
-    Observable<BaseBean<homeBean>> getHomeArticles(@Path("page") int page);
+    Call<BaseBean<homeBean>> getHomeArticles(@Path("page") int page);
     /**
      * 获取首页banner
      */
     @GET("/banner/json")
-    Observable<BaseBean<List<homeBannerBean>>> getHomeBanners();
+    Call<BaseBean<List<homeBannerBean>>> getHomeBanners();
 }

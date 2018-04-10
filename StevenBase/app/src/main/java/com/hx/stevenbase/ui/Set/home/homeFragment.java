@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hx.steven.Mvp.BaseMvpModel;
 import com.hx.steven.fragment.BaseMvpLazyFragment;
 import com.hx.steven.util.LoadType;
 import com.hx.steven.util.ToastUtil;
@@ -31,7 +32,7 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class homeFragment extends BaseMvpLazyFragment<homePresenter, homeContract.View>
+public class homeFragment extends BaseMvpLazyFragment<homePresenter>
         implements homeContract.View, BaseQuickAdapter.OnItemChildClickListener,
         BaseQuickAdapter.OnItemClickListener {
 
@@ -41,8 +42,8 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter, homeContrac
     TwinklingRefreshLayout refreshLayoutQuestion;
     Unbinder unbinder;
 
-    private homeAdapter adapter;//首页文章适配器
-    private Banner mBannerAds;//banner控件
+    homeAdapter adapter;//首页文章适配器
+    Banner mBannerAds;//banner控件
 
     @Override
     protected void initMvpLazyFragment(View view) {
@@ -84,6 +85,13 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter, homeContrac
                 mPresenter.reFresh();
             }
         });
+        /**banner Item点击事件*/
+        mBannerAds.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                ToastUtil.showToast(context, "bannerClick");
+            }
+        });
     }
 
     @Override
@@ -92,8 +100,22 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter, homeContrac
     }
 
     @Override
+    public List<BaseMvpModel> createModels() {
+        List<BaseMvpModel> models = new ArrayList<>();
+        models.add(new HomeModel());
+        return models;
+    }
+
+    @Override
     protected int getContentId() {
         return R.layout.fragment_question;
+    }
+
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        showLoding("加载中");
+        mPresenter.reFresh();
     }
 
     @Override
@@ -126,8 +148,6 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter, homeContrac
                     refreshLayoutQuestion.finishLoadmore();
                 }
                 break;
-            default:
-                break;
         }
 
     }
@@ -148,17 +168,11 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter, homeContrac
                     }
                 })
                 .start();
-        mBannerAds.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                ToastUtil.showToast(context, "bannerClick");
-            }
-        });
     }
 
     @Override
-    public void homeFail(String msg,int mLoadType) {
-        switch (mLoadType){
+    public void homeFail(String msg, int mLoadType) {
+        switch (mLoadType) {
             case LoadType.TYPE_REFRESH_ERROR:
                 getMultipleStatusView().showError();
                 dismissLoding();
@@ -195,12 +209,5 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter, homeContrac
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         ToastUtil.showToast(context, "ItemClick");
-    }
-
-    @Override
-    public void onClick(View view) {
-        super.onClick(view);
-        showLoding("加载中");
-        mPresenter.reFresh();
     }
 }

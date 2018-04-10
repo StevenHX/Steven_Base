@@ -27,7 +27,7 @@ public class SetActivity extends BaseActivity implements BottomBarLayout.OnItemS
     @Override
     protected void initView() {
         setTitle("设置");
-        hideLeftIcon();
+//        hideLeftIcon();
         ButterKnife.bind(this);
       mFragments.add(new aboutFragment());
       mFragments.add(new homeFragment());

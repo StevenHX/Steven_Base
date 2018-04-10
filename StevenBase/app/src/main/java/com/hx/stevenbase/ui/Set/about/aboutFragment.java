@@ -5,10 +5,13 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.hx.steven.Mvp.BaseMvpModel;
 import com.hx.steven.fragment.BaseMvpFragment;
 import com.hx.steven.util.MPermissionUtil;
 import com.hx.stevenbase.R;
-import com.orhanobut.logger.Logger;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +21,7 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class aboutFragment extends BaseMvpFragment<aboutPresenter, aboutContract.View> implements aboutContract.View {
+public class aboutFragment extends BaseMvpFragment<aboutPresenter> implements aboutContract.View {
 
     @BindView(R.id.about_name)
     EditText aboutName;
@@ -31,6 +34,11 @@ public class aboutFragment extends BaseMvpFragment<aboutPresenter, aboutContract
     @Override
     protected aboutPresenter createPresenter() {
         return new aboutPresenter();
+    }
+
+    @Override
+    public List<BaseMvpModel> createModels() {
+        return null;
     }
 
     @Override

@@ -37,53 +37,74 @@ public class BaseMvpPresenter<V extends BaseMvpView> implements Presenter<V> {
 
     @Override
     public void detachModel() {
-        models.clear();
         models = null;
     }
 //===================================与View有关公共方法==========================================
 
     /**
      * 返回目标view
-     * @return
      */
-    public  V getMvpView(){
+    public V getMvpView() {
+        if (mvpView == null) {
+            throw new MvpViewNotAttachedException();
+        }
         return mvpView;
     }
     /**
-     * 检查view和presenter是否连接
+     * 获取具体的View
      */
-    public void checkViewAttach(){
-        if(mvpView == null){
-            throw  new MvpViewNotAttachedException();
+    public <V extends BaseMvpView> V getMvpView(Class<V> clazz) {
+        if (mvpView == null) {
+            throw new MvpViewNotAttachedException();
         }
-    }
-    /**
-     * 自定义异常
-     */
-    public static   class  MvpViewNotAttachedException extends RuntimeException {
-        public  MvpViewNotAttachedException(){
-            super("请求数据前请先调用 attachView(MvpView) 方法与View建立连接");
-        }
+        return (V) mvpView;
     }
 
 //==========================================与model相关公共方法===================================
     /**
-     * 获取model
+     * 获取所有的model
      */
-    public List<BaseMvpModel> getMvpModels(){
-        if(models == null){
-            throw  new MvpViewNotAttachedException();
-        }else{
+    public List<BaseMvpModel> getMvpModels() {
+        if (models == null) {
+            throw new MvpModelNotAttachedException();
+        } else {
             return models;
+        }
+    }
+
+
+    /**
+     * 获取具体的某一个model
+     */
+    public <T extends BaseMvpModel> T getModel(Class<T> clazz) {
+        if (models == null) {
+            throw new MvpModelNotAttachedException();
+        } else {
+            for (int i = 0; i < models.size(); i++) {
+                BaseMvpModel model = models.get(i);
+                if (model.getClass().getName().equals(clazz.getName())) {
+                    return (T) model;
+                }
+            }
+            return null;
         }
     }
 
     /**
      * 自定义异常
      */
-    public static   class  MvpModelNotAttachedException extends RuntimeException {
-        public  MvpModelNotAttachedException(){
-            super("请求数据前请先调用 attachModels(MvpView) 方法与View建立连接");
+    public static class MvpViewNotAttachedException extends RuntimeException {
+        public MvpViewNotAttachedException() {
+            super("请求数据前请先调用 attachView(MvpView) 方法与View建立连接");
+        }
+    }
+
+    /**
+     * 自定义异常
+     */
+    public static class MvpModelNotAttachedException extends RuntimeException {
+        public MvpModelNotAttachedException() {
+            super("请求数据前请先调用 attachModels(MvpView) 方法与model建立连接");
         }
     }
 }

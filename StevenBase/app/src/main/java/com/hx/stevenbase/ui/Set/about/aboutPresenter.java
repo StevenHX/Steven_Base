@@ -1,15 +1,10 @@
 package com.hx.stevenbase.ui.Set.about;
 
+import com.hx.steven.http.BaseBean;
 import com.hx.stevenbase.http.Api;
-import com.hx.stevenbase.http.BaseDisposableObserver;
 
-import java.util.logging.Logger;
-
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableObserver;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -21,21 +16,39 @@ public class aboutPresenter extends aboutContract.Presenter {
     @Override
     void aboutRequest(final aboutDto about) {
 
-        subscribe(Api.getInstance().getApiService()
-        .about(about)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeWith(new BaseDisposableObserver<aboutBean>(){
+//        subscribe(Api.getInstance().getApiService()
+//        .about(about)
+//        .subscribeOn(Schedulers.io())
+//        .observeOn(AndroidSchedulers.mainThread())
+//        .subscribeWith(new BaseDisposableObserver<aboutBean>(){
+//
+//            @Override
+//            public void onSuccess(aboutBean result) {
+//
+//            }
+//
+//            @Override
+//            public void onFail(aboutBean result, Throwable t) {
+//
+//            }
+//        }));
 
-            @Override
-            public void onSuccess(aboutBean result) {
+        subscribe(
+                Api.getInstance().getApiService()
+                        .about(about)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<BaseBean<aboutBean>>() {
+                            @Override
+                            public void accept(BaseBean<aboutBean> aboutBeanBaseBean) throws Exception {
 
-            }
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
 
-            @Override
-            public void onFail(aboutBean result, Throwable t) {
-
-            }
-        }));
+                            }
+                        })
+        );
     }
 }

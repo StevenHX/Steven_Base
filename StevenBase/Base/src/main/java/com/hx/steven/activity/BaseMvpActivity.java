@@ -1,14 +1,17 @@
 package com.hx.steven.activity;
 
+import com.hx.steven.Mvp.BaseMvpModel;
 import com.hx.steven.Mvp.BaseMvpPresenter;
 import com.hx.steven.Mvp.BaseMvpView;
 import com.hx.steven.util.ToastUtil;
 
+import java.util.List;
+
 public abstract class BaseMvpActivity<P extends BaseMvpPresenter> extends BaseActivity implements BaseMvpView{
     public P mPresenter;
-
-    public abstract P creatPresenter();
     public abstract void initMvpView();
+    public abstract P createPresenter();
+    public abstract List<BaseMvpModel> createModels();
 
     @Override
     public void showLoding(String msg) {
@@ -27,8 +30,11 @@ public abstract class BaseMvpActivity<P extends BaseMvpPresenter> extends BaseAc
 
     @Override
     protected void initView() {
-        mPresenter = creatPresenter();
-        if(mPresenter != null) mPresenter.attachView(this);
+        mPresenter = createPresenter();
+        if(mPresenter != null) {
+            mPresenter.attachView(this);
+            mPresenter.attachModels(createModels());
+        }
         initMvpView();
     }
 
@@ -39,6 +45,7 @@ public abstract class BaseMvpActivity<P extends BaseMvpPresenter> extends BaseAc
         if(mPresenter != null) {
             mPresenter.detachView();
             mPresenter.unScribe();
+            mPresenter.detachModel();
         }
     }
 }
