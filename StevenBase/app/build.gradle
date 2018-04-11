@@ -2,8 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'walle'
-
+apply plugin: 'me.tatarka.retrolambda'
 android {
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     defaultConfig {
