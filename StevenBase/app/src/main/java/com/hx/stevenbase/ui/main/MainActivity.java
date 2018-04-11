@@ -1,6 +1,6 @@
 package com.hx.stevenbase.ui.main;
 
-import android.support.v4.app.Fragment;
+import android.Manifest;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
@@ -14,17 +14,19 @@ import com.hx.stevenbase.Bean.User;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.app.App;
 import com.hx.stevenbase.gen.DaoSession;
-import com.hx.stevenbase.ui.Login.LoginActivity;
+import com.hx.stevenbase.ui.Set.SetActivity;
 import com.meituan.android.walle.WalleChannelReader;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
-    private static final String TAG = "MainActivity";
+    {
+        setEnableSliding(false);
+        setEnableHeader(true);
+        setEnableMultiple(false);
+    }
     @BindView(R.id.id_viewpager)
     ViewPager viewPager;
     @BindView(R.id.hello)
@@ -36,18 +38,11 @@ public class MainActivity extends BaseActivity {
 
     private DaoSession daoSession;
 
-    private TagAdapter<String> mColorTagAdapter;
-
-    private ArrayList<Fragment> mFragments = new ArrayList<Fragment>();
-
-    {
-        setEnableSliding(false);
-    }
     @Override
     protected void initView() {
-        setTitle("首页");
-//        hideLeftIcon();
         ButterKnife.bind(this);
+        setHeaderNormal("首页",null,null);
+
         /**瓦力多渠道打包*/
         String channel = WalleChannelReader.getChannel(this.getApplicationContext());
         ToastUtil.showToast(this, channel);
@@ -61,17 +56,8 @@ public class MainActivity extends BaseActivity {
         }
         ToastUtil.showToast(this,"插入成功");
 
-//        MPermissionUtil.requestPermissionsResult(this,0,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new MPermissionUtil.OnPermissionListener() {
-//            @Override
-//            public void onPermissionGranted() {
-//
-//            }
-//
-//            @Override
-//            public void onPermissionDenied() {
-//
-//            }
-//        });
+        RequestPermissions(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
         /**viewPager变换操作*/
         viewPager = (ViewPager) findViewById(R.id.id_viewpager);
         viewPager.setOffscreenPageLimit(3);
@@ -98,16 +84,11 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
-    @Override
-    protected boolean isShowHeader() {
-        return true;
-    }
-
 
     @OnClick(R.id.hello)
     public void onViewClicked() {
-        launch(MainActivity.this, LoginActivity.class);
-//        launch(MainActivity.this, SetActivity.class);
+//        launch(MainActivity.this, LoginActivity.class);
+        launch(MainActivity.this, SetActivity.class);
 //        ToastUtil.showCustomToast(MainActivity.this, "2333333");
 
         //                NormalSelectionDialog selectionDialog =  new NormalSelectionDialog.Builder(MainActivity.this)

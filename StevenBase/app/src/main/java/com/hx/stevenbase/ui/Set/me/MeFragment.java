@@ -21,6 +21,9 @@ import butterknife.Unbinder;
  * @date 2018.3.22
  */
 public class MeFragment extends BaseFragment {
+    {
+        setEnableMultiple(false);
+    }
     /**
      * butterKnife解绑对象
      */

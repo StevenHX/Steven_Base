@@ -1,6 +1,5 @@
 package com.hx.stevenbase.ui.Set.about;
 
-import android.Manifest;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
@@ -8,7 +7,6 @@ import android.widget.EditText;
 
 import com.hx.steven.Mvp.BaseMvpModel;
 import com.hx.steven.fragment.BaseMvpFragment;
-import com.hx.steven.util.MPermissionUtil;
 import com.hx.stevenbase.R;
 
 import java.util.List;
@@ -22,7 +20,9 @@ import butterknife.Unbinder;
  * A simple {@link Fragment} subclass.
  */
 public class aboutFragment extends BaseMvpFragment<aboutPresenter> implements aboutContract.View {
-
+    {
+        setEnableMultiple(false);
+    }
     @BindView(R.id.about_name)
     EditText aboutName;
     @BindView(R.id.about_pwd)
@@ -45,19 +45,6 @@ public class aboutFragment extends BaseMvpFragment<aboutPresenter> implements ab
     public void initMvpView(View view) {
         unbinder = ButterKnife.bind(this, view);
         aboutDto = new aboutDto();
-
-
-        MPermissionUtil.requestPermissionsResult(this, 0, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, new MPermissionUtil.OnPermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-
-            }
-
-            @Override
-            public void onPermissionDenied() {
-                MPermissionUtil.showTipsDialog(context);
-            }
-        });
     }
 
     @Override

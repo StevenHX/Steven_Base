@@ -17,17 +17,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SetActivity extends BaseActivity implements BottomBarLayout.OnItemSelectedListener {
-    private ArrayList<Fragment> mFragments = new ArrayList<Fragment>();
-
+    {
+        setEnableHeader(false);
+        setEnableMultiple(false);
+    }
     @BindView(R.id.set_viewpager)
     CommViewPager setViewpager;
+
     @BindView(R.id.set_bbl)
     BottomBarLayout bottomBarLayout;
 
+    private ArrayList<Fragment> mFragments = new ArrayList<Fragment>();
+
     @Override
     protected void initView() {
-        setTitle("设置");
-//        hideLeftIcon();
         ButterKnife.bind(this);
       mFragments.add(new aboutFragment());
       mFragments.add(new homeFragment());
@@ -45,10 +48,6 @@ public class SetActivity extends BaseActivity implements BottomBarLayout.OnItemS
         return R.layout.activity_set;
     }
 
-    @Override
-    protected boolean isShowHeader() {
-        return true;
-    }
 
     @Override
     public void onItemSelected(BottomBarItem bottomBarItem, int position) {

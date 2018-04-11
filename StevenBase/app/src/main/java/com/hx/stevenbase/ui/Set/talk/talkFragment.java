@@ -10,7 +10,9 @@ import com.hx.stevenbase.R;
  * A simple {@link Fragment} subclass.
  */
 public class talkFragment extends BaseFragment {
-
+    {
+        setEnableMultiple(false);
+    }
     @Override
     protected void initView(View view) {
 

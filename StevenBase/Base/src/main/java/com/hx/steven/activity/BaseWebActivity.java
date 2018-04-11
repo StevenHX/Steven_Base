@@ -34,6 +34,7 @@ public abstract class BaseWebActivity extends BaseActivity {
         title = getIntent().getStringExtra(TITLE);
         contractNo = getIntent().getStringExtra(CONTRACTNO);
         isshowHeader = getIntent().getBooleanExtra(ISHASHEADER,true);
+        setEnableHeader(isshowHeader);
     }
 
     @Override
@@ -117,7 +118,7 @@ public abstract class BaseWebActivity extends BaseActivity {
     }
 
 
-    public void open(Context context, String title, String contractNo, String url,boolean isshowHeader)
+    public void Open(Context context, String title, String contractNo, String url,boolean isshowHeader)
     {
         Intent intent = new Intent(context, BaseWebActivity.class);
         intent.putExtra(URL, url);
@@ -143,6 +144,9 @@ public abstract class BaseWebActivity extends BaseActivity {
         if (progressBar != null) {
             progressBar = null;
         }
+        if(webView!=null){
+            webView = null;
+        }
     }
 
     @Override
@@ -150,10 +154,6 @@ public abstract class BaseWebActivity extends BaseActivity {
         return R.layout.activity_bas_webview;
     }
 
-    @Override
-    protected boolean isShowHeader() {
-        return isshowHeader;
-    }
 
     /**
      * 拦截URL逻辑

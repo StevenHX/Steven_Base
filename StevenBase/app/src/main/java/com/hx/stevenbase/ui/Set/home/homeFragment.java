@@ -35,7 +35,9 @@ import butterknife.Unbinder;
 public class homeFragment extends BaseMvpLazyFragment<homePresenter>
         implements homeContract.View, BaseQuickAdapter.OnItemChildClickListener,
         BaseQuickAdapter.OnItemClickListener {
-
+    {
+        setEnableMultiple(true);
+    }
     @BindView(R.id.recycler_question)
     RecyclerView recyclerQuestion;
     @BindView(R.id.refreshLayout_question)
@@ -111,12 +113,6 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter>
         return R.layout.fragment_question;
     }
 
-    @Override
-    public void onClick(View view) {
-        super.onClick(view);
-        showLoding("加载中");
-        mPresenter.reFresh();
-    }
 
     @Override
     public void onDestroyView() {

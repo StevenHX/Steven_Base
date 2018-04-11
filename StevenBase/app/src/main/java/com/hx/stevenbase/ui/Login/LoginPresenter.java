@@ -17,7 +17,8 @@ public class LoginPresenter extends LoginContract.Presenter {
             @Override
             public void loginSuccess(LoginBean loginBean) {
                 getMvpView().dismissLoding();
-                getMvpView(LoginActivity.class).getMultipleStatusView().showContent();
+                getMvpView().showLoding("ddd");
+                getMvpView().getMultipleStatusView().showContent();
                 getMvpView().loginSuccess(loginBean);
             }
 

@@ -16,7 +16,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements LoginContract.View {
-
+    {
+        setEnableHeader(true);
+        setEnableMultiple(true);
+    }
 
     @BindView(R.id.login_icon)
     ImageView loginIcon;
@@ -34,10 +37,6 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
         return R.layout.activity_login;
     }
 
-    @Override
-    protected boolean isShowHeader() {
-        return true;
-    }
 
     @Override
     public void loginSuccess(LoginBean loginBean) {
@@ -52,7 +51,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     @Override
     public void initMvpView() {
         ButterKnife.bind(this);
-        setTitle("登录");
+        setHeaderNormal("登陆","返回",null);
         loginDto = new LoginDto();
         loginName.setShakeAnimation();
     }

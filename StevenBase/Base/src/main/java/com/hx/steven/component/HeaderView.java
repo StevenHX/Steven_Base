@@ -62,7 +62,7 @@ public class HeaderView extends LinearLayout implements View.OnClickListener {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HeaderView, defStyleAttr, 0);
         leftString = a.getString(R.styleable.HeaderView_leftString);
         leftTvColor = a.getColor(R.styleable.HeaderView_leftColor, Color.DKGRAY);
-        showLeftTv = a.getBoolean(R.styleable.HeaderView_showLeftTv,true);
+        showLeftTv = a.getBoolean(R.styleable.HeaderView_showLeftTv,false);
         leftIcon = a.getDrawable(R.styleable.HeaderView_leftIcon);
         showLeftIcon = a.getBoolean(R.styleable.HeaderView_showLeftIcon,false);
         titleString = a.getString(R.styleable.HeaderView_titleString);
@@ -133,7 +133,14 @@ public class HeaderView extends LinearLayout implements View.OnClickListener {
      * */
     /**设置左侧文字*/
     public void setLeftString(String text){
-        this.leftTv.setText(text);
+        if(text!=null){
+            setShowLeftTv(true);
+            this.leftTv.setText(text);
+            setShowLeftIcon(true);
+        }else{
+            setShowLeftTv(false);
+            setShowLeftIcon(false);
+        }
     }
     /**设置左侧文字颜色*/
     public void setLeftTvColor(int leftTvColor){
@@ -153,7 +160,11 @@ public class HeaderView extends LinearLayout implements View.OnClickListener {
     }
     /**设置标题*/
     public void setTitleString(String title){
-        this.titleTv.setText(title);
+        if(title!=null){
+            this.titleTv.setText(title);
+        }else{
+            setShowTitle(false);
+        }
     }
     /**设置标题颜色*/
     public void setTitleTvColor(int titleTvColor){
@@ -165,7 +176,14 @@ public class HeaderView extends LinearLayout implements View.OnClickListener {
     }
     /**设置右侧文字*/
     public void setRightString(String text){
-        this.rightTv.setText(text);
+        if(text!=null){
+            setShowRightTv(true);
+            this.rightTv.setText(text);
+            setShowRightTv(true);
+        }else{
+            setShowRightTv(false);
+            setShowRIghtIcon(false);
+        }
     }
     /**设置右侧文字颜色*/
     public void setRightTvColor(int rightTvColor){

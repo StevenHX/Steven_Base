@@ -102,6 +102,7 @@ public class MPermissionUtil {
                 if (mOnPermissionListener != null)
                     mOnPermissionListener.onPermissionGranted();
             } else {
+                // TODO: 2018/4/11 添加优化，提示具体哪些权限被拒，看是否是必须的
                 if (mOnPermissionListener != null)
                     mOnPermissionListener.onPermissionDenied();
             }
