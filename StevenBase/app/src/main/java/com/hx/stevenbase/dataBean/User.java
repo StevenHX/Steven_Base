@@ -1,4 +1,4 @@
-package com.hx.stevenbase.Bean;
+package com.hx.stevenbase.dataBean;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;

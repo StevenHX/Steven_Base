@@ -2,7 +2,6 @@ package com.hx.stevenbase.ui.main;
 
 import android.Manifest;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.widget.Button;
 
 import com.hx.steven.activity.BaseActivity;
@@ -10,7 +9,7 @@ import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.ProgressBarView;
 import com.hx.steven.util.ToastUtil;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
-import com.hx.stevenbase.Bean.User;
+import com.hx.stevenbase.dataBean.User;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.app.App;
 import com.hx.stevenbase.gen.DaoSession;
@@ -68,12 +67,6 @@ public class MainActivity extends BaseActivity {
         /**自定义progressView*/
         pbView.setMax(100);
         pbView.setProgress(43);
-        pbView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pbView.setProgress(88);
-            }
-        });
     }
 
     private pageAdapter adapter;
