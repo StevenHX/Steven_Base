@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.BottomBar.BottomBarItem;
 import com.hx.steven.component.BottomBar.BottomBarLayout;
-import com.hx.steven.component.CommViewPager;
+import com.hx.steven.component.NoScrollViewPager;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.ui.Set.about.aboutFragment;
 import com.hx.stevenbase.ui.Set.home.homeFragment;
@@ -22,7 +22,7 @@ public class SetActivity extends BaseActivity implements BottomBarLayout.OnItemS
         setEnableMultiple(false);
     }
     @BindView(R.id.set_viewpager)
-    CommViewPager setViewpager;
+    NoScrollViewPager setViewpager;
 
     @BindView(R.id.set_bbl)
     BottomBarLayout bottomBarLayout;

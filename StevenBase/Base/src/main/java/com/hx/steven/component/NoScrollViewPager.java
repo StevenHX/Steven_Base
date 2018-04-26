@@ -10,7 +10,7 @@ import android.view.MotionEvent;
  * Created by user on 2017/10/31.
  */
 
-public class CommViewPager extends ViewPager {
+public class NoScrollViewPager extends ViewPager {
 
     private boolean noScroll = false;
 
@@ -18,11 +18,11 @@ public class CommViewPager extends ViewPager {
     public void setNoScroll(boolean noScroll) {
         this.noScroll = noScroll;
     }
-    public CommViewPager(Context context) {
+    public NoScrollViewPager(Context context) {
         super(context);
     }
 
-    public CommViewPager(Context context, AttributeSet attrs) {
+    public NoScrollViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
