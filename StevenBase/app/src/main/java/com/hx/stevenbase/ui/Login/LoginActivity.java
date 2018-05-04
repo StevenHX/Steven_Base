@@ -34,7 +34,7 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
 
     @Override
     protected int getContentId() {
-        return R.layout.activity_login;
+        return R.layout.login_activity;
     }
 
 

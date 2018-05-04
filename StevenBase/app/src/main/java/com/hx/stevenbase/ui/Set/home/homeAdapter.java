@@ -24,7 +24,7 @@ public class homeAdapter extends BaseQuickAdapter<homeBean.DatasBean,BaseViewHol
         helper.setText(R.id.tvTitle,item.getTitle());
         helper.setText(R.id.tvChapterName,item.getChapterName());
         helper.setImageResource(R.id.ivCollect, item.isCollect()
-                ? R.drawable.ic_action_like : R.drawable.ic_action_no_like);
+                ? R.drawable.home_recycle_item_icon_like : R.drawable.home_recycle_item_icon_nolike);
 
         helper.addOnClickListener(R.id.ivCollect);
         helper.addOnClickListener(R.id.tvTitle);

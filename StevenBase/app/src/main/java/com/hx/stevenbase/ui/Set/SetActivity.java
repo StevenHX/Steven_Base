@@ -45,7 +45,7 @@ public class SetActivity extends BaseActivity implements BottomBarLayout.OnItemS
 
     @Override
     protected int getContentId() {
-        return R.layout.activity_set;
+        return R.layout.set_activity;
     }
 
 

@@ -9,12 +9,16 @@ import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.ProgressBarView;
 import com.hx.steven.util.ToastUtil;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
-import com.hx.stevenbase.dataBean.User;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.app.App;
+import com.hx.stevenbase.dataBean.User;
 import com.hx.stevenbase.gen.DaoSession;
+import com.hx.stevenbase.gen.UserDao;
 import com.hx.stevenbase.ui.Set.SetActivity;
 import com.meituan.android.walle.WalleChannelReader;
+import com.orhanobut.logger.Logger;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,6 +59,9 @@ public class MainActivity extends BaseActivity {
         }
         ToastUtil.showToast(this,"插入成功");
 
+        List<User> users = daoSession.getUserDao().queryBuilder().where(UserDao.Properties.Age.eq(25)).list();
+        Logger.d(users.get(0).getName());
+
         RequestPermissions(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         /**viewPager变换操作*/
@@ -74,7 +81,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getContentId() {
-        return R.layout.activity_main;
+        return R.layout.main_activity;
     }
 
 

@@ -52,7 +52,7 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter>
         unbinder = ButterKnife.bind(this, view);
         /**设置RecyclerView adapter*/
         recyclerQuestion.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new homeAdapter(R.layout.home_item, null);
+        adapter = new homeAdapter(R.layout.home_recycle_item, null);
         adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         recyclerQuestion.setAdapter(adapter);
         /**设置bannerView*/
@@ -110,7 +110,7 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter>
 
     @Override
     protected int getContentId() {
-        return R.layout.fragment_question;
+        return R.layout.home_fragment;
     }
 
 

@@ -49,7 +49,7 @@ public class aboutFragment extends BaseMvpFragment<aboutPresenter> implements ab
 
     @Override
     protected int getContentId() {
-        return R.layout.fragment_about;
+        return R.layout.about_fragment;
     }
 
     @Override

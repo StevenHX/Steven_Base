@@ -42,6 +42,22 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    'src/main/res',
+                    '/src/main/res/layouts/',
+                    '/src/main/res/layouts/main',
+                    '/src/main/res/layouts/login',
+                    '/src/main/res/layouts/about',
+                    '/src/main/res/layouts/me',
+                    '/src/main/res/layouts/talk',
+                    '/src/main/res/layouts/home',
+                    '/src/main/res/layouts/welcome'
+            ]
+        }
+    }
+
 }
 greendao {
     schemaVersion 1
