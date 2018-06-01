@@ -65,3 +65,13 @@ dependencies {
     //约束布局
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '26.1.0'
+            }
+        }
+    }
+}
