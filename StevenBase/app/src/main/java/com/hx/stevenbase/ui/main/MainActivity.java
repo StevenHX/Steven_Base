@@ -2,10 +2,12 @@ package com.hx.stevenbase.ui.main;
 
 import android.Manifest;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.widget.Button;
 
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
+import com.hx.steven.component.FullScreenTimeDialog;
 import com.hx.steven.component.ProgressBarView;
 import com.hx.steven.util.ToastUtil;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
@@ -14,7 +16,6 @@ import com.hx.stevenbase.app.App;
 import com.hx.stevenbase.dataBean.User;
 import com.hx.stevenbase.gen.DaoSession;
 import com.hx.stevenbase.gen.UserDao;
-import com.hx.stevenbase.ui.Set.SetActivity;
 import com.meituan.android.walle.WalleChannelReader;
 import com.orhanobut.logger.Logger;
 
@@ -87,8 +88,18 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.hello)
     public void onViewClicked() {
+        FullScreenTimeDialog dialog = new FullScreenTimeDialog(this);
+        dialog.setImages(new int[]{R.mipmap.refresh_loading01,R.mipmap.ic_launcher,R.mipmap.ic_launcher});
+        dialog.setMaxNumber(3000);
+        dialog.setCountDownListener(new FullScreenTimeDialog.CountDownListener() {
+            @Override
+            public void countDownFinish() {
+                Log.e("xxxxx","countDownFinish");
+            }
+        });
+        dialog.show();
 //        launch(MainActivity.this, LoginActivity.class);
-        launch(MainActivity.this, SetActivity.class);
+//        launch(MainActivity.this, SetActivity.class);
 //        ToastUtil.showCustomToast(MainActivity.this, "2333333");
 
         //                NormalSelectionDialog selectionDialog =  new NormalSelectionDialog.Builder(MainActivity.this)
