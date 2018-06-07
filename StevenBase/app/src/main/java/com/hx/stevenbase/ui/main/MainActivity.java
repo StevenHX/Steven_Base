@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.hello)
     public void onViewClicked() {
         FullScreenTimeDialog dialog = new FullScreenTimeDialog(this);
-        dialog.setImages(new int[]{R.mipmap.refresh_loading01,R.mipmap.ic_launcher,R.mipmap.ic_launcher});
+        dialog.setImages(new int[]{R.drawable.icon_three,R.drawable.icon_two,R.drawable.icon_one});
         dialog.setMaxNumber(3000);
         dialog.setCountDownListener(new FullScreenTimeDialog.CountDownListener() {
             @Override

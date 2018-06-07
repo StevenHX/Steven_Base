@@ -10,11 +10,13 @@ import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 /**
  * 全屏倒计时 dialog
@@ -47,9 +49,14 @@ public class FullScreenTimeDialog extends Dialog {
 
     private void init() {
         numberIv = new ImageView(context);
+        RelativeLayout relativeLayout = new RelativeLayout(context);
+        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        relativeLayout.setLayoutParams(rlp);
+        relativeLayout.setGravity(Gravity.CENTER);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         numberIv.setLayoutParams(layoutParams);
-        setContentView(numberIv);
+        relativeLayout.addView(numberIv);
+        setContentView(relativeLayout);
     }
 
     @Override
@@ -71,13 +78,13 @@ public class FullScreenTimeDialog extends Dialog {
      */
     public void setNumberAnimation(){
       ObjectAnimator animatorx  =  ObjectAnimator
-                .ofFloat(numberIv,"scaleX",1,2);
+                .ofFloat(numberIv,"scaleX",0,1);
       animatorx.setDuration(periodtime);
       animatorx.setInterpolator(new OvershootInterpolator());
       animatorx.start();
 
         ObjectAnimator animatory  =  ObjectAnimator
-                .ofFloat(numberIv,"scaleY",1,2);
+                .ofFloat(numberIv,"scaleY",0,1);
         animatory.setDuration(periodtime);
         animatory.setInterpolator(new OvershootInterpolator());
         animatory.start();
