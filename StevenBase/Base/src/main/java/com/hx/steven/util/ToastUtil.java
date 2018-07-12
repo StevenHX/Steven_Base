@@ -45,7 +45,7 @@ public class ToastUtil {
      */
     public static void showCustomToast(Context context,String content){
         content = content==null?"":content;
-        View view = View.inflate(context,R.layout.custom_toast_view,null);
+        View view = View.inflate(context,R.layout.custom_view_toast,null);
         if (toast == null) {
             toast = Toast.makeText(context,content , Toast.LENGTH_SHORT);
         }

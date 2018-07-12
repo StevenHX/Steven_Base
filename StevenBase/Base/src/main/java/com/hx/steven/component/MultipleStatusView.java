@@ -61,10 +61,10 @@ import java.util.ArrayList;
     public MultipleStatusView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MultipleStatusView, defStyleAttr, 0);
-        mEmptyViewResId = a.getResourceId(R.styleable.MultipleStatusView_emptyView, R.layout.empty_view);
-        mErrorViewResId = a.getResourceId(R.styleable.MultipleStatusView_errorView, R.layout.error_view);
-        mLoadingViewResId = a.getResourceId(R.styleable.MultipleStatusView_loadingView, R.layout.loading_view);
-        mNoNetworkViewResId = a.getResourceId(R.styleable.MultipleStatusView_noNetworkView, R.layout.no_network_view);
+        mEmptyViewResId = a.getResourceId(R.styleable.MultipleStatusView_emptyView, R.layout.custom_view_multi_empty);
+        mErrorViewResId = a.getResourceId(R.styleable.MultipleStatusView_errorView, R.layout.custom_view_multi_error);
+        mLoadingViewResId = a.getResourceId(R.styleable.MultipleStatusView_loadingView, R.layout.custom_view_multi_loading);
+        mNoNetworkViewResId = a.getResourceId(R.styleable.MultipleStatusView_noNetworkView, R.layout.custom_view_multi_nonet);
         mContentViewResId = a.getResourceId(R.styleable.MultipleStatusView_contentView, NULL_RESOURCE_ID);
         a.recycle();
         mInflater = LayoutInflater.from(getContext());

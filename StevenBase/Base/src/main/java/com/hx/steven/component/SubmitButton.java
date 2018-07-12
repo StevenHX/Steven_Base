@@ -58,7 +58,7 @@ public class SubmitButton extends FrameLayout {
          removeAllViews();
 
          mInflater = LayoutInflater.from(context);
-         View view =  mInflater.inflate(R.layout.sbbtn_layout,null);
+         View view =  mInflater.inflate(R.layout.custom_btn_submit,null);
          addView(view);
          mButton = (TextView) view.findViewById(R.id.btn_login);
          mImageView = (ImageView)view.findViewById(R.id.iv_beauty_login_loading);

@@ -82,7 +82,7 @@ public class HeaderView extends LinearLayout implements View.OnClickListener {
      */
     private void init(Context context) {
         inflater = LayoutInflater.from(context);
-        View headView = inflater.inflate(R.layout.activity_base_header,null);
+        View headView = inflater.inflate(R.layout.base_activity_header,null);
         addView(headView);
         leftTv =  headView.findViewById(R.id.header_left);
         leftIv = headView.findViewById(R.id.header_left_icon);

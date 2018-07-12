@@ -63,7 +63,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragmemt_base, container, false);
+        View view = inflater.inflate(R.layout.base_fragmemt, container, false);
         mContainer = view.findViewById(R.id.base_container);
         /**初始化multipleView*/
         multipleStatusView = new MultipleStatusView(context);

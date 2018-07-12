@@ -151,7 +151,7 @@ public abstract class BaseWebActivity extends BaseActivity {
 
     @Override
     protected int getContentId() {
-        return R.layout.activity_bas_webview;
+        return R.layout.base_activity_webview;
     }
 
 

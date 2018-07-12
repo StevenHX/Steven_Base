@@ -117,7 +117,7 @@ public class BottomBarItem extends LinearLayout {
         setOrientation(VERTICAL);
         setGravity(Gravity.CENTER);
 
-        View view = View.inflate(mContext, R.layout.item_bottom_bar, null);
+        View view = View.inflate(mContext, R.layout.custom_view_bbar_item, null);
         if (mItemPadding != 0) {
             //如果有设置item的padding
             view.setPadding(mItemPadding, mItemPadding, mItemPadding, mItemPadding);

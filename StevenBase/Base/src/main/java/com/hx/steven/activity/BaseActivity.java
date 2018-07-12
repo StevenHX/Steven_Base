@@ -75,7 +75,7 @@ public abstract class BaseActivity extends SlidingActivity {
     }
 
     private void initContainer() {
-        setContentView(R.layout.activity_base);
+        setContentView(R.layout.base_activity);
         mContainer = (ViewGroup) findViewById(R.id.base_container);
 
         /**初始化多状态视图*/

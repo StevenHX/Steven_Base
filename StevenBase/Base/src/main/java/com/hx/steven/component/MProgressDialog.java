@@ -49,7 +49,7 @@ public class MProgressDialog implements View.OnClickListener {
     private void initDialog() {
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View mProgressDialogView = inflater.inflate(R.layout.mn_progress_dialog_layout, null);// 得到加载view
+        View mProgressDialogView = inflater.inflate(R.layout.custom_dialog_mprogress, null);// 得到加载view
         mDialog = new Dialog(mContext, R.style.MNCustomProgressDialog);// 创建自定义样式dialog
         mDialog.setCancelable(true);// 不可以用“返回键”取消
         mDialog.setCanceledOnTouchOutside(false);

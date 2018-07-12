@@ -4,6 +4,7 @@ import android.Manifest;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.widget.Button;
+
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.FullScreenTimeDialog;
@@ -17,7 +18,9 @@ import com.hx.stevenbase.gen.DaoSession;
 import com.hx.stevenbase.gen.UserDao;
 import com.meituan.android.walle.WalleChannelReader;
 import com.orhanobut.logger.Logger;
+
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -87,11 +90,8 @@ public class MainActivity extends BaseActivity {
     public void onViewClicked() {
         FullScreenTimeDialog dialog = new FullScreenTimeDialog(this);
         dialog.setMaxNumber(3000);
-        dialog.setCountDownListener(new FullScreenTimeDialog.CountDownListener() {
-            @Override
-            public void countDownFinish() {
-                Log.e("xxxxx","countDownFinish");
-            }
+        dialog.setCountDownListener(()->{
+            Log.e("xxxxx","countDownFinish");
         });
         dialog.show();
     }

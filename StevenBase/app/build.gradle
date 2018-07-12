@@ -1,8 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
 apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'walle'
-apply plugin: 'me.tatarka.retrolambda'
 android {
 
     compileOptions {
@@ -75,22 +73,23 @@ walle {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile project(':Base')
-    compile project(':selectordialog')
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:support-v4:26.+'
-    testCompile 'junit:junit:4.12'
-    compile 'com.jakewharton:butterknife:8.8.1'
-    apt 'com.jakewharton:butterknife-compiler:8.8.1'
-    compile 'org.greenrobot:greendao:3.0.1'
-    compile 'org.greenrobot:greendao-generator:3.0.0'
-    compile 'com.meituan.android.walle:library:1.1.6'
-    compile 'com.facebook.stetho:stetho:1.5.0'
+    testImplementation 'junit:junit:4.12'
+
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
+    implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'org.greenrobot:greendao:3.2.2'
+    implementation 'org.greenrobot:greendao-generator:3.2.2'
+    implementation 'com.meituan.android.walle:library:1.1.6'
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+    implementation project(':Base')
 }
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->
