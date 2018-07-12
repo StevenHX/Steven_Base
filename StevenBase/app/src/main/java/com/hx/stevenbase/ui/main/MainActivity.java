@@ -4,7 +4,6 @@ import android.Manifest;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.widget.Button;
-
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.FullScreenTimeDialog;
@@ -18,9 +17,7 @@ import com.hx.stevenbase.gen.DaoSession;
 import com.hx.stevenbase.gen.UserDao;
 import com.meituan.android.walle.WalleChannelReader;
 import com.orhanobut.logger.Logger;
-
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -89,7 +86,6 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.hello)
     public void onViewClicked() {
         FullScreenTimeDialog dialog = new FullScreenTimeDialog(this);
-        dialog.setImages(new int[]{R.drawable.icon_three,R.drawable.icon_two,R.drawable.icon_one});
         dialog.setMaxNumber(3000);
         dialog.setCountDownListener(new FullScreenTimeDialog.CountDownListener() {
             @Override
@@ -98,40 +94,5 @@ public class MainActivity extends BaseActivity {
             }
         });
         dialog.show();
-//        launch(MainActivity.this, LoginActivity.class);
-//        launch(MainActivity.this, SetActivity.class);
-//        ToastUtil.showCustomToast(MainActivity.this, "2333333");
-
-        //                NormalSelectionDialog selectionDialog =  new NormalSelectionDialog.Builder(MainActivity.this)
-//                        .setTitleText("消息")
-//                        .setlTitleVisible(true)
-//                        .setTitleTextColor(R.color.base_deep)
-//                        .build();
-//                ArrayList<String> data = new ArrayList<String>();
-//                data.add("1111");
-//                data.add("2222");
-//                data.add("3333");
-//                data.add("4444");
-//                 selectionDialog.setDataList(data);
-//                 selectionDialog.show();
-
-        //                new MDAlertDialog.Builder(MainActivity.this)
-//                        .setContentText("加载中...")
-//                        .setContentTextSize(30)
-//                        .setContentTextColor(R.color.base_deep)
-//                        .setOnclickListener(new DialogOnClickListener() {
-//                            @Override
-//                            public void clickLeftButton(View view) {
-//
-//                            }
-//
-//                            @Override
-//                            public void clickRightButton(View view) {
-//
-//                            }
-//                        })
-//
-//                        .build()
-//                        .show();
     }
 }

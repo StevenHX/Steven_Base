@@ -85,15 +85,11 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:support-v4:26.+'
     testCompile 'junit:junit:4.12'
-
     compile 'com.jakewharton:butterknife:8.8.1'
     apt 'com.jakewharton:butterknife-compiler:8.8.1'
-
     compile 'org.greenrobot:greendao:3.0.1'
     compile 'org.greenrobot:greendao-generator:3.0.0'
-
     compile 'com.meituan.android.walle:library:1.1.6'
-
     compile 'com.facebook.stetho:stetho:1.5.0'
 }
 configurations.all {

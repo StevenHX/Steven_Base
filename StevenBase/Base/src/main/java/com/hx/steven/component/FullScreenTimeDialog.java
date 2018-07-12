@@ -1,22 +1,22 @@
 package com.hx.steven.component;
 
-import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.res.ResourcesCompat;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.OvershootInterpolator;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * 全屏倒计时 dialog
@@ -25,12 +25,12 @@ import android.widget.RelativeLayout;
  */
 
 public class FullScreenTimeDialog extends Dialog {
-    private static final long periodtime = 1000;
-    private int[] images = new int[]{};
+    private static final long PERIODTIME = 1000;
     private Context context;
-    private ImageView numberIv;
     private int maxNumber;
+    private String lastTime;
     private CountDownTimer timer;
+    private TextView numberTextView;
     private CountDownListener countDownListener;
 
     public FullScreenTimeDialog(@NonNull Context context) {
@@ -48,14 +48,19 @@ public class FullScreenTimeDialog extends Dialog {
     }
 
     private void init() {
-        numberIv = new ImageView(context);
-        RelativeLayout relativeLayout = new RelativeLayout(context);
-        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        numberTextView = new TextView(context);
+        LinearLayout relativeLayout = new LinearLayout(context);
+        LinearLayout.LayoutParams rlp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         relativeLayout.setLayoutParams(rlp);
         relativeLayout.setGravity(Gravity.CENTER);
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        numberIv.setLayoutParams(layoutParams);
-        relativeLayout.addView(numberIv);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        numberTextView.setLayoutParams(layoutParams);
+        numberTextView.setGravity(Gravity.CENTER);
+        numberTextView.setText(String.valueOf(maxNumber/1000));
+        numberTextView.setTextColor(Color.WHITE);
+        numberTextView.setTextSize(18f);
+        numberTextView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        relativeLayout.addView(numberTextView);
         setContentView(relativeLayout);
     }
 
@@ -76,18 +81,32 @@ public class FullScreenTimeDialog extends Dialog {
     /**
      * 设置数字动画
      */
-    public void setNumberAnimation(){
-      ObjectAnimator animatorx  =  ObjectAnimator
-                .ofFloat(numberIv,"scaleX",0,1);
-      animatorx.setDuration(periodtime);
-      animatorx.setInterpolator(new OvershootInterpolator());
-      animatorx.start();
+    public void setShowNumberAnimation(){
 
-        ObjectAnimator animatory  =  ObjectAnimator
-                .ofFloat(numberIv,"scaleY",0,1);
-        animatory.setDuration(periodtime);
-        animatory.setInterpolator(new OvershootInterpolator());
-        animatory.start();
+        ValueAnimator animator1 = ValueAnimator.ofFloat(18f,210f);
+        animator1.setDuration(150);
+        animator1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float size = (float) animation.getAnimatedValue();
+                numberTextView.setTextSize(size);
+            }
+        });
+        animator1.start();
+    }
+    public void setHideNumberAnimation(){
+        ValueAnimator animator1 = ValueAnimator.ofFloat(210f,0f);
+        animator1.setDuration(100);
+        animator1.setStartDelay(PERIODTIME);
+        animator1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float size = (float) animation.getAnimatedValue();
+                numberTextView.setTextSize(size);
+                if(size == 0f) dismiss();
+            }
+        });
+        animator1.start();
     }
 
     /**
@@ -96,34 +115,26 @@ public class FullScreenTimeDialog extends Dialog {
      */
     public void setMaxNumber(final int number){
         this.maxNumber = number;
-        if(images.length != maxNumber/1000) {
-            throw new RuntimeException("图片数组与数字不匹配");
-        }
-        timer = new CountDownTimer(this.maxNumber+periodtime,periodtime) {
+        timer = new CountDownTimer(this.maxNumber+PERIODTIME,PERIODTIME) {
             @Override
             public void onTick(long millisUntilFinished) {
-                int position = images.length - (int) (millisUntilFinished/1000);
-                numberIv.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(),images[position],null));
-                setNumberAnimation();
+                 numberTextView.setText(String.valueOf (millisUntilFinished/1000));
+                if(!TextUtils.equals(lastTime,String.valueOf (millisUntilFinished/1000))) {
+                    setShowNumberAnimation();
+                }
+                lastTime = String.valueOf (millisUntilFinished/1000);
+               if(TextUtils.equals(lastTime,"1")){
+                   setHideNumberAnimation();
+                   timer.cancel();
+                   countDownListener.countDownFinish();
+                }
             }
 
             @Override
             public void onFinish() {
-                timer.cancel();
-                dismiss();
-                countDownListener.countDownFinish();
+
             }
         };
-
-    }
-
-    /**
-     * 设置图片数组
-     * 必须在设置时间前设置
-     * @param images
-     */
-    public void setImages(int[] images){
-        this.images = images;
     }
 
     @Override

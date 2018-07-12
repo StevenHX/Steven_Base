@@ -29,6 +29,10 @@
             android:theme="@style/AppTheme.Slide"/>
 
         <activity android:name=".annotation.InjectActivity"/>
+
+        <activity android:name=".ui.Welcome.WelcomeActivity">
+
+        </activity>
     </application>
 
 </manifest>

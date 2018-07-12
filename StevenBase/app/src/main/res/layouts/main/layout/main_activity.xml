@@ -35,7 +35,7 @@
 
         <com.hx.steven.component.ProgressBarView
             android:id="@+id/pbView"
-            android:layout_width="200dp"
+            android:layout_width="@dimen/x200"
             android:layout_height="200dp"
             android:visibility="gone" />
 
