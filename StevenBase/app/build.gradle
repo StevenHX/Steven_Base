@@ -91,13 +91,3 @@ dependencies {
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation project(':Base')
 }
-configurations.all {
-    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-        def requested = details.requested
-        if (requested.group == 'com.android.support') {
-            if (!requested.name.startsWith("multidex")) {
-                details.useVersion '26.1.0'
-            }
-        }
-    }
-}

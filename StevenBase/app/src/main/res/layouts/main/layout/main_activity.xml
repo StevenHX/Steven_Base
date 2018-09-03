@@ -42,6 +42,10 @@
        <com.hx.steven.component.SwipeSelectView
            android:layout_width="match_parent"
            android:layout_height="wrap_content"/>
+        <com.hx.steven.component.CommentBezierView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/base"/>
     </LinearLayout>
 
 
