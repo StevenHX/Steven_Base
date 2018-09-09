@@ -17,7 +17,6 @@ import butterknife.OnClick;
 
 public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements LoginContract.View {
     {
-        setEnableHeader(true);
         setEnableMultiple(true);
     }
 
@@ -51,7 +50,6 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter> implements Lo
     @Override
     public void initMvpView() {
         ButterKnife.bind(this);
-        setHeaderNormal("登陆","返回",null);
         loginDto = new LoginDto();
         loginName.setShakeAnimation();
     }

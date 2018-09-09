@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hx.steven.Mvp.BaseMvpModel;
 import com.hx.steven.fragment.BaseMvpLazyFragment;
-import com.hx.steven.util.LoadType;
 import com.hx.steven.util.ToastUtil;
 import com.hx.stevenbase.R;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
@@ -32,8 +31,7 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class homeFragment extends BaseMvpLazyFragment<homePresenter>
-        implements homeContract.View, BaseQuickAdapter.OnItemChildClickListener,
+public class homeFragment extends BaseMvpLazyFragment<homePresenter> implements homeContract.View, BaseQuickAdapter.OnItemChildClickListener,
         BaseQuickAdapter.OnItemClickListener {
     {
         setEnableMultiple(true);

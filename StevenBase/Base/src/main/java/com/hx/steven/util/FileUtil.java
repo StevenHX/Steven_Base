@@ -1,33 +1,50 @@
 package com.hx.steven.util;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.File;
+import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
 /**
- * Created by dashan on 2016/9/7
  * 文件计算工具类
  */
 public class FileUtil {
-
-    private static FileUtil inst;
-
-    public static FileUtil getInstance() {
-        if (inst == null) {
-            inst = new FileUtil();
-        }
-        return inst;
+    /**
+     * 针对系统文夹只需要扫描,不用插入内容提供者,不然会重复
+     *
+     * @param context  上下文
+     * @param filePath 文件路径
+     */
+    public static void scanFile(Context context, String filePath) {
+        if (!fileExists(filePath))
+            return;
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        intent.setData(Uri.fromFile(new File(filePath)));
+        context.sendBroadcast(intent);
     }
-
+    /**
+     * 文件是否存在
+     *
+     * @param filePath
+     * @return
+     */
+    public static boolean fileExists(String filePath) {
+        File file = new File(filePath);
+        return file.exists();
+    }
     /**
      * 获取指定文件夹内所有文件大小的和
      *
      * @param file file
      * @return size
      */
-    public long getFolderSize(File file) {
+    public  static long getFolderSize(File file) {
         long size = 0;
         File[] fileList = file.listFiles();
         for (File aFileList : fileList) {
@@ -46,7 +63,7 @@ public class FileUtil {
      * @param filePath       filePath
      * @param deleteThisPath deleteThisPath
      */
-    public void deleteFolderFile(String filePath, boolean deleteThisPath) {
+    public static void deleteFolderFile(String filePath, boolean deleteThisPath) {
         if (!TextUtils.isEmpty(filePath)) {
             try {
                 File file = new File(filePath);
@@ -121,4 +138,57 @@ public class FileUtil {
         }
         return sdDir.toString();
     }
+
+    // 将字符串写入到文本文件中
+    public static void writeTxtToFile(String strcontent, String filePath, String fileName) {
+        deleteFolderFile(filePath,true);
+        //生成文件夹之后，再生成文件，不然会出错
+        makeFilePath(filePath, fileName);
+
+        String strFilePath = filePath+fileName;
+        // 每次写入时，都换行写
+        String strContent = strcontent + "\r\n";
+        try {
+            File file = new File(strFilePath);
+            if (!file.exists()) {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            }
+            RandomAccessFile raf = new RandomAccessFile(file, "rwd");
+            raf.seek(file.length());
+            raf.write(strContent.getBytes());
+            raf.close();
+        } catch (Exception e) {
+            Log.e("FileUtil", "Error on write File:" + e);
+        }
+    }
+
+    // 生成文件
+    public static File makeFilePath(String filePath, String fileName) {
+        File file = null;
+        makeRootDirectory(filePath);
+        try {
+            file = new File(filePath + fileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    // 生成文件夹
+    public static void makeRootDirectory(String filePath) {
+        File file = null;
+        try {
+            file = new File(filePath);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+        } catch (Exception e) {
+            Log.i("error:", e+"");
+        }
+    }
+
 }

@@ -6,28 +6,22 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.hx.steven.R;
-import com.hx.steven.component.HeaderView;
 import com.hx.steven.component.MProgressDialog;
 import com.hx.steven.component.MultipleStatusView;
 import com.hx.steven.util.MPermissionUtil;
 
-public abstract class BaseActivity extends SlidingActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 内容视图的params
      */
     LinearLayout.LayoutParams contentParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-    /**
-     * 头部视图的params
-     */
-    LinearLayout.LayoutParams headParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     /**
      * 容器视图
      */
@@ -41,36 +35,15 @@ public abstract class BaseActivity extends SlidingActivity {
      */
     private MultipleStatusView multipleStatusView;
     /**
-     * 头部视图
-     */
-    private HeaderView headerView;
-    /**
-     * 是否显示头部
-     */
-    private boolean enableHeader;
-    /**
      * 是否显示MultipleView
      */
     private boolean enableMultiple;
-
-    protected abstract void initView();
-    protected abstract int getContentId();
-    protected void clickHeadLeft() {
-        onBackPressed();
-    }
-    protected void clickHeadRight() {
-    }
-    protected void permissionsGrant(){}
-    protected void permissionDenied(){}
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);//设置屏幕保持竖直
         initContainer();
-        setInside();
-        excuteStatesBar();
         initView();
     }
 
@@ -84,14 +57,7 @@ public abstract class BaseActivity extends SlidingActivity {
         /**初始化内容视图*/
         View layout = LayoutInflater.from(this).inflate(getContentId(), null);
         layout.setLayoutParams(contentParams);
-        /**初始化头部视图*/
-        headerView = new HeaderView(this);
-        headerView.setLayoutParams(headParams);
 
-        /**---添加视图逻辑----*/
-        if (enableHeader) {
-            mContainer.addView(headerView);
-        }
         if (enableMultiple) {
             multipleStatusView.addView(layout);
             mContainer.addView(multipleStatusView);
@@ -99,32 +65,9 @@ public abstract class BaseActivity extends SlidingActivity {
             mContainer.addView(layout);
         }
     }
+    protected abstract void initView();
 
-    /**
-     * 设置沉浸式效果
-     */
-    private void setInside() {
-        //透明状态栏
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        //透明导航栏
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-    }
-
-    /**
-     * 解决4.4设置状态栏颜色之后，布局内容嵌入状态栏位置问题
-     */
-    private void excuteStatesBar() {
-        ViewGroup mContentView = (ViewGroup) getWindow().findViewById(Window.ID_ANDROID_CONTENT);
-        View mChildView = mContentView.getChildAt(0);
-        if (mChildView != null) {
-            //注意不是设置 ContentView 的 FitsSystemWindows,
-            // 而是设置 ContentView 的第一个子 View ，预留出系统 View 的空间.
-            mChildView.setFitsSystemWindows(true);
-        }
-    }
-
-
-
+    protected abstract int getContentId();
 
     /**
      * 6.0权限
@@ -134,10 +77,6 @@ public abstract class BaseActivity extends SlidingActivity {
         MPermissionUtil.onRequestPermissionsResult(requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
-/**
- * ===================================================  设置公共方法=============================
- */
 
     /**
      * 设置需要获取的权限
@@ -154,6 +93,16 @@ public abstract class BaseActivity extends SlidingActivity {
                 permissionDenied();
             }
         });
+    }
+
+    protected void permissionsGrant() {
+    }
+
+/**
+ * ===================================================  设置公共方法=============================
+ */
+
+    protected void permissionDenied() {
     }
 
     /**
@@ -173,49 +122,6 @@ public abstract class BaseActivity extends SlidingActivity {
      */
     public void setEnableMultiple(boolean enableMultiple) {
         this.enableMultiple = enableMultiple;
-    }
-
-    /**
-     * 设置是否显示headView
-     */
-    public void setEnableHeader(boolean enableHeader) {
-        this.enableHeader = enableHeader;
-    }
-
-    /**
-     * 设置header
-     *
-     * @param title
-     * @param leftString
-     * @param rightString
-     */
-    public void setHeaderNormal(String title, String leftString, String rightString) {
-        if (!enableHeader) {
-            throw new RuntimeException("noHeaderView");
-        }
-        getHeaderView().setTitleString(title);
-        getHeaderView().setLeftString(leftString);
-        getHeaderView().setRightString(rightString);
-        getHeaderView().setOnHeadClickListener(new HeaderView.OnHeadClickListener() {
-            @Override
-            public void ClickLeft() {
-                clickHeadLeft();
-            }
-
-            @Override
-            public void ClickRight() {
-                clickHeadRight();
-            }
-        });
-    }
-
-    /**
-     * 获取headView
-     *
-     * @return
-     */
-    public HeaderView getHeaderView() {
-        return enableHeader ? headerView : null;
     }
 
 

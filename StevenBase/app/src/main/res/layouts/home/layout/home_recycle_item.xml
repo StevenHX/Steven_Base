@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="vertical"
-        android:padding="@dimen/dp_10">
+        android:padding="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -55,7 +55,7 @@
             android:gravity="center_vertical"
             android:maxLines="2"
             android:text="标题"
-            android:textSize="@dimen/medium"/>
+            android:textSize="25dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                 android:layout_centerVertical="true"
                 android:text="章节名称"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/big_small"/>
+                android:textSize="12dp"/>
 
             <ImageView
                 android:id="@+id/ivCollect"

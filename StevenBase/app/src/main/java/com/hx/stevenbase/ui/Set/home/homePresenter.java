@@ -1,7 +1,5 @@
 package com.hx.stevenbase.ui.Set.home;
 
-import com.hx.steven.util.LoadType;
-
 import java.util.List;
 
 /**

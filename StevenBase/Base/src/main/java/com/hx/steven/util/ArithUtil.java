@@ -5,7 +5,6 @@ package com.hx.steven.util;
 import java.math.BigDecimal;
 
 /**
- * Allen
  * float double 数值不能计算
  */
 @SuppressWarnings("unused")

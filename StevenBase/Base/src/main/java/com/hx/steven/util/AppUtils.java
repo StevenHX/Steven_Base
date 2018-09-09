@@ -17,12 +17,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 
-/**
- * Created by WuXiaolong
- * on 2016/3/22.
- * 微信公众号：吴小龙同学
- * 个人博客：http://wuxiaolong.me/
- */
 public class AppUtils {
 
     /**

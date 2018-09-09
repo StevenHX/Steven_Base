@@ -18,7 +18,6 @@ import butterknife.ButterKnife;
 
 public class SetActivity extends BaseActivity implements BottomBarLayout.OnItemSelectedListener {
     {
-        setEnableHeader(false);
         setEnableMultiple(false);
     }
     @BindView(R.id.set_viewpager)

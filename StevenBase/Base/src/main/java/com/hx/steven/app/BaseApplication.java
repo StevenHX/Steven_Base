@@ -1,4 +1,5 @@
 package com.hx.steven.app;
+
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
@@ -10,6 +11,9 @@ import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 
 /**
  * Created by user on 2018/1/15.
@@ -17,6 +21,7 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 
 public class BaseApplication extends Application{
     private static BaseApplication mApp;
+    public Executor mostExecutor   = Executors.newFixedThreadPool(5);
     @Override
     public void onCreate() {
         super.onCreate();
@@ -34,11 +39,11 @@ public class BaseApplication extends Application{
 
     private void initLogger() {
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
-//                .showThreadInfo(false)  // (Optional) Whether to show thread info or not. Default true
+                .showThreadInfo(true)  // (Optional) Whether to show thread info or not. Default true
 //                .methodCount(0)         // (Optional) How many method line to show. Default 2
 //                .methodOffset(7)        // (Optional) Hides internal method calls up to offset. Default 5
 //                .logStrategy(customLog) // (Optional) Changes the log strategy to print out. Default LogCat
-                .tag("HX")   // (Optional) Global tag for every log. Default PRETTY_LOGGER
+                .tag("StevenBase")   // (Optional) Global tag for every log. Default PRETTY_LOGGER
                 .build();
 
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));

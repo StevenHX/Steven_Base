@@ -117,9 +117,9 @@ public class HeaderView extends LinearLayout implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         int i = view.getId();
-        if (i == R.id.header_left) {
+        if (i == R.id.header_left || i==R.id.header_left_icon) {
             headClickListener.ClickLeft();
-        } else if (i == R.id.header_right) {
+        } else if (i == R.id.header_right || i==R.id.header_right_icon) {
             headClickListener.ClickRight();
         }
     }

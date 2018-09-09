@@ -35,10 +35,6 @@ import java.util.Map;
  * crashHandlerUtil.setCrashTip("很抱歉，程序出现异常，即将退出！");
  * }
  * }
- * Created by Administrator
- * on 2016/5/19.
- * 微信公众号：吴小龙同学
- * 个人博客：http://wuxiaolong.me/
  */
 public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
 

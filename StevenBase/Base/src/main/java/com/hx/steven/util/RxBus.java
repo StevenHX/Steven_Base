@@ -4,10 +4,6 @@ import io.reactivex.Flowable;
 import io.reactivex.processors.FlowableProcessor;
 import io.reactivex.processors.PublishProcessor;
 
-/**
- * Created by lw on 2018/1/25.
- */
-
 public class RxBus {
     private static volatile RxBus sRxBus;
     // 主题

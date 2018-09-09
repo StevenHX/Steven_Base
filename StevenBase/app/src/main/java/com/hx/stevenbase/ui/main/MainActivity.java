@@ -27,8 +27,6 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
     {
-        setEnableSliding(false);
-        setEnableHeader(true);
         setEnableMultiple(false);
     }
     @BindView(R.id.id_viewpager)
@@ -45,7 +43,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        setHeaderNormal("首页",null,null);
 
         /**瓦力多渠道打包*/
         String channel = WalleChannelReader.getChannel(this.getApplicationContext());

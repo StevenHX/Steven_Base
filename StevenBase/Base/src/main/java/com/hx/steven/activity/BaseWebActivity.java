@@ -34,7 +34,6 @@ public abstract class BaseWebActivity extends BaseActivity {
         title = getIntent().getStringExtra(TITLE);
         contractNo = getIntent().getStringExtra(CONTRACTNO);
         isshowHeader = getIntent().getBooleanExtra(ISHASHEADER,true);
-        setEnableHeader(isshowHeader);
     }
 
     @Override
