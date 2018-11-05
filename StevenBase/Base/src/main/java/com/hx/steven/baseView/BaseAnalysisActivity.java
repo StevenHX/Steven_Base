@@ -16,11 +16,11 @@ public class BaseAnalysisActivity extends DecoratorActivity {
 
     @Override
     public void showLoading(String msg) {
-        super.showLoading(msg);
+        showLoading(msg);
     }
 
     @Override
     public void dismissLoading() {
-        super.dismissLoading();
+        dismissLoading();
     }
 }

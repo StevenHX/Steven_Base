@@ -10,11 +10,11 @@
     <com.hx.steven.component.BannerView.BannerView
         android:id="@+id/bannerView_me"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x350">
+        android:layout_height="@dimen/dp_175">
     </com.hx.steven.component.BannerView.BannerView>
     <com.hx.steven.component.SubmitButton
         android:id="@+id/sbBtn_login"
-        android:layout_marginTop="@dimen/x100"
+        android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </com.hx.steven.component.SubmitButton>

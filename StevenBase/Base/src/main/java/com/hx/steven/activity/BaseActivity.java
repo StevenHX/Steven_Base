@@ -1,6 +1,7 @@
 package com.hx.steven.activity;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -13,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.hx.steven.R;
+import com.hx.steven.app.BaseApplication;
 import com.hx.steven.component.MProgressDialog;
 import com.hx.steven.component.MultipleStatusView;
 import com.hx.steven.util.MPermissionUtil;
+import com.hx.steven.util.ScreenAdaptationUtil;
 
 public abstract class BaseActivity extends AppCompatActivity {
     /**

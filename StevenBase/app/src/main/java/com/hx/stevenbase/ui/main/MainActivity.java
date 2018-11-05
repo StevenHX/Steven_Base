@@ -2,13 +2,16 @@ package com.hx.stevenbase.ui.main;
 
 import android.Manifest;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Button;
 
 import com.hx.steven.activity.BaseActivity;
+import com.hx.steven.app.BaseApplication;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.FullScreenTimeDialog;
 import com.hx.steven.component.ProgressBarView;
+import com.hx.steven.util.ScreenAdaptationUtil;
 import com.hx.steven.util.ToastUtil;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.R;
@@ -16,6 +19,7 @@ import com.hx.stevenbase.app.App;
 import com.hx.stevenbase.dataBean.User;
 import com.hx.stevenbase.gen.DaoSession;
 import com.hx.stevenbase.gen.UserDao;
+import com.hx.stevenbase.ui.Set.SetActivity;
 import com.meituan.android.walle.WalleChannelReader;
 import com.orhanobut.logger.Logger;
 
@@ -42,6 +46,17 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        // TODO: 2018/11/5 test
+        final DisplayMetrics appDisplayMetrics = App.getAppContext().getResources().getDisplayMetrics();
+        final DisplayMetrics activityDisplayMetrics = getResources().getDisplayMetrics();
+
+        Logger.d("appDensity="+appDisplayMetrics.density+",appScaledDensity="+appDisplayMetrics.scaledDensity+",appDensityDpi="+appDisplayMetrics.densityDpi);
+        Logger.d("activityDensity="+activityDisplayMetrics.density+",activityScaledDensity="+activityDisplayMetrics.scaledDensity+",activityDensityDpi="+activityDisplayMetrics.densityDpi);
+        //ScreenAdaptationUtil.SetCustomDensity(this, BaseApplication.getAppContext());
+
+        Logger.d("appDensity="+appDisplayMetrics.density+",appScaledDensity="+appDisplayMetrics.scaledDensity+",appDensityDpi="+appDisplayMetrics.densityDpi);
+        Logger.d("activityDensity="+activityDisplayMetrics.density+",activityScaledDensity="+activityDisplayMetrics.scaledDensity+",activityDensityDpi="+activityDisplayMetrics.densityDpi);
+
         ButterKnife.bind(this);
 
         /**瓦力多渠道打包*/
@@ -85,11 +100,12 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.hello)
     public void onViewClicked() {
-        FullScreenTimeDialog dialog = new FullScreenTimeDialog(this);
-        dialog.setMaxNumber(3000);
-        dialog.setCountDownListener(()->{
-            Log.e("xxxxx","countDownFinish");
-        });
-        dialog.show();
+//        FullScreenTimeDialog dialog = new FullScreenTimeDialog(this);
+//        dialog.setMaxNumber(3000);
+//        dialog.setCountDownListener(()->{
+//            Log.e("xxxxx","countDownFinish");
+//        });
+//        dialog.show();
+        launch(this, SetActivity.class);
     }
 }

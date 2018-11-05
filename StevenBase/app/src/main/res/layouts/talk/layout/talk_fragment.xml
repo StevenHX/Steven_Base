@@ -1,12 +1,10 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hx.stevenbase.ui.Set.talk.talkFragment"
     android:background="@color/white">
-
-    <com.lcodecore.tkrefreshlayout.header.bezierlayout.WaveView
-        android:layout_width="@dimen/x100"
-        android:layout_height="@dimen/x100"/>
-
-</FrameLayout>
+    <ImageView
+        android:id="@+id/img"
+        android:src="@color/colorAccent"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100" />
+</RelativeLayout>

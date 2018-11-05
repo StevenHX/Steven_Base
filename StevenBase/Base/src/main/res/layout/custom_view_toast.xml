@@ -7,10 +7,10 @@
     <TextView
         android:id="@+id/custom_toast_tv"
         android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
         android:layout_width="wrap_content"
-        android:layout_height="64dp"
+        android:layout_height="@dimen/dp_64"
         android:background="@drawable/custom_toast_bg"
         android:textSize="23sp"
         android:textColor="#ffffff">

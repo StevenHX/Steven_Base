@@ -36,7 +36,7 @@ public class WindowUtil {
      * @param context Context
      * @return 屏幕的高
      */
-    public int getScreenHeight(Context context) {
+    public static int getScreenHeight(Context context) {
         if (context == null) {
             return 0;
         }
