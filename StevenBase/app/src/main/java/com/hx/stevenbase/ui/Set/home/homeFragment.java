@@ -1,9 +1,9 @@
 package com.hx.stevenbase.ui.Set.home;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -78,20 +78,12 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter> implements 
             }
         });
         /**设置状态视图，错误时点击重试*/
-        getMultipleStatusView().setOnRetryClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLoding("加载中");
-                mPresenter.reFresh();
-            }
+        getMultipleStatusView().setOnRetryClickListener(view1 -> {
+            showLoding("加载中");
+            mPresenter.reFresh();
         });
         /**banner Item点击事件*/
-        mBannerAds.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                ToastUtil.showToast(context, "bannerClick");
-            }
-        });
+        mBannerAds.setOnBannerListener(position -> ToastUtil.showToast(context, "bannerClick"));
     }
 
     @Override

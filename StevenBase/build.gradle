@@ -5,30 +5,21 @@ buildscript {
         jcenter()
         mavenCentral()
         google()
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
-        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
-        classpath 'com.meituan.android.walle:plugin:1.1.6'
+        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath "io.realm:realm-gradle-plugin:5.15.1"
     }
 }
 
 allprojects {
     repositories {
         jcenter()
-        maven { url 'https://jitpack.io' }
-        google()
-    }
-
-    configurations.all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            def requested = details.requested
-            if (requested.group == 'com.android.support') {
-                if (!requested.name.startsWith("multidex")) {
-                    details.useVersion '26.1.0'
-                }
-            }
+        maven {
+            url 'https://jitpack.io'
         }
+        google()
     }
 }
 

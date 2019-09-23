@@ -1,15 +1,12 @@
 package com.hx.stevenbase.ui.Set.talk;
 
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import androidx.fragment.app.Fragment;
+
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.hx.steven.fragment.BaseLazyFragment;
-import com.hx.steven.util.AppUtils;
 import com.hx.steven.util.WindowUtil;
 import com.hx.stevenbase.R;
 import com.orhanobut.logger.Logger;

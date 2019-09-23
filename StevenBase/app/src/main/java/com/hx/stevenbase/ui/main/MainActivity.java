@@ -1,33 +1,31 @@
 package com.hx.stevenbase.ui.main;
 
 import android.Manifest;
-import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.viewpager.widget.ViewPager;
 
 import com.hx.steven.activity.BaseActivity;
-import com.hx.steven.app.BaseApplication;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
-import com.hx.steven.component.FullScreenTimeDialog;
 import com.hx.steven.component.ProgressBarView;
-import com.hx.steven.util.ScreenAdaptationUtil;
-import com.hx.steven.util.ToastUtil;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.R;
-import com.hx.stevenbase.app.App;
-import com.hx.stevenbase.dataBean.User;
-import com.hx.stevenbase.gen.DaoSession;
-import com.hx.stevenbase.gen.UserDao;
+import com.hx.stevenbase.Realm.UserDB;
 import com.hx.stevenbase.ui.Set.SetActivity;
-import com.meituan.android.walle.WalleChannelReader;
 import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 public class MainActivity extends BaseActivity {
     {
@@ -42,43 +40,24 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.pbView)
     ProgressBarView pbView;
 
-    private DaoSession daoSession;
-
+   private Realm realm;
     @Override
     protected void initView() {
-        // TODO: 2018/11/5 test
-        final DisplayMetrics appDisplayMetrics = App.getAppContext().getResources().getDisplayMetrics();
-        final DisplayMetrics activityDisplayMetrics = getResources().getDisplayMetrics();
-
-        Logger.d("appDensity="+appDisplayMetrics.density+",appScaledDensity="+appDisplayMetrics.scaledDensity+",appDensityDpi="+appDisplayMetrics.densityDpi);
-        Logger.d("activityDensity="+activityDisplayMetrics.density+",activityScaledDensity="+activityDisplayMetrics.scaledDensity+",activityDensityDpi="+activityDisplayMetrics.densityDpi);
-        //ScreenAdaptationUtil.SetCustomDensity(this, BaseApplication.getAppContext());
-
-        Logger.d("appDensity="+appDisplayMetrics.density+",appScaledDensity="+appDisplayMetrics.scaledDensity+",appDensityDpi="+appDisplayMetrics.densityDpi);
-        Logger.d("activityDensity="+activityDisplayMetrics.density+",activityScaledDensity="+activityDisplayMetrics.scaledDensity+",activityDensityDpi="+activityDisplayMetrics.densityDpi);
-
         ButterKnife.bind(this);
-
-        /**瓦力多渠道打包*/
-        String channel = WalleChannelReader.getChannel(this.getApplicationContext());
-        ToastUtil.showToast(this, channel);
-        /**greenDao数据库操作*/
-        User userone = new User(null, "hx", 25);
-        daoSession = App.getDaoSession();
-        try {
-            daoSession.getUserDao().insert(userone);
-        } catch (Exception e) {
-            ToastUtil.showToast(this, "插入数据失败");
-        }
-        ToastUtil.showToast(this,"插入成功");
-
-        List<User> users = daoSession.getUserDao().queryBuilder().where(UserDao.Properties.Age.eq(25)).list();
-        Logger.d(users.get(0).getName());
+        /**初始化Realm*/
+        Realm.init(this);
+        //实例化数据库
+        RealmConfiguration config=new RealmConfiguration.Builder()
+                .name("UserRealm.realm")//文件名
+                .encryptionKey(new byte[64])//加密用字段,不是64位会报错
+                .schemaVersion(0)//版本号
+                .build();
+        realm = Realm.getInstance(config);
 
         RequestPermissions(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         /**viewPager变换操作*/
-        viewPager = (ViewPager) findViewById(R.id.id_viewpager);
+        viewPager = findViewById(R.id.id_viewpager);
         viewPager.setOffscreenPageLimit(3);
         adapter = new pageAdapter(this, images);
         viewPager.setPageTransformer(false, new ScaleInTransformer());
@@ -87,6 +66,12 @@ public class MainActivity extends BaseActivity {
         /**自定义progressView*/
         pbView.setMax(100);
         pbView.setProgress(43);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
     }
 
     private pageAdapter adapter;
@@ -107,5 +92,35 @@ public class MainActivity extends BaseActivity {
 //        });
 //        dialog.show();
         launch(this, SetActivity.class);
+        realmInsert(realm);
+        List<Map<String, Object>> data = getData();
+        Logger.d(data);
+    }
+
+
+    //增
+    private void realmInsert(Realm realm){
+        realm.beginTransaction();//开启事务
+        UserDB user=realm.createObject(UserDB.class);
+        user.setUserName("hxxxx");
+        user.setPassWord("21321412");
+        realm.commitTransaction();//提交事务
+    }
+
+    //查
+    private List<Map<String, Object>> getData() {
+        RealmResults<UserDB> userList = realm.where(UserDB.class)
+                .findAll();
+        List<Map<String, Object>> list= new ArrayList<>();
+        HashMap<String,Object> map;
+        for (int i = 0; i < userList.size(); i++) {
+            String lv_username = userList.get(i).getUserName();
+            String lv_password = userList.get(i).getPassWord();
+            map= new HashMap<>();
+            map.put("username",lv_username);
+            map.put("password",lv_password);
+            list.add(map);
+        }
+        return list;
     }
 }

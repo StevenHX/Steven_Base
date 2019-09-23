@@ -1,7 +1,6 @@
 package com.hx.steven.baseView;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * activity 装饰抽象父类

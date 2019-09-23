@@ -1,6 +1,6 @@
 package com.hx.stevenbase.ui.Set;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.BottomBar.BottomBarItem;
 import com.hx.steven.component.BottomBar.BottomBarLayout;
