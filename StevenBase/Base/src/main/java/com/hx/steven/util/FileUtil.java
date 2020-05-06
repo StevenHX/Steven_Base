@@ -1,13 +1,12 @@
 package com.hx.steven.util;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Log;
+
+import com.hx.steven.BuildConfig;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
@@ -15,36 +14,80 @@ import java.math.BigDecimal;
  * 文件计算工具类
  */
 public class FileUtil {
+
     /**
-     * 针对系统文夹只需要扫描,不用插入内容提供者,不然会重复
-     *
-     * @param context  上下文
-     * @param filePath 文件路径
+     * 判断sd卡是否挂载
      */
-    public static void scanFile(Context context, String filePath) {
-        if (!fileExists(filePath))
-            return;
-        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        intent.setData(Uri.fromFile(new File(filePath)));
-        context.sendBroadcast(intent);
+    private static boolean isSDMounted() {
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
+
     /**
-     * 文件是否存在
+     * 获取根目录下app的目录
      *
-     * @param filePath
      * @return
      */
-    public static boolean fileExists(String filePath) {
-        File file = new File(filePath);
-        return file.exists();
+    private static File getExternalStorageAppDirectory() {
+        if (isSDMounted()) {
+            File sdFile = Environment.getExternalStorageDirectory();
+            String appName = BuildConfig.APPLICATION_ID;
+            File appDir = new File(sdFile, appName);
+            if (!appDir.exists()) {
+                appDir.mkdirs();
+            }
+            return appDir;
+        }
+        return null;
     }
+
+    /**
+     * 获取保存的文件路径
+     */
+    private static File getSaveFile(String fileName) throws Exception {
+        File appDir = getExternalStorageAppDirectory();
+        if (appDir == null) throw new Exception("sdCard not mounted");
+        File dataFile = new File(appDir, fileName);
+        if (!dataFile.exists()) {
+            dataFile.createNewFile();
+        }
+        return dataFile;
+    }
+
+    /**
+     * 保存文件到根目录app名称文件夹下的目录
+     */
+    public static void saveFile2ExternalAppDirectory(String fileName, String content) throws Exception {
+        File file = getSaveFile(fileName);
+        String strContent = content + "\r\n";
+        RandomAccessFile raf = new RandomAccessFile(file, "rwd");
+        raf.seek(file.length());
+        raf.write(strContent.getBytes());
+        raf.close();
+    }
+
+    /**
+     * 从指定目录，读取文件内容 默认从根目录appID文件夹下读取
+     */
+    public static String getContentFromAppDirectory(String fileName) throws IOException {
+        File file = getExternalStorageAppDirectory();
+        File dataFile = new File(file, fileName);
+        RandomAccessFile raf = new RandomAccessFile(dataFile, "rw");
+        StringBuilder builder = new StringBuilder();
+        String content;
+        while ((content = raf.readLine()) != null) {
+            builder.append(content);
+            builder.append("\n");
+        }
+        return builder.toString();
+    }
+
     /**
      * 获取指定文件夹内所有文件大小的和
      *
      * @param file file
      * @return size
      */
-    public  static long getFolderSize(File file) {
+    public static long getFolderSize(File file) {
         long size = 0;
         File[] fileList = file.listFiles();
         for (File aFileList : fileList) {
@@ -95,24 +138,17 @@ public class FileUtil {
      * @return size
      */
     public static String getFormatSize(long size) {
-
         long kiloByte = size / 1024;
-//        if (kiloByte < 1) {
-//            return size + "Byte";
-//        }
-
         long megaByte = kiloByte / 1024;
         if (megaByte < 1) {
             BigDecimal result1 = new BigDecimal(Long.toString(kiloByte));
             return result1.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "KB";
         }
-
         long gigaByte = megaByte / 1024;
         if (gigaByte < 1) {
             BigDecimal result2 = new BigDecimal(Long.toString(megaByte));
             return result2.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "MB";
         }
-
         long teraBytes = gigaByte / 1024;
         if (teraBytes < 1) {
             BigDecimal result3 = new BigDecimal(Long.toString(gigaByte));
@@ -122,73 +158,4 @@ public class FileUtil {
 
         return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";
     }
-
-
-    /**
-     * 获取SD卡路径
-     * @return
-     */
-    public static String getSDPath(){
-        File sdDir = null;
-        boolean sdCardExist = Environment.getExternalStorageState()
-                .equals(android.os.Environment.MEDIA_MOUNTED); //判断sd卡是否存在
-        if (sdCardExist)
-        {
-            sdDir = Environment.getExternalStorageDirectory();//获取跟目录
-        }
-        return sdDir.toString();
-    }
-
-    // 将字符串写入到文本文件中
-    public static void writeTxtToFile(String strcontent, String filePath, String fileName) {
-        deleteFolderFile(filePath,true);
-        //生成文件夹之后，再生成文件，不然会出错
-        makeFilePath(filePath, fileName);
-
-        String strFilePath = filePath+fileName;
-        // 每次写入时，都换行写
-        String strContent = strcontent + "\r\n";
-        try {
-            File file = new File(strFilePath);
-            if (!file.exists()) {
-                file.getParentFile().mkdirs();
-                file.createNewFile();
-            }
-            RandomAccessFile raf = new RandomAccessFile(file, "rwd");
-            raf.seek(file.length());
-            raf.write(strContent.getBytes());
-            raf.close();
-        } catch (Exception e) {
-            Log.e("FileUtil", "Error on write File:" + e);
-        }
-    }
-
-    // 生成文件
-    public static File makeFilePath(String filePath, String fileName) {
-        File file = null;
-        makeRootDirectory(filePath);
-        try {
-            file = new File(filePath + fileName);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return file;
-    }
-
-    // 生成文件夹
-    public static void makeRootDirectory(String filePath) {
-        File file = null;
-        try {
-            file = new File(filePath);
-            if (!file.exists()) {
-                file.mkdir();
-            }
-        } catch (Exception e) {
-            Log.i("error:", e+"");
-        }
-    }
-
 }

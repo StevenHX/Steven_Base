@@ -2,7 +2,6 @@ package com.hx.stevenbase.ui.main;
 
 import android.Manifest;
 import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.viewpager.widget.ViewPager;
 
@@ -12,8 +11,6 @@ import com.hx.steven.component.ProgressBarView;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.Realm.UserDB;
-import com.hx.stevenbase.ui.Set.SetActivity;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +28,7 @@ public class MainActivity extends BaseActivity {
     {
         setEnableMultiple(false);
     }
+
     @BindView(R.id.id_viewpager)
     ViewPager viewPager;
     @BindView(R.id.hello)
@@ -40,14 +38,15 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.pbView)
     ProgressBarView pbView;
 
-   private Realm realm;
+    private Realm realm;
+
     @Override
     protected void initView() {
         ButterKnife.bind(this);
         /**初始化Realm*/
         Realm.init(this);
         //实例化数据库
-        RealmConfiguration config=new RealmConfiguration.Builder()
+        RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("UserRealm.realm")//文件名
                 .encryptionKey(new byte[64])//加密用字段,不是64位会报错
                 .schemaVersion(0)//版本号
@@ -91,17 +90,17 @@ public class MainActivity extends BaseActivity {
 //            Log.e("xxxxx","countDownFinish");
 //        });
 //        dialog.show();
-        launch(this, SetActivity.class);
-        realmInsert(realm);
-        List<Map<String, Object>> data = getData();
-        Logger.d(data);
+//        launch(this, SetActivity.class);
+//        realmInsert(realm);
+//        List<Map<String, Object>> data = getData();
+//        Logger.d(data);
     }
 
 
     //增
-    private void realmInsert(Realm realm){
+    private void realmInsert(Realm realm) {
         realm.beginTransaction();//开启事务
-        UserDB user=realm.createObject(UserDB.class);
+        UserDB user = realm.createObject(UserDB.class);
         user.setUserName("hxxxx");
         user.setPassWord("21321412");
         realm.commitTransaction();//提交事务
@@ -111,14 +110,14 @@ public class MainActivity extends BaseActivity {
     private List<Map<String, Object>> getData() {
         RealmResults<UserDB> userList = realm.where(UserDB.class)
                 .findAll();
-        List<Map<String, Object>> list= new ArrayList<>();
-        HashMap<String,Object> map;
+        List<Map<String, Object>> list = new ArrayList<>();
+        HashMap<String, Object> map;
         for (int i = 0; i < userList.size(); i++) {
             String lv_username = userList.get(i).getUserName();
             String lv_password = userList.get(i).getPassWord();
-            map= new HashMap<>();
-            map.put("username",lv_username);
-            map.put("password",lv_password);
+            map = new HashMap<>();
+            map.put("username", lv_username);
+            map.put("password", lv_password);
             list.add(map);
         }
         return list;
