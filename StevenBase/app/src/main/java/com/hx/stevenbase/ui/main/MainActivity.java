@@ -8,9 +8,15 @@ import androidx.viewpager.widget.ViewPager;
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.ProgressBarView;
+import com.hx.steven.http.BaseApiService;
+import com.hx.steven.http.BaseBean;
+import com.hx.steven.manager.RetrofitNetManager;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.Realm.UserDB;
+import com.hx.stevenbase.http.ApiService;
+import com.hx.stevenbase.http.HttpCallback;
+import com.hx.stevenbase.ui.Set.home.homeBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +29,8 @@ import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
 
 public class MainActivity extends BaseActivity {
     {
@@ -94,6 +102,24 @@ public class MainActivity extends BaseActivity {
 //        realmInsert(realm);
 //        List<Map<String, Object>> data = getData();
 //        Logger.d(data);
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        HttpLoggingInterceptor logging2 = new HttpLoggingInterceptor();
+        logging2.setLevel(HttpLoggingInterceptor.Level.BASIC);
+
+        RetrofitNetManager.getInstance().init("http://www.baidu.com",logging,logging2);
+        ApiService apiService = (ApiService) RetrofitNetManager.getInstance().getApiService();
+        apiService.getHomeArticles(0).enqueue(new HttpCallback<homeBean>() {
+            @Override
+            public void onSuccess(homeBean result) {
+
+            }
+
+            @Override
+            public void onFail(Call<BaseBean<homeBean>> call, Throwable t) {
+
+            }
+        });
     }
 
 

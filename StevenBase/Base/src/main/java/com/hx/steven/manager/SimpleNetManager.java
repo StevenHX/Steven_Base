@@ -11,19 +11,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 网络请求管理类
+ * 简单网络请求管理类
  *
  * @author hx
  */
-public class HttpNetManager {
-    private static final String TAG = "HttpNetManager";
-    private static HttpNetManager instance;
+public class SimpleNetManager {
+    private static final String TAG = "SimpleNetManager";
+    private static SimpleNetManager instance;
 
-    public static HttpNetManager getInstance() {
+    public static SimpleNetManager getInstance() {
         if (instance == null) {
-            synchronized (HttpNetManager.class) {
+            synchronized (SimpleNetManager.class) {
                 if (instance == null) {
-                    instance = new HttpNetManager();
+                    instance = new SimpleNetManager();
                 }
             }
         }
