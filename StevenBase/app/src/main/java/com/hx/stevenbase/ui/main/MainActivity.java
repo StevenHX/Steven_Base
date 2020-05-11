@@ -16,6 +16,7 @@ import com.hx.stevenbase.R;
 import com.hx.stevenbase.Realm.UserDB;
 import com.hx.stevenbase.http.ApiService;
 import com.hx.stevenbase.http.HttpCallback;
+import com.hx.stevenbase.ui.Set.SetActivity;
 import com.hx.stevenbase.ui.Set.home.homeBean;
 
 import java.util.ArrayList;
@@ -98,28 +99,7 @@ public class MainActivity extends BaseActivity {
 //            Log.e("xxxxx","countDownFinish");
 //        });
 //        dialog.show();
-//        launch(this, SetActivity.class);
-//        realmInsert(realm);
-//        List<Map<String, Object>> data = getData();
-//        Logger.d(data);
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
-        HttpLoggingInterceptor logging2 = new HttpLoggingInterceptor();
-        logging2.setLevel(HttpLoggingInterceptor.Level.BASIC);
-
-        RetrofitNetManager.getInstance().init("http://www.baidu.com",logging,logging2);
-        ApiService apiService = (ApiService) RetrofitNetManager.getInstance().getApiService();
-        apiService.getHomeArticles(0).enqueue(new HttpCallback<homeBean>() {
-            @Override
-            public void onSuccess(homeBean result) {
-
-            }
-
-            @Override
-            public void onFail(Call<BaseBean<homeBean>> call, Throwable t) {
-
-            }
-        });
+        launch(this, WebActivity.class);
     }
 
 

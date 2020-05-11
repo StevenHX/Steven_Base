@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
+import com.hx.steven.manager.X5WebManager;
 import com.hx.steven.util.ActivityManagerUtil;
 import com.hx.steven.util.CrashHandlerUtil;
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -21,7 +22,6 @@ import java.util.concurrent.Executors;
 
 public class BaseApplication extends Application{
     private static BaseApplication mApp;
-    public Executor mostExecutor   = Executors.newFixedThreadPool(5);
     @Override
     public void onCreate() {
         super.onCreate();
@@ -35,6 +35,10 @@ public class BaseApplication extends Application{
          * 初始化logger
          */
         initLogger();
+        /**
+         * 初始化x5
+         */
+        X5WebManager.getInstance().initX5WebView();
     }
 
     private void initLogger() {

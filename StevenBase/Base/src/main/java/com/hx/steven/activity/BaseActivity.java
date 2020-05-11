@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,20 +53,21 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(R.layout.base_activity);
         mContainer = (ViewGroup) findViewById(R.id.base_container);
 
-        /**初始化多状态视图*/
-        multipleStatusView = new MultipleStatusView(this);
-        multipleStatusView.setLayoutParams(contentParams);
         /**初始化内容视图*/
         View layout = LayoutInflater.from(this).inflate(getContentId(), null);
         layout.setLayoutParams(contentParams);
 
         if (enableMultiple) {
+            /**初始化多状态视图*/
+            multipleStatusView = new MultipleStatusView(this);
+            multipleStatusView.setLayoutParams(contentParams);
             multipleStatusView.addView(layout);
             mContainer.addView(multipleStatusView);
         } else {
             mContainer.addView(layout);
         }
     }
+
     protected abstract void initView();
 
     protected abstract int getContentId();
@@ -98,9 +101,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void permissionsGrant() {
     }
 
-/**
- * ===================================================  设置公共方法=============================
- */
+    /**
+     * ===================================================  设置公共方法=============================
+     */
 
     protected void permissionDenied() {
     }

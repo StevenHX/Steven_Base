@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hx.stevenbase">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -15,6 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.main.WebActivity">
+        </activity>
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,17 +19,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.Login.LoginActivity"
-            android:theme="@style/AppTheme.Slide"/>
-
-        <activity android:name=".ui.Set.SetActivity"
-            android:theme="@style/AppTheme.Slide"/>
-
-        <activity android:name=".annotation.InjectActivity"/>
-
-        <activity android:name=".ui.Welcome.WelcomeActivity">
-
-        </activity>
+        <activity
+            android:name=".ui.Login.LoginActivity"
+            android:theme="@style/AppTheme.Slide" />
+        <activity
+            android:name=".ui.Set.SetActivity"
+            android:theme="@style/AppTheme.Slide" />
+        <activity android:name=".annotation.InjectActivity" />
+        <activity android:name=".ui.Welcome.WelcomeActivity" />
     </application>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
