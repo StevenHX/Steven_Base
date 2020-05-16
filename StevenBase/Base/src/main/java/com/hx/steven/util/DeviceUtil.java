@@ -29,7 +29,7 @@ public class DeviceUtil {
      * @return
      */
     public static String getVersionName(Context context) {
-        String versionName = null ;
+        String versionName = null;
         try {
             PackageManager packageManager = context.getPackageManager();
             PackageInfo packInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
@@ -67,6 +67,7 @@ public class DeviceUtil {
     public static String getPhoneBrand() {
         return android.os.Build.BRAND;
     }
+
     /**
      * 获取手机型号
      *
@@ -75,6 +76,7 @@ public class DeviceUtil {
     public static String getPhoneModel() {
         return android.os.Build.MODEL;
     }
+
     /**
      * 获取手机Android API等级（22、23 ...）
      *
@@ -83,6 +85,7 @@ public class DeviceUtil {
     public static int getBuildLevel() {
         return android.os.Build.VERSION.SDK_INT;
     }
+
     /**
      * 获取手机Android 版本（4.4、5.0、5.1 ...）
      *
@@ -94,6 +97,7 @@ public class DeviceUtil {
 
     /**
      * 得到手机ipv4地址
+     *
      * @param context
      * @return
      */
@@ -120,11 +124,8 @@ public class DeviceUtil {
             } else if (info.getType() == ConnectivityManager.TYPE_WIFI) {//当前使用无线网络
                 WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                 WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-                String ipAddress = intIP2StringIP(wifiInfo.getIpAddress());//得到IPV4地址
-                return ipAddress;
+                return intIP2StringIP(wifiInfo.getIpAddress());//得到IPV4地址;
             }
-        } else {
-            //当前无网络连接,请在设置中打开网络
         }
         return null;
     }
@@ -138,6 +139,7 @@ public class DeviceUtil {
 
     /**
      * 通过网络接口取  获取手机MAC地址
+     *
      * @return
      */
     public static String getNewMac() {
@@ -179,6 +181,7 @@ public class DeviceUtil {
         }
         return false;
     }
+
     private static String getSystemProperty(String name) throws Exception {
         Class systemPropertyClazz = Class.forName("android.os.SystemProperties");
         return (String) systemPropertyClazz.getMethod("get", new Class[]{String.class})
@@ -189,8 +192,8 @@ public class DeviceUtil {
     /**
      * 判断APP是不是运行在模拟器  综合判断是不是 模拟器
      */
-    public static boolean isSimulate(){
-        if(checkNormal()){
+    public static boolean isSimulate() {
+        if (checkNormal()) {
             return true;
         }
         return false;

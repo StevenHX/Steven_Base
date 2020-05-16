@@ -64,7 +64,7 @@ publish {
     userOrg = 'horizonsteven'
     groupId = 'com.hx.steven'
     artifactId = 'StevenBase'
-    publishVersion = '1.0.0'
+    publishVersion = '1.0.1'
     desc = 'novoad bintraybuild project'
     website = 'https://github.com/you project'
 }

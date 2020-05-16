@@ -8,8 +8,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import androidx.core.app.ActivityCompat;
 import android.view.inputmethod.InputMethodManager;
+
+import androidx.core.app.ActivityCompat;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -21,11 +22,12 @@ public class AppUtils {
 
     /**
      * 以最小内存读取本地资源图片
+     *
      * @param context
      * @param bitmapResId
      * @return
      */
-    public static Bitmap readBitmap(Context context, int bitmapResId){
+    public static Bitmap readBitmap(Context context, int bitmapResId) {
         BitmapFactory.Options opt = new BitmapFactory.Options();
         opt.inPreferredConfig = Bitmap.Config.RGB_565;
         opt.inPurgeable = true;
@@ -33,6 +35,7 @@ public class AppUtils {
         InputStream is = context.getResources().openRawResource(bitmapResId);
         return BitmapFactory.decodeStream(is, null, opt);
     }
+
     /**
      * 关闭键盘
      *
@@ -118,7 +121,6 @@ public class AppUtils {
         intent.setAction(Intent.ACTION_CALL);// 直接拨号
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             context.startActivity(intent);
-            return;
         }
     }
 
@@ -133,25 +135,38 @@ public class AppUtils {
         intent.setAction(Intent.ACTION_DIAL);// 拨号盘
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             context.startActivity(intent);
-            return;
         }
     }
 
+    /**
+     * 将dp值转换为px值
+     *
+     * @param dipValue
+     * @return
+     */
     public static int dip2px(Context context, float dipValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);
     }
+
+    /**
+     * 将px值转换为dp值
+     *
+     * @param pxValue
+     * @return
+     */
     public static int px2dip(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
+
     /**
      * 将sp值转换为px值，保证文字大小不变
      *
      * @param spValue
      * @return
      */
-    public static int sp2px(Context context,float spValue) {
+    public static int sp2px(Context context, float spValue) {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
     }

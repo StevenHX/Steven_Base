@@ -5,9 +5,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *   ^((13[4-9])|(147)|(15[0-2,7-9])|(178)|(18[2-4,7-8]))\\d{8}|(1705)\\d{7}$
- *   ^((13[0-2])|(145)|(15[5-6])|(176)|(18[5,6]))\\d{8}|(1709)\\d{7}$
- *   ^((133)|(153)|(177)|(18[0,1,9]))\\d{8}$
+ * ^((13[4-9])|(147)|(15[0-2,7-9])|(178)|(18[2-4,7-8]))\\d{8}|(1705)\\d{7}$
+ * ^((13[0-2])|(145)|(15[5-6])|(176)|(18[5,6]))\\d{8}|(1709)\\d{7}$
+ * ^((133)|(153)|(177)|(18[0,1,9]))\\d{8}$
  */
 
 public class RegexUtil {
@@ -33,7 +33,7 @@ public class RegexUtil {
      * @param cardId 卡号
      * @return 星号替换的银行卡号
      */
-    public static String cardIdHide(String cardId) {
+    public static String bankCardIdNoHide(String cardId) {
         return cardId.replaceAll("\\d{15}(\\d{3})", "**** **** **** **** $1");
     }
 
@@ -43,14 +43,19 @@ public class RegexUtil {
      * @param id 身份证号
      * @return 星号替换的身份证号
      */
-    public static String idHide(String id) {
+    public static String idCardNoHide(String id) {
         return id.replaceAll("(\\d{4})\\d{10}(\\d{4})", "$1** **** ****$2");
     }
 
-
-    public static boolean Phone(String phone) {
+    /**
+     * 判断是否是手机号
+     *
+     * @param phone
+     * @return
+     */
+    public static boolean isPhoneNo(String phone) {
         Pattern p1 = Pattern
-                .compile("^((13[4-9])|(147)|(15[0-2,7-9])|(178)|(18[2-4,7-8]))\\d{8}|(1705)\\d{7}$");
+                .compile("^((13[4-9])|(147)|(15[0-2,7-9])|(178)|(18[2-4,7-8])|(199))\\d{8}|(1705)\\d{7}$");
         Matcher m1 = p1.matcher(phone);
 
         Pattern p2 = Pattern
@@ -60,19 +65,16 @@ public class RegexUtil {
         Pattern p3 = Pattern
                 .compile("^((133)|(153)|(177)|(18[0,1,9]))\\d{8}$");
         Matcher m3 = p3.matcher(phone);
-        if (m1.matches() || m2.matches() || m3.matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return m1.matches() || m2.matches() || m3.matches();
     }
 
     /**
      * 6到16位数字加字母组合
+     *
      * @param pwd
      * @return
      */
-    public static boolean LoginPwd(String pwd) {
+    public static boolean isPwdValid(String pwd) {
         Pattern p = Pattern
                 .compile("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$");
         Matcher m = p.matcher(pwd);
@@ -81,6 +83,7 @@ public class RegexUtil {
 
     /**
      * 邮箱
+     *
      * @param str
      * @return
      */
@@ -101,7 +104,7 @@ public class RegexUtil {
      *              <p><b>电话号码：</b>这包含从 0 到 9 的一个或多个数字 </p>
      * @return 验证成功返回true，验证失败返回false
      */
-    public static boolean checkPhone(String phone) {
+    public static boolean isHomePhoneNo(String phone) {
         String regex = "(\\+\\d+)?(\\d{3,4}\\-?)?\\d{7,8}$";
         return Pattern.matches(regex, phone);
     }
@@ -112,7 +115,7 @@ public class RegexUtil {
      * @param str
      * @return
      */
-    public static boolean ContainChinese(String str) {
+    public static boolean isContainChinese(String str) {
         Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
         Matcher m = p.matcher(str);
         if (m.find()) {
@@ -120,16 +123,17 @@ public class RegexUtil {
         }
         return false;
     }
+
     /**
      * 判断一个字符串是否全是中文
      */
-    public static boolean AllChinese(String str){
+    public static boolean isAllChinese(String str) {
         Pattern p = Pattern.compile("[\u4e00-\u9fa5]+");
         Matcher m = p.matcher(str);
         if (m.matches()) {
             return true;
         }
-         return false;
+        return false;
     }
 
     /**
@@ -138,7 +142,7 @@ public class RegexUtil {
      * @param str
      * @return
      */
-    public static boolean ContainNumber(String str) {
+    public static boolean isContainNumber(String str) {
         boolean flag = false;
         Pattern p = Pattern.compile(".*\\d+.*");
         Matcher m = p.matcher(str);
@@ -150,18 +154,19 @@ public class RegexUtil {
     /**
      * 判断一个字符串是否包含 *
      */
-    public static boolean ContainXing(String str){
+    public static boolean isContainXing(String str) {
         Pattern p = Pattern.compile(".*\\*.*");
         Matcher m = p.matcher(str);
-        if (m.matches()){
+        if (m.matches()) {
             return true;
         }
         return false;
     }
+
     /**
      * 校验身份证 的合法性  十八位身份证
      */
-    public  static  boolean IDCard(String str){
+    public static boolean isIDCardNo(String str) {
         Pattern p = Pattern.compile("^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$");
         Matcher m = p.matcher(str);
         if (m.matches()) {
