@@ -3,34 +3,33 @@ package com.hx.steven.app;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.util.Log;
 
-import com.hx.steven.manager.X5WebManager;
 import com.hx.steven.util.ActivityManagerUtil;
 import com.hx.steven.util.CrashHandlerUtil;
+import com.hx.steven.manager.WxManager;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
+import com.tencent.smtt.export.external.TbsCoreSettings;
+import com.tencent.smtt.sdk.QbSdk;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.HashMap;
 
 
 /**
  * Created by user on 2018/1/15.
  */
 
-public class BaseApplication extends Application{
+public class BaseApplication extends Application {
+    private static final String TAG = "BaseApplication";
     private static BaseApplication mApp;
+
     @Override
     public void onCreate() {
         super.onCreate();
         mApp = this;
-        CrashHandlerUtil crashHandlerUtil = CrashHandlerUtil.getInstance();
-        crashHandlerUtil.init(this);
-        crashHandlerUtil.setCrashTip("很抱歉，程序出现异常，即将退出！");
-
-        registerActivityLifecycleCallbacks(new SwitchBackgroundCallbacks());
         /**
          * 初始化logger
          */
@@ -38,7 +37,17 @@ public class BaseApplication extends Application{
         /**
          * 初始化x5
          */
-        X5WebManager.getInstance().initX5WebView();
+        initX5WebView();
+        /**
+         * 初始化微信
+         */
+        WxManager.getInstance().regToWx();
+
+        registerActivityLifecycleCallbacks(new SwitchBackgroundCallbacks());
+
+        CrashHandlerUtil crashHandlerUtil = CrashHandlerUtil.getInstance();
+        crashHandlerUtil.init(this);
+        crashHandlerUtil.setCrashTip("很抱歉，程序出现异常，即将退出！");
     }
 
     private void initLogger() {
@@ -53,8 +62,33 @@ public class BaseApplication extends Application{
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
     }
 
+    public void initX5WebView() {
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+                Log.d(TAG, " onViewInitFinished is " + arg0);
+            }
+
+            @Override
+            public void onCoreInitFinished() {
+
+            }
+        };
+        // 防止和crosswalk冲突、多进程加快初始化速度
+        HashMap map = new HashMap();
+        map.put(TbsCoreSettings.TBS_SETTINGS_USE_PRIVATE_CLASSLOADER, true);
+        map.put(TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER, true);
+        map.put(TbsCoreSettings.TBS_SETTINGS_USE_DEXLOADER_SERVICE, true);
+        QbSdk.initTbsSettings(map);
+        //x5内核初始化接口
+        QbSdk.initX5Environment(BaseApplication.getAppContext(), cb);
+    }
+
     /**
      * 获取application context
+     *
      * @return
      */
     public static BaseApplication getAppContext() {

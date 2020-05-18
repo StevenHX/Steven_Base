@@ -4,11 +4,15 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.view.View;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * bitmap工具类
@@ -99,6 +103,113 @@ public class BitmapUtil {
             }
         }
         return inSampleSize;
+    }
+
+    public static Bitmap imageZoom(Bitmap bitMap, int maxSize) {
+        //将bitmap放至数组中，意在bitmap的大小（与实际读取的原文件要大）
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitMap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        //将字节换成KB
+        double mid = b.length;
+        //判断bitmap占用空间是否大于允许最大空间 如果大于则压缩 小于则不压缩
+        if (mid > maxSize) {
+            //获取bitmap大小 是允许最大大小的多少倍
+            double i = mid / maxSize;
+            //开始压缩 此处用到平方根 将宽带和高度压缩掉对应的平方根倍 （1.保持刻度和高度和原bitmap比率一致，压缩后也达到了最大大小占用空间的大小）
+            bitMap = zoomImage(bitMap, bitMap.getWidth() / Math.sqrt(i),
+                    bitMap.getHeight() / Math.sqrt(i));
+        }
+        return bitMap;
+    }
+
+    public static Bitmap zoomImage(Bitmap bgimage, double newWidth,
+                                   double newHeight) {
+        // 获取这个图片的宽和高
+        float width = bgimage.getWidth();
+        float height = bgimage.getHeight();
+        // 创建操作图片用的matrix对象
+        Matrix matrix = new Matrix();
+        // 计算宽高缩放率
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 缩放图片动作
+        matrix.postScale(scaleWidth, scaleHeight);
+        return Bitmap.createBitmap(bgimage, 0, 0, (int) width,
+                (int) height, matrix, true);
+    }
+
+    /**
+     * 按照一定的宽高比例裁剪图片
+     *
+     * @param bitmap
+     * @param num1
+     *            长边的比例
+     * @param num2
+     *            短边的比例
+     * @return
+     */
+    public static Bitmap ImageCrop(Bitmap bitmap, int num1, int num2,
+                                   boolean isRecycled)
+    {
+        if (bitmap == null)
+        {
+            return null;
+        }
+        int w = bitmap.getWidth(); // 得到图片的宽，高
+        int h = bitmap.getHeight();
+        int retX, retY;
+        int nw, nh;
+        if (w > h)
+        {
+            if (h > w * num2 / num1)
+            {
+                nw = w;
+                nh = w * num2 / num1;
+                retX = 0;
+                retY = (h - nh) / 2;
+            } else
+            {
+                nw = h * num1 / num2;
+                nh = h;
+                retX = (w - nw) / 2;
+                retY = 0;
+            }
+        } else
+        {
+            if (w > h * num2 / num1)
+            {
+                nh = h;
+                nw = h * num2 / num1;
+                retY = 0;
+                retX = (w - nw) / 2;
+            } else
+            {
+                nh = w * num1 / num2;
+                nw = w;
+                retY = (h - nh) / 2;
+                retX = 0;
+            }
+        }
+        Bitmap bmp = Bitmap.createBitmap(bitmap, retX, retY, nw, nh, null,
+                false);
+        if (isRecycled && bitmap != null && !bitmap.equals(bmp)
+                && !bitmap.isRecycled())
+        {
+            bitmap.recycle();
+            bitmap = null;
+        }
+        return bmp;
+    }
+    /**
+     * 截取某个view  不适用于根view
+     * @param dView
+     * @return
+     */
+    public static Bitmap captureByView(View dView) {
+        dView.setDrawingCacheEnabled(true);
+        dView.buildDrawingCache();
+        return Bitmap.createBitmap(dView.getDrawingCache());
     }
 }
 

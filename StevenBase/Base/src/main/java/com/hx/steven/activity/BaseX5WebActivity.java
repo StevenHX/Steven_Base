@@ -1,10 +1,11 @@
 package com.hx.steven.activity;
 
 import com.hx.steven.R;
-import com.hx.steven.manager.X5WebManager;
+import com.hx.steven.web.WebManager;
+import com.hx.steven.web.X5Strategy;
 import com.tencent.smtt.sdk.WebView;
 
-public abstract class BaseWebActivity extends BaseActivity {
+public abstract class BaseX5WebActivity extends BaseActivity {
     {
         setEnableMultiple(false);
     }
@@ -20,7 +21,7 @@ public abstract class BaseWebActivity extends BaseActivity {
     @Override
     protected void initView() {
         mWebView = findViewById(R.id.web_webView);
-        X5WebManager.getInstance().initWebView(mWebView,getWebInterface());
+        WebManager.getInstance().initWebManager(mWebView,getWebInterface(),new X5Strategy());
     }
 
     @Override

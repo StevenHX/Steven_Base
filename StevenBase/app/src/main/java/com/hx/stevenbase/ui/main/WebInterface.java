@@ -1,5 +1,7 @@
 package com.hx.stevenbase.ui.main;
 
-public class WebInterface {
+import com.hx.steven.web.BaseWebInterface;
+
+public class WebInterface extends BaseWebInterface {
 
 }

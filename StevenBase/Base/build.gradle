@@ -25,6 +25,11 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
@@ -57,6 +62,10 @@ dependencies {
     api 'com.contrarywind:Android-PickerView:4.1.6'
     // 沉浸式库
     api 'com.gyf.immersionbar:immersionbar:2.3.3'
+    // 微信
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.6'
+    // ali支付
+    implementation(name: 'alipaySdk-15.6.8-20191021122455-noUtdid', ext: 'aar')
 }
 apply plugin: 'com.novoda.bintray-release'
 publish {

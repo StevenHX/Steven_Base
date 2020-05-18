@@ -1,10 +1,11 @@
 package com.hx.stevenbase.ui.main;
 
-import com.hx.steven.activity.BaseWebActivity;
-import com.hx.steven.manager.X5WebManager;
+import com.hx.steven.activity.BaseX5WebActivity;
+import com.hx.steven.web.WebManager;
+import com.hx.steven.web.X5Strategy;
 import com.hx.steven.util.BarColorUtils;
 
-public class WebActivity extends BaseWebActivity {
+public class WebActivity extends BaseX5WebActivity {
     @Override
     public Object getWebInterface() {
         return new WebInterface();
@@ -14,6 +15,6 @@ public class WebActivity extends BaseWebActivity {
     protected void initView() {
         super.initView();
         BarColorUtils.setBarColor(this, "#FFB6C1", false);
-        X5WebManager.getInstance().loadUrl("https://happy-read-h5-test.xiyueapp.info/");
+        WebManager.getInstance().getWebStrategyInterface().loadUrl("https://happy-read-h5-test.xiyueapp.info/");
     }
 }

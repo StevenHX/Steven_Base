@@ -41,6 +41,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     private boolean enableMultiple;
 
+    private static BaseActivity baseActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,10 +51,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         initView();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        baseActivity = null;
+    }
+
     private void initContainer() {
         setContentView(R.layout.base_activity);
         mContainer = (ViewGroup) findViewById(R.id.base_container);
 
+        baseActivity = this;
         /**初始化内容视图*/
         View layout = LayoutInflater.from(this).inflate(getContentId(), null);
         layout.setLayoutParams(contentParams);
@@ -127,6 +136,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         this.enableMultiple = enableMultiple;
     }
 
+    /**
+     * 获取当前实例
+     *
+     * @return
+     */
+    public static BaseActivity getThis() {
+        return baseActivity;
+    }
 
     /**
      * 显示dialog

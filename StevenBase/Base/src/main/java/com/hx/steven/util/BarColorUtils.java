@@ -10,16 +10,18 @@ public class BarColorUtils {
 
     public static void setBarColor(Activity activity, String color, boolean isDark) {
         try {
-            if (color.length() > 0) {
-                ImmersionBar.with(activity)
-                        .statusBarColor(color)
-                        .statusBarDarkFont(isDark, 0.2f)
-                        .init();
-            } else {
-                ImmersionBar.with(activity)
-                        .statusBarDarkFont(isDark, 0.2f)
-                        .init();
-            }
+            activity.runOnUiThread(() -> {
+                if (color.length() > 0) {
+                    ImmersionBar.with(activity)
+                            .statusBarColor(color)
+                            .statusBarDarkFont(isDark, 0.2f)
+                            .init();
+                } else {
+                    ImmersionBar.with(activity)
+                            .statusBarDarkFont(isDark, 0.2f)
+                            .init();
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("setBarColor", e.getMessage());

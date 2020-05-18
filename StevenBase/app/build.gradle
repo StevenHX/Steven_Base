@@ -56,7 +56,11 @@ android {
     }
 
 }
-
+repositories {
+    flatDir {
+        dirs 'libs', '../Base/libs'
+    }
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation'androidx.test.espresso:espresso-core:3.2.0'

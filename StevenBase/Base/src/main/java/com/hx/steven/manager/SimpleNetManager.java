@@ -2,6 +2,7 @@ package com.hx.steven.manager;
 
 import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -125,6 +126,34 @@ public class SimpleNetManager {
         });
     }
 
+    public void doGetRequestAsyncByte(String urlPath, NetBytesResultCallBackListener listener) {
+        ThreadPoolManager.getInstance().execute(() -> {
+            URL url;
+            try {
+                url = new URL(urlPath);
+                //得到connection对象。
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                //设置请求方式
+                connection.setRequestMethod("GET");
+                //连接
+                connection.connect();
+                //得到响应码
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    //得到响应流
+                    InputStream inputStream = connection.getInputStream();
+                    //将响应流转换成字符串
+                    byte[] result = Input2ByteArr(inputStream, "UTF-8");//将流转换为字符串。
+                    listener.netBytesResultCallBack(true, result);
+                } else {
+                    listener.netBytesResultCallBack(false, new byte[0]);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                listener.netBytesResultCallBack(false,  new byte[0]);
+            }
+        });
+    }
     /**
      * 异步发送get请求,添加请求头
      */
@@ -158,6 +187,39 @@ public class SimpleNetManager {
             } catch (IOException e) {
                 e.printStackTrace();
                 listener.netResultCallBack(false, e.getMessage());
+            }
+        });
+    }
+
+    public void doGetRequestAsyncWithHeadByte(String urlPath, HashMap<String, String> heads, NetBytesResultCallBackListener listener) {
+        ThreadPoolManager.getInstance().execute(() -> {
+            URL url;
+            try {
+                url = new URL(urlPath);
+                //得到connection对象。
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                //设置请求方式
+                connection.setRequestMethod("GET");
+                // 添加请求头
+                for (Map.Entry<String, String> entry : heads.entrySet()) {
+                    connection.setRequestProperty(entry.getKey(), entry.getValue());
+                }
+                //连接
+                connection.connect();
+                //得到响应码
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    //得到响应流
+                    InputStream inputStream = connection.getInputStream();
+                    //将响应流转换成字符串
+                    byte[] result = Input2ByteArr(inputStream, "UTF-8");//将流转换为字符串。
+                    listener.netBytesResultCallBack(true, result);
+                } else {
+                    listener.netBytesResultCallBack(false, new byte[0]);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                listener.netBytesResultCallBack(false,  new byte[0]);
             }
         });
     }
@@ -334,7 +396,27 @@ public class SimpleNetManager {
         return "";
     }
 
+    /**
+     * 转换输入流为字节数组
+     *
+     * @param in
+     * @param encode
+     * @return
+     */
+    private byte[] Input2ByteArr(InputStream in, String encode) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        byte[] buff = new byte[100];
+        int rc;
+        while ((rc = in.read(buff, 0, 100)) > 0) {
+            byteArrayOutputStream.write(buff, 0, rc);
+        }
+        return byteArrayOutputStream.toByteArray();
+    }
+
     public interface NetResultCallBackListener {
         void netResultCallBack(boolean isSuccess, String result);
+    }
+    public interface NetBytesResultCallBackListener {
+        void netBytesResultCallBack(boolean isSuccess, byte[] result);
     }
 }
