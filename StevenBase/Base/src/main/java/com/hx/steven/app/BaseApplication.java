@@ -5,13 +5,15 @@ import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.hx.steven.BuildConfig;
+import com.hx.steven.manager.WxManager;
 import com.hx.steven.util.ActivityManagerUtil;
 import com.hx.steven.util.CrashHandlerUtil;
-import com.hx.steven.manager.WxManager;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
+import com.tencent.bugly.Bugly;
 import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.sdk.QbSdk;
 
@@ -42,6 +44,10 @@ public class BaseApplication extends Application {
          * 初始化微信
          */
         WxManager.getInstance().regToWx();
+        /**
+         * 初始化bugly
+         */
+        Bugly.init(getApplicationContext(), BuildConfig.buglyAppId, false);
 
         registerActivityLifecycleCallbacks(new SwitchBackgroundCallbacks());
 

@@ -10,9 +10,10 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
     }
     buildTypes {
         release {
@@ -20,12 +21,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String","wxWeChatId",properties.getProperty("wxWeChatId"))
             buildConfigField("String","wxWeChatSec",properties.getProperty("wxWeChatSec"))
+            buildConfigField("String","buglyAppId",properties.getProperty("buglyAppId"))
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String","wxWeChatId",properties.getProperty("wxWeChatId"))
             buildConfigField("String","wxWeChatSec",properties.getProperty("wxWeChatSec"))
+            buildConfigField("String","wxWeChatSec",properties.getProperty("wxWeChatSec"))
+            buildConfigField("String","buglyAppId",properties.getProperty("buglyAppId"))
         }
     }
     compileOptions {
@@ -48,8 +52,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation 'junit:junit:4.12'
-    api 'androidx.appcompat:appcompat:1.1.0'
-    api 'androidx.legacy:legacy-support-v4:1.0.0'
     api 'com.google.android.material:material:1.1.0'
     //banner
     api 'com.youth.banner:banner:1.4.10'
@@ -78,6 +80,8 @@ dependencies {
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.6'
     // ali支付
     implementation(name: 'alipaySdk-15.6.8-20191021122455-noUtdid', ext: 'aar')
+    // bugly
+    api 'com.tencent.bugly:crashreport_upgrade:1.4.2'
 }
 apply plugin: 'com.novoda.bintray-release'
 publish {
