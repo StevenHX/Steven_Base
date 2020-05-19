@@ -43,7 +43,7 @@ public class FileUtil {
     /**
      * 获取保存的文件路径
      */
-    private static File getSaveFile(String fileName) throws Exception {
+    public static File getSaveFile(String fileName) throws Exception {
         File appDir = getExternalStorageAppDirectory();
         if (appDir == null) throw new Exception("sdCard not mounted");
         File dataFile = new File(appDir, fileName);

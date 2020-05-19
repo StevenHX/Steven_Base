@@ -1,5 +1,9 @@
 apply plugin: 'com.android.library'
 
+Properties properties = new Properties()
+InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream() ;
+properties.load( inputStream )
+
 android {
     compileSdkVersion 29
 
@@ -14,6 +18,14 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String","wxWeChatId",properties.getProperty("wxWeChatId"))
+            buildConfigField("String","wxWeChatSec",properties.getProperty("wxWeChatSec"))
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String","wxWeChatId",properties.getProperty("wxWeChatId"))
+            buildConfigField("String","wxWeChatSec",properties.getProperty("wxWeChatSec"))
         }
     }
     compileOptions {

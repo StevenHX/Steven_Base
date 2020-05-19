@@ -4,21 +4,52 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.core.app.ActivityCompat;
+
+import com.hx.steven.app.BaseApplication;
+import com.hx.steven.model.AppInfo;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class AppUtils {
+
+    public static AppInfo getPackages(String packageName) {
+        // 获取已经安装的所有应用, PackageInfo　系统类，包含应用信息
+        List<PackageInfo> packages = BaseApplication.getAppContext().getPackageManager().getInstalledPackages(0);
+        AppInfo temp = null;
+        for (int i = 0; i < packages.size(); i++) {
+            PackageInfo packageInfo = packages.get(i);
+            if ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) { //非系统应用
+                // AppInfo 自定义类，包含应用信息
+                AppInfo appInfo = new AppInfo();
+                appInfo.setAppName(
+                        packageInfo.applicationInfo.loadLabel(
+                                BaseApplication.getAppContext().getPackageManager()).toString());//获取应用名称
+                appInfo.setPackageName(packageInfo.packageName); //获取应用包名，可用于卸载和启动应用
+                appInfo.setVersionName(packageInfo.versionName);//获取应用版本名
+                appInfo.setVersionCode(packageInfo.versionCode);//获取应用版本号
+                if (TextUtils.equals(packageInfo.packageName, packageName)) {
+                    temp = appInfo;
+                    break;
+                }
+            }
+        }
+        return temp;
+    }
 
     /**
      * 以最小内存读取本地资源图片

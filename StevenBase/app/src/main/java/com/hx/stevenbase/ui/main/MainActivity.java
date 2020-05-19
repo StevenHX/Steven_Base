@@ -1,6 +1,7 @@
 package com.hx.stevenbase.ui.main;
 
 import android.Manifest;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.viewpager.widget.ViewPager;
@@ -11,6 +12,7 @@ import com.hx.steven.component.ProgressBarView;
 import com.hx.steven.http.BaseApiService;
 import com.hx.steven.http.BaseBean;
 import com.hx.steven.manager.RetrofitNetManager;
+import com.hx.steven.manager.SimpleNetManager;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.Realm.UserDB;
@@ -18,6 +20,7 @@ import com.hx.stevenbase.http.ApiService;
 import com.hx.stevenbase.http.HttpCallback;
 import com.hx.stevenbase.ui.Set.SetActivity;
 import com.hx.stevenbase.ui.Set.home.homeBean;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,7 +102,13 @@ public class MainActivity extends BaseActivity {
 //            Log.e("xxxxx","countDownFinish");
 //        });
 //        dialog.show();
-        launch(this, WebActivity.class);
+//        launch(this, WebActivity.class);
+
+        SimpleNetManager.getInstance().downloadFile(
+                "https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk"
+                , "XYAPK", (isDone, present) -> {
+                    Log.e("xxxxxxx","isDone:" + isDone+",present:" + present+"%");
+                });
     }
 
 

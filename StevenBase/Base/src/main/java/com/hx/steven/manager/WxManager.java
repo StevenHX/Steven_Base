@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.widget.Toast;
 
+import com.hx.steven.BuildConfig;
 import com.hx.steven.app.BaseApplication;
 import com.hx.steven.util.BitmapUtil;
 import com.hx.steven.util.JsonHelp;
@@ -36,34 +37,17 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 public class WxManager {
     private static final String TAG = "WxManager";
     private static WxManager instance;
+    private String wxWeChatId = BuildConfig.wxWeChatId;
+    private String wxWeChatSec = BuildConfig.wxWeChatSec;
     private WXPay wxPay;
 
     private WxManager() {
-
-    }
-
-    private static String wxWeChatId;
-    private static String wxWeChatSec;
-
-    static {
-        Properties prop = new Properties();
-        InputStream in = Object.class.getResourceAsStream("/local.properties");
-        try {
-            prop.load(in);
-            wxWeChatId = prop.getProperty("wxWeChatId").trim();
-            wxWeChatSec = prop.getProperty("wxWeChatSec").trim();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public static WxManager getInstance() {

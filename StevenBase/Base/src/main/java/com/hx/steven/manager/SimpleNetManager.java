@@ -2,9 +2,13 @@ package com.hx.steven.manager;
 
 import android.util.Log;
 
+import com.hx.steven.util.FileUtil;
+
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -150,10 +154,11 @@ public class SimpleNetManager {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                listener.netBytesResultCallBack(false,  new byte[0]);
+                listener.netBytesResultCallBack(false, new byte[0]);
             }
         });
     }
+
     /**
      * 异步发送get请求,添加请求头
      */
@@ -219,7 +224,7 @@ public class SimpleNetManager {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                listener.netBytesResultCallBack(false,  new byte[0]);
+                listener.netBytesResultCallBack(false, new byte[0]);
             }
         });
     }
@@ -370,6 +375,33 @@ public class SimpleNetManager {
 
     }
 
+    public void downloadFile(String urlPath, String fileName, NetDownloadCallBackListener listener) {
+        ThreadPoolManager.getInstance().execute(() -> {
+            URL url = null;
+            int count = 0;
+            try {
+                url = new URL(urlPath);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();//建立连接
+                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) return;
+                int totalSize = connection.getContentLength();//获取文件总大小
+                InputStream is = connection.getInputStream();
+                OutputStream os = new FileOutputStream(FileUtil.getSaveFile(fileName));
+                int len = 0;
+                byte bs[] = new byte[1024];
+                while ((len = is.read(bs)) != -1) {
+                    os.write(bs, 0, len);//写入文件
+                    count += len;
+                    listener.getProgress(count == totalSize, String.format("%.1f", count * 1f / totalSize * 100));
+                }
+                os.flush();
+                is.close();
+                os.close();//最后关闭输入输出流
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     /**
      * 转换输入流为字符串
      *
@@ -416,7 +448,12 @@ public class SimpleNetManager {
     public interface NetResultCallBackListener {
         void netResultCallBack(boolean isSuccess, String result);
     }
+
     public interface NetBytesResultCallBackListener {
         void netBytesResultCallBack(boolean isSuccess, byte[] result);
+    }
+
+    public interface NetDownloadCallBackListener {
+        void getProgress(boolean isDone, String present);
     }
 }

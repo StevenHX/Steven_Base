@@ -3,12 +3,13 @@ package com.hx.steven.web;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.app.BaseApplication;
 import com.hx.steven.manager.WxManager;
+import com.hx.steven.model.AppInfo;
+import com.hx.steven.util.AppUtils;
 import com.hx.steven.util.BarColorUtils;
 import com.hx.steven.util.JsonHelp;
 import com.hx.steven.wxShare.AuthCallback;
@@ -78,7 +79,7 @@ public class BaseWebInterface {
      */
     @JavascriptInterface
     public void wxLogin() {
-        Log.v("JavascriptInterface", "wxAuthLogin");
+        Logger.d("wxAuthLogin");
         WxManager.getInstance().sendAuth(new AuthCallback() {
             @Override
             public void onSuccess(String result) {
@@ -159,4 +160,29 @@ public class BaseWebInterface {
             WxManager.getInstance().wxPay(mNowPayModel.getPayInfo());
         }
     }
+
+    /**
+     * 获取指定包名的app的版本信息
+     */
+    @JavascriptInterface
+    public void getAppVersionById(String data) {
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(data);
+            String packageName = jsonObject.getString("packageName");
+            AppInfo appInfo = AppUtils.getPackages(packageName);
+            Map<String, Object> params = new HashMap<>();
+            params.put("result", 1);
+            params.put("versionName", appInfo != null ? appInfo.getVersionName() : "");
+            params.put("versionCode", appInfo != null ? appInfo.getVersionCode() : "");
+            WebManager.getInstance().getWebStrategyInterface().callJs("getAppVersionByIdCallBack", JsonHelp.toJson(params));
+        } catch (JSONException e) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("result", 0);
+            WebManager.getInstance().getWebStrategyInterface().callJs("getAppVersionByIdCallBack", JsonHelp.toJson(params));
+            e.printStackTrace();
+        }
+    }
+
+
 }
