@@ -56,7 +56,6 @@ public class BaseApplication extends Application {
         JPushInterface.setDebugMode(TextUtils.equals(BuildConfig.BUILD_TYPE, "debug"));
         JPushInterface.init(this);
 
-
         registerActivityLifecycleCallbacks(new SwitchBackgroundCallbacks());
     }
 
