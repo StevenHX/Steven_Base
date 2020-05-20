@@ -14,7 +14,6 @@ public class WebActivity extends BaseX5WebActivity {
     @Override
     protected void initView() {
         super.initView();
-        BarColorUtils.setBarColor(this, "#FFB6C1", false);
         WebManager.getInstance().getWebStrategyInterface().loadUrl("https://happy-read-h5-test.xiyueapp.info/");
     }
 }

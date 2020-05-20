@@ -82,6 +82,10 @@ dependencies {
     implementation(name: 'alipaySdk-15.6.8-20191021122455-noUtdid', ext: 'aar')
     // bugly
     api 'com.tencent.bugly:crashreport_upgrade:1.4.2'
+    api 'com.tencent.tinker:tinker-android-lib:1.9.9'
+    // 极光推送
+    implementation 'cn.jiguang.sdk:jpush:3.4.0'
+    implementation 'cn.jiguang.sdk:jcore:2.1.6'
 }
 apply plugin: 'com.novoda.bintray-release'
 publish {

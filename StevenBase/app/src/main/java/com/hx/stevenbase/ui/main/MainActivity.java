@@ -1,7 +1,6 @@
 package com.hx.stevenbase.ui.main;
 
 import android.Manifest;
-import android.util.Log;
 import android.widget.Button;
 
 import androidx.viewpager.widget.ViewPager;
@@ -9,18 +8,10 @@ import androidx.viewpager.widget.ViewPager;
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.ProgressBarView;
-import com.hx.steven.http.BaseApiService;
-import com.hx.steven.http.BaseBean;
-import com.hx.steven.manager.RetrofitNetManager;
-import com.hx.steven.manager.SimpleNetManager;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.Realm.UserDB;
-import com.hx.stevenbase.http.ApiService;
-import com.hx.stevenbase.http.HttpCallback;
-import com.hx.stevenbase.ui.Set.SetActivity;
-import com.hx.stevenbase.ui.Set.home.homeBean;
-import com.orhanobut.logger.Logger;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,8 +24,6 @@ import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
 
 public class MainActivity extends BaseActivity {
     {
@@ -65,7 +54,9 @@ public class MainActivity extends BaseActivity {
                 .build();
         realm = Realm.getInstance(config);
 
-        RequestPermissions(0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        RequestPermissions(0,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE);
 
         /**viewPager变换操作*/
         viewPager = findViewById(R.id.id_viewpager);
@@ -96,6 +87,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.hello)
     public void onViewClicked() {
+        CrashReport.testJavaCrash();
 //        FullScreenTimeDialog dialog = new FullScreenTimeDialog(this);
 //        dialog.setMaxNumber(3000);
 //        dialog.setCountDownListener(()->{
@@ -103,12 +95,12 @@ public class MainActivity extends BaseActivity {
 //        });
 //        dialog.show();
 //        launch(this, WebActivity.class);
-
-        SimpleNetManager.getInstance().downloadFile(
-                "https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk"
-                , "XYAPK", (isDone, present) -> {
-                    Log.e("xxxxxxx","isDone:" + isDone+",present:" + present+"%");
-                });
+//
+//        SimpleNetManager.getInstance().downloadFile(
+//                "https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk"
+//                , "XYAPK", (isDone, present) -> {
+//                    Log.e("xxxxxxx","isDone:" + isDone+",present:" + present+"%");
+//                });
     }
 
 

@@ -3,6 +3,7 @@ package com.hx.steven.web;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.text.TextUtils;
 import android.webkit.JavascriptInterface;
 
 import com.hx.steven.activity.BaseActivity;
@@ -12,6 +13,7 @@ import com.hx.steven.model.AppInfo;
 import com.hx.steven.util.AppUtils;
 import com.hx.steven.util.BarColorUtils;
 import com.hx.steven.util.JsonHelp;
+import com.hx.steven.util.SharedPreferencesUtil;
 import com.hx.steven.wxShare.AuthCallback;
 import com.hx.steven.wxShare.ShareCallback;
 import com.hx.steven.wxShare.WxAuthDto;
@@ -27,6 +29,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class BaseWebInterface {
     /**
@@ -184,5 +188,35 @@ public class BaseWebInterface {
         }
     }
 
+    /**
+     * 获取极光推送的RegistrationID
+     */
+    @JavascriptInterface
+    public void getRegistrationId() {
+        try {
+            String registrationId = JPushInterface.getRegistrationID(BaseApplication.getAppContext());
+            Map params = new HashMap<String, String>();
+            params.put("result", 1);
+            params.put("data", registrationId);
+            WebManager.getInstance().getWebStrategyInterface().callJs("getRegistrationIdCallback", JsonHelp.toJson(params));
+        } catch (Exception e) {
+            Map params = new HashMap<String, String>();
+            params.put("result", 0);
+            WebManager.getInstance().getWebStrategyInterface().callJs("getRegistrationIdCallback", JsonHelp.toJson(params));
+        }
+    }
+
+    /**
+     * 获取推送消息
+     */
+    @JavascriptInterface
+    public void receivedMsg() {
+        String value = SharedPreferencesUtil.getString(BaseApplication.getAppContext(), "msg_key", "");
+        HashMap<String, String> map = new HashMap();
+        map.put("result", TextUtils.isEmpty(value) ? "0" : "1");
+        map.put("data", value);
+        WebManager.getInstance().getWebStrategyInterface().callJs("receivedMsgCallback", JsonHelp.toJson(map));
+        SharedPreferencesUtil.setString(BaseApplication.getAppContext(), "msg_key", "");
+    }
 
 }

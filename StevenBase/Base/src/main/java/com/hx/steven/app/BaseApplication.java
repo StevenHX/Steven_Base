@@ -3,12 +3,12 @@ package com.hx.steven.app;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.hx.steven.BuildConfig;
 import com.hx.steven.manager.WxManager;
 import com.hx.steven.util.ActivityManagerUtil;
-import com.hx.steven.util.CrashHandlerUtil;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
@@ -18,6 +18,8 @@ import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.sdk.QbSdk;
 
 import java.util.HashMap;
+
+import cn.jpush.android.api.JPushInterface;
 
 
 /**
@@ -47,13 +49,15 @@ public class BaseApplication extends Application {
         /**
          * 初始化bugly
          */
-        Bugly.init(getApplicationContext(), BuildConfig.buglyAppId, false);
+        Bugly.init(this, BuildConfig.buglyAppId, TextUtils.equals(BuildConfig.BUILD_TYPE, "debug"));
+        /**
+         * 初始化jpush
+         */
+        JPushInterface.setDebugMode(TextUtils.equals(BuildConfig.BUILD_TYPE, "debug"));
+        JPushInterface.init(this);
+
 
         registerActivityLifecycleCallbacks(new SwitchBackgroundCallbacks());
-
-        CrashHandlerUtil crashHandlerUtil = CrashHandlerUtil.getInstance();
-        crashHandlerUtil.init(this);
-        crashHandlerUtil.setCrashTip("很抱歉，程序出现异常，即将退出！");
     }
 
     private void initLogger() {

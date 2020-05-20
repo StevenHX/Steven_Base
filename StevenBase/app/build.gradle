@@ -14,8 +14,12 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "7756d6f8678d967e4be435d7",
+                JPUSH_CHANNEL: "developer-default"
+        ]
     }
 
     signingConfigs {
