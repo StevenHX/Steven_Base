@@ -16,3 +16,22 @@
 - "io.reactivex.rxjava2:rxjava:2.1.1"
 - 'com.lcodecorex:tkrefreshlayout:1.0.7' 下拉刷新框架
 - 'com.android.support:design:26.0.0-alpha1'
+
+```
+        defaultConfig {
+           .........
+           multiDexEnabled true
+           manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "7756d6f8678d967e4be435d7",
+                JPUSH_CHANNEL: "developer-default"
+            ]
+        }
+ 
+        repositories {
+            flatDir {
+                dirs 'libs', '../Base/libs'
+            }
+        }
+```
+

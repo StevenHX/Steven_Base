@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00FFFFFF">
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:src="@drawable/dot_bg" />
+
+        <TextView
+            android:id="@+id/tv_upgrade_cancel"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:tag="beta_cancel_button"
+            android:textColor="@color/black_p50"
+            android:background="@drawable/white_radius"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_upgrade_feature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv"
+            android:background="@color/white"
+            android:paddingBottom="20dp"
+            android:paddingEnd="25dp"
+            android:paddingStart="25dp"
+            android:paddingTop="20dp"
+            android:tag="beta_upgrade_feature"
+            android:textColor="@color/base_deep"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/tv_upgrade_feature"
+            android:background="@color/black_p50" />
+
+        <TextView
+            android:id="@+id/tv_upgrade_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/line"
+            android:background="@drawable/dot_white_bg"
+            android:gravity="center"
+            android:tag="beta_confirm_button"
+            android:visibility="visible"
+            android:textStyle="bold"
+            android:textColor="@color/black_p50" />
+        <TextView
+            android:tag="beta_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+        <TextView
+            android:tag="beta_upgrade_info"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+    </RelativeLayout>
+</RelativeLayout>

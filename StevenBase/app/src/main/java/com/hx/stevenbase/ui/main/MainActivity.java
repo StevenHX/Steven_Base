@@ -11,7 +11,6 @@ import com.hx.steven.component.ProgressBarView;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.Realm.UserDB;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,14 +86,14 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.hello)
     public void onViewClicked() {
-        CrashReport.testJavaCrash();
+//        Beta.checkUpgrade();
 //        FullScreenTimeDialog dialog = new FullScreenTimeDialog(this);
 //        dialog.setMaxNumber(3000);
 //        dialog.setCountDownListener(()->{
 //            Log.e("xxxxx","countDownFinish");
 //        });
 //        dialog.show();
-//        launch(this, WebActivity.class);
+        launch(this, WebActivity.class);
 //
 //        SimpleNetManager.getInstance().downloadFile(
 //                "https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk"

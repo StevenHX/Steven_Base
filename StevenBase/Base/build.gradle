@@ -17,14 +17,14 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            multiDexKeepProguard file('multidex-config.pro')
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String","wxWeChatId",properties.getProperty("wxWeChatId"))
             buildConfigField("String","wxWeChatSec",properties.getProperty("wxWeChatSec"))
             buildConfigField("String","buglyAppId",properties.getProperty("buglyAppId"))
         }
         debug {
-            minifyEnabled false
+            multiDexKeepProguard file('multidex-config.pro')
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String","wxWeChatId",properties.getProperty("wxWeChatId"))
             buildConfigField("String","wxWeChatSec",properties.getProperty("wxWeChatSec"))
@@ -52,6 +52,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation 'junit:junit:4.12'
+    api 'com.android.support:multidex:1.0.3'
     api 'com.google.android.material:material:1.1.0'
     //banner
     api 'com.youth.banner:banner:1.4.10'

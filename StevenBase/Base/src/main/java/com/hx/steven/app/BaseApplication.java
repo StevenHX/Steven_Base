@@ -2,18 +2,23 @@ package com.hx.steven.app;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.multidex.MultiDex;
+
 import com.hx.steven.BuildConfig;
 import com.hx.steven.manager.WxManager;
 import com.hx.steven.util.ActivityManagerUtil;
+import com.hx.steven.util.AppUtils;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 import com.tencent.bugly.Bugly;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.sdk.QbSdk;
 
@@ -46,10 +51,20 @@ public class BaseApplication extends Application {
          * 初始化微信
          */
         WxManager.getInstance().regToWx();
+
+
         /**
          * 初始化bugly
          */
-        Bugly.init(this, BuildConfig.buglyAppId, TextUtils.equals(BuildConfig.BUILD_TYPE, "debug"));
+        // 获取当前包名
+        String packageName = getPackageName();
+        // 获取当前进程名
+        String processName = AppUtils.getProcessName(android.os.Process.myPid());
+        // 设置是否为上报进程
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
+        strategy.setUploadProcess(processName == null || processName.equals(packageName));
+        Bugly.init(this, BuildConfig.buglyAppId, TextUtils.equals(BuildConfig.BUILD_TYPE, "debug"), strategy);
+
         /**
          * 初始化jpush
          */
@@ -57,6 +72,13 @@ public class BaseApplication extends Application {
         JPushInterface.init(this);
 
         registerActivityLifecycleCallbacks(new SwitchBackgroundCallbacks());
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     private void initLogger() {

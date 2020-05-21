@@ -28,10 +28,4 @@
         <activity android:name=".annotation.InjectActivity" />
         <activity android:name=".ui.Welcome.WelcomeActivity" />
     </application>
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-
 </manifest>
