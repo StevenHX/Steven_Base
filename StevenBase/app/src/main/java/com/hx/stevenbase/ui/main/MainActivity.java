@@ -24,6 +24,8 @@ import com.hx.stevenbase.BuildConfig;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.Realm.UserDB;
 import com.orhanobut.logger.Logger;
+import com.steven.updatetool.UpdateModel;
+import com.steven.updatetool.UpdateUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -97,8 +99,6 @@ public class MainActivity extends BaseActivity {
         return R.layout.main_activity;
     }
 
-    UpdateDialog updateDialog;
-
     @OnClick(R.id.hello)
     public void onViewClicked() {
 //        Beta.checkUpgrade();
@@ -110,44 +110,18 @@ public class MainActivity extends BaseActivity {
 //        dialog.show();
 //        launch(this, WebActivity.class);
 
-
-        updateDialog = new UpdateDialog.Builder(this)
-                .setForce(true)
-                .setTitle("喜阅商城")
-                .setVersion("1.0.1")
-                .setMessage("优化内容.....\ndsdsdsdsdsdsd\ndsdsdsdsd")
-                .setPositiveButton("立即升级", (dialog, which) ->
-                        downApk("https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk", "xyMall.apk"))
-                .setNegativeButton("下次再说", (dialog, which) -> dialog.dismiss())
-                .create();
-        updateDialog.show();
-    }
-
-    public void downApk(String url, String fileName) {
-        SimpleNetManager.getInstance().downloadFile(
-                url, fileName, (isDone, present) -> {
-                    Log.e("xxxxxxx", "isDone:" + isDone + ",present:" + present + "%" + ",currentThread: " + Thread.currentThread().getName());
-                    runOnUiThread(() -> updateDialog.setDownloadPresent(present));
-                    if (isDone) {
-                        try {
-                            File file = FileUtil.getSaveFile("xyMall.apk");
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                Uri contentUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileProvider", file);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
-                            } else {
-                                intent.setDataAndType(
-                                        Uri.fromFile(file),
-                                        "application/vnd.android.package-archive"
-                                );
-                            }
-                            startActivity(intent);
-
-                        } catch (Exception e) {
-                        }
-                    }
-                });
+        UpdateUtil updateUtil = new UpdateUtil();
+        UpdateModel updateModel = new UpdateModel();
+        updateModel.setForce(true);
+        updateModel.setTitle("喜阅商城");
+        updateModel.setVersionStr("1.0.1");
+        updateModel.setAppName("xyMall.apk");
+        updateModel.setDownloadUrl("https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk");
+        updateModel.setMessage("优化内容.....\ndsdsdsdsdsdsd\ndsdsdsdsd");
+        updateModel.setPositiveStr("立即升级");
+        updateModel.setNegativeStr("下次再说");
+        updateModel.setAppId(BuildConfig.APPLICATION_ID);
+        updateUtil.showUpdateDialog(this,updateModel);
     }
 
     //增

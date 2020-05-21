@@ -1,8 +1,6 @@
-package com.hx.steven.manager;
+package com.steven.updatetool;
 
 import android.util.Log;
-
-import com.hx.steven.util.FileUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;

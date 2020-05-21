@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:background="#ffffff">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_upgrade_feature"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/tv_upgrade_cancle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/line_bg"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="5dp"
+                android:tag="beta_confirm_button"
+                android:textColor="#D4D4D4"
+                android:textSize="16sp"
+                tools:text="下次再说" />
+
+            <TextView
+                android:id="@+id/tv_upgrade_confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/line_bg"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="5dp"
+                android:tag="beta_confirm_button"
+                android:textColor="#dd000000"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="立即升级" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line1"
+            android:paddingStart="16dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="5dp"
+            android:textColor="#D6D6D6"
+            android:textSize="14sp"
+            tools:text="版本: 1.0.1" />
+
+        <TextView
+            android:id="@+id/tv_body_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_version"
+            android:paddingStart="14dp"
+            android:paddingEnd="0dp"
+            android:text="更新说明:"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_upgrade_feature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_body_top"
+            android:paddingStart="25dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="25dp"
+            android:paddingBottom="10dp"
+            android:tag="beta_upgrade_feature"
+            android:textColor="#dd000000"
+            android:textSize="14sp"
+            tools:text="优化内容" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="喜阅商城" />
+
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/tv_title"
+            android:background="#7F7E6F6F" />
+    </RelativeLayout>
+</RelativeLayout>

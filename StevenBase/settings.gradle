@@ -1,1 +1,2 @@
 include ':app', ':Base'
+include ':updatetool'

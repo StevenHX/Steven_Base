@@ -1,9 +1,7 @@
-package com.hx.steven.util;
+package com.steven.updatetool;
 
 import android.os.Environment;
 import android.text.TextUtils;
-
-import com.hx.steven.BuildConfig;
 
 import java.io.File;
 import java.io.IOException;
