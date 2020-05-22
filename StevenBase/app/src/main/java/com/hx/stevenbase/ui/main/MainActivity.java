@@ -111,17 +111,18 @@ public class MainActivity extends BaseActivity {
 //        launch(this, WebActivity.class);
 
         UpdateUtil updateUtil = new UpdateUtil();
-        UpdateModel updateModel = new UpdateModel();
-        updateModel.setForce(true);
-        updateModel.setTitle("喜阅商城");
-        updateModel.setVersionStr("1.0.1");
-        updateModel.setAppName("xyMall.apk");
-        updateModel.setDownloadUrl("https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk");
-        updateModel.setMessage("优化内容.....\ndsdsdsdsdsdsd\ndsdsdsdsd");
-        updateModel.setPositiveStr("立即升级");
-        updateModel.setNegativeStr("下次再说");
-        updateModel.setAppId(BuildConfig.APPLICATION_ID);
-        updateUtil.showUpdateDialog(this,updateModel);
+//        UpdateModel updateModel = new UpdateModel();
+//        updateModel.setForce(true);
+//        updateModel.setTitle("喜阅商城");
+//        updateModel.setVersionName("1.0.1");
+//        updateModel.setVersionCode(101);
+//        updateModel.setAppName("xyMall.apk");
+//        updateModel.setDownloadUrl("https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk");
+//        updateModel.setMessage("优化内容.....\ndsdsdsdsdsdsd\ndsdsdsdsd");
+//        updateModel.setPositiveStr("立即升级");
+//        updateModel.setNegativeStr("下次再说");
+//        updateModel.setAppId(BuildConfig.APPLICATION_ID);
+        updateUtil.showUpdateDialog(this, "http://192.168.1.67:440/basic/checkAppVersion", BuildConfig.VERSION_CODE, BuildConfig.BUILD_TYPE);
     }
 
     //增
