@@ -1,5 +1,10 @@
 package com.steven.updatetool;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+
+import androidx.annotation.DrawableRes;
+
 public class UpdateModel {
     private boolean isForce;
     private String title;
@@ -11,8 +16,13 @@ public class UpdateModel {
     private String appId;
     private String appName;
     private String negativeStr;
+    private int imgSrc;
+    private int bottomBg;
 
-    public UpdateModel(boolean isForce, String title, String versionName, int versionCode, String message, String positiveStr, String downloadUrl, String appId, String appName, String negativeStr) {
+    public UpdateModel(boolean isForce, String title, String versionName,
+                       int versionCode, String message, String positiveStr,
+                       String downloadUrl, String appId, String appName,
+                       String negativeStr, int imgSrc,int bottomBg) {
         this.isForce = isForce;
         this.title = title;
         this.versionName = versionName;
@@ -23,6 +33,8 @@ public class UpdateModel {
         this.appId = appId;
         this.appName = appName;
         this.negativeStr = negativeStr;
+        this.imgSrc = imgSrc;
+        this.bottomBg = bottomBg;
     }
 
     public UpdateModel() {
@@ -107,5 +119,21 @@ public class UpdateModel {
 
     public void setNegativeStr(String negativeStr) {
         this.negativeStr = negativeStr;
+    }
+
+    public int getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(@DrawableRes int imgSrc) {
+        this.imgSrc = imgSrc;
+    }
+
+    public int getBottomBg() {
+        return bottomBg;
+    }
+
+    public void setBottomBg(int bottomBg) {
+        this.bottomBg = bottomBg;
     }
 }

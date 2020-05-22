@@ -1,33 +1,20 @@
 package com.hx.stevenbase.ui.main;
 
 import android.Manifest;
-import android.app.DownloadManager;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
-import android.util.Log;
 import android.widget.Button;
 
-import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.ProgressBarView;
-import com.hx.steven.component.UpdateDialog;
-import com.hx.steven.manager.SimpleNetManager;
-import com.hx.steven.util.FileUtil;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.BuildConfig;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.Realm.UserDB;
-import com.orhanobut.logger.Logger;
 import com.steven.updatetool.UpdateModel;
 import com.steven.updatetool.UpdateUtil;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +43,8 @@ public class MainActivity extends BaseActivity {
 
     private Realm realm;
 
+    UpdateUtil updateUtil;
+
     @Override
     protected void initView() {
         ButterKnife.bind(this);
@@ -83,6 +72,7 @@ public class MainActivity extends BaseActivity {
         /**自定义progressView*/
         pbView.setMax(100);
         pbView.setProgress(43);
+        updateUtil = new UpdateUtil();
     }
 
     @Override
@@ -111,18 +101,21 @@ public class MainActivity extends BaseActivity {
 //        launch(this, WebActivity.class);
 
         UpdateUtil updateUtil = new UpdateUtil();
-//        UpdateModel updateModel = new UpdateModel();
-//        updateModel.setForce(true);
-//        updateModel.setTitle("喜阅商城");
-//        updateModel.setVersionName("1.0.1");
-//        updateModel.setVersionCode(101);
-//        updateModel.setAppName("xyMall.apk");
-//        updateModel.setDownloadUrl("https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk");
-//        updateModel.setMessage("优化内容.....\ndsdsdsdsdsdsd\ndsdsdsdsd");
-//        updateModel.setPositiveStr("立即升级");
-//        updateModel.setNegativeStr("下次再说");
-//        updateModel.setAppId(BuildConfig.APPLICATION_ID);
-        updateUtil.showUpdateDialog(this, "http://192.168.1.67:440/basic/checkAppVersion", BuildConfig.VERSION_CODE, BuildConfig.BUILD_TYPE);
+        updateUtil.setDebug(true);
+        UpdateModel updateModel = new UpdateModel();
+        updateModel.setForce(true);
+        updateModel.setTitle("喜阅商城");
+        updateModel.setVersionName("4.0.0");
+        updateModel.setVersionCode(400);
+        updateModel.setAppName("xyMall.apk");
+        updateModel.setDownloadUrl("https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk");
+        updateModel.setMessage("1.优化内容.....\n2.优化功能");
+        updateModel.setPositiveStr("立即升级");
+        updateModel.setNegativeStr("下次再说");
+        updateModel.setAppId(BuildConfig.APPLICATION_ID);
+        updateModel.setImgSrc(R.drawable.top_bg);
+        updateModel.setBottomBg(R.drawable.btn_bg);
+        updateUtil.showUpdateDialog(this, updateModel, BuildConfig.VERSION_CODE, BuildConfig.BUILD_TYPE);
     }
 
     //增
