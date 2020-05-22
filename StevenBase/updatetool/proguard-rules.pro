@@ -81,3 +81,4 @@
 
 -keepclasseswithmembers class com.steven.updatetool.UpdateUtil { *; }
 -keepclasseswithmembers class com.steven.updatetool.UpdateModel { *; }
+-keepclasseswithmembers class com.steven.updatetool.CheckAppVersionListener { *; }

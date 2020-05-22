@@ -12,6 +12,7 @@ import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.BuildConfig;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.Realm.UserDB;
+import com.steven.updatetool.CheckAppVersionListener;
 import com.steven.updatetool.UpdateModel;
 import com.steven.updatetool.UpdateUtil;
 
@@ -115,7 +116,18 @@ public class MainActivity extends BaseActivity {
         updateModel.setAppId(BuildConfig.APPLICATION_ID);
         updateModel.setImgSrc(R.drawable.top_bg);
         updateModel.setBottomBg(R.drawable.btn_bg);
-        updateUtil.showUpdateDialog(this, updateModel, BuildConfig.VERSION_CODE, BuildConfig.BUILD_TYPE);
+        updateUtil.showUpdateDialog(this, updateModel, BuildConfig.VERSION_CODE,
+                BuildConfig.BUILD_TYPE, new CheckAppVersionListener() {
+                    @Override
+                    public void readyToUpGrade() {
+
+                    }
+
+                    @Override
+                    public void noUpGrade() {
+
+                    }
+                });
     }
 
     //增

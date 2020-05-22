@@ -21,7 +21,6 @@ public class UpdateUtil {
     private boolean isDebug = false;
 
     /**
-     *
      * @param isDebug 设置调试模式 默认测试模式无法弹窗
      */
     public void setDebug(boolean isDebug) {
@@ -34,8 +33,10 @@ public class UpdateUtil {
      * @param localVersionCode 本地versionCode
      * @param buildType        本地编译类型
      */
-    public void showUpdateDialog(Activity activity, UpdateModel updateModel, int localVersionCode, String buildType) {
+    public void showUpdateDialog(Activity activity, UpdateModel updateModel, int localVersionCode,
+                                 String buildType, CheckAppVersionListener listener) {
         if ((isDebug || !TextUtils.equals(buildType, "debug")) && localVersionCode < updateModel.getVersionCode()) {
+            listener.readyToUpGrade();
             updateDialog = new UpdateDialog.Builder(activity)
                     .setForce(updateModel.isForce())
                     .setVersion(updateModel.getVersionName())
@@ -46,6 +47,8 @@ public class UpdateUtil {
                             downApk(activity, updateModel.getDownloadUrl(), updateModel.getAppId(), updateModel.getAppName()))
                     .create();
             updateDialog.show();
+        } else {
+            listener.noUpGrade();
         }
     }
 
@@ -58,7 +61,7 @@ public class UpdateUtil {
      * @param bottomBg         -1 用默认
      */
     public void showUpdateDialog(Activity activity, String requestUrl, int localVersionCode, String buildType,
-                                 @DrawableRes int imgSrc, @DrawableRes int bottomBg) {
+                                 @DrawableRes int imgSrc, @DrawableRes int bottomBg, CheckAppVersionListener listener) {
         SimpleNetManager.getInstance().doGetRequestAsync(requestUrl, (isSuccess, result) -> {
             if (isSuccess) {
                 try {
@@ -78,7 +81,7 @@ public class UpdateUtil {
                             versionCode, message, positiveStr, downloadUrl, appId, appName, negativeStr,
                             imgSrc == -1 ? R.drawable.top_bg : imgSrc,
                             bottomBg == -1 ? R.drawable.btn_bg : bottomBg);
-                    activity.runOnUiThread(() -> showUpdateDialog(activity, updateModel, localVersionCode, buildType));
+                    activity.runOnUiThread(() -> showUpdateDialog(activity, updateModel, localVersionCode, buildType, listener));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -92,8 +95,10 @@ public class UpdateUtil {
      * @param localVersionCode 本地versionCode
      * @param buildType        本地编译类型
      */
-    public void showUpdateDialog(Activity activity, String requestUrl, int localVersionCode, String buildType) {
-        showUpdateDialog(activity, requestUrl, localVersionCode, buildType, R.drawable.top_bg, R.drawable.btn_bg);
+    public void showUpdateDialog(Activity activity, String requestUrl, int localVersionCode,
+                                 String buildType, CheckAppVersionListener listener) {
+        showUpdateDialog(activity, requestUrl, localVersionCode, buildType,
+                R.drawable.top_bg, R.drawable.btn_bg, listener);
     }
 
     private void downApk(Activity activity, String url, String appId, String fileName) {
