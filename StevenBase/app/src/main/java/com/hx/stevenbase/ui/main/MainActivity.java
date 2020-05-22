@@ -12,6 +12,7 @@ import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.BuildConfig;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.Realm.UserDB;
+import com.orhanobut.logger.Logger;
 import com.steven.updatetool.CheckAppVersionListener;
 import com.steven.updatetool.UpdateModel;
 import com.steven.updatetool.UpdateUtil;
@@ -104,7 +105,7 @@ public class MainActivity extends BaseActivity {
         UpdateUtil updateUtil = new UpdateUtil();
         updateUtil.setDebug(true);
         UpdateModel updateModel = new UpdateModel();
-        updateModel.setForce(true);
+        updateModel.setForce(false);
         updateModel.setTitle("喜阅商城");
         updateModel.setVersionName("4.0.0");
         updateModel.setVersionCode(400);
@@ -120,12 +121,17 @@ public class MainActivity extends BaseActivity {
                 BuildConfig.BUILD_TYPE, new CheckAppVersionListener() {
                     @Override
                     public void readyToUpGrade() {
+                        Logger.e("readyToUpGrade");
+                    }
 
+                    @Override
+                    public void cancelUpGrade() {
+                        Logger.e("cancelUpGrade");
                     }
 
                     @Override
                     public void noUpGrade() {
-
+                        Logger.e("noUpGrade");
                     }
                 });
     }

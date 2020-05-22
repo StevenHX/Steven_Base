@@ -36,19 +36,22 @@ public class UpdateUtil {
     public void showUpdateDialog(Activity activity, UpdateModel updateModel, int localVersionCode,
                                  String buildType, CheckAppVersionListener listener) {
         if ((isDebug || !TextUtils.equals(buildType, "debug")) && localVersionCode < updateModel.getVersionCode()) {
-            listener.readyToUpGrade();
+            if (listener != null) listener.readyToUpGrade();
             updateDialog = new UpdateDialog.Builder(activity)
                     .setForce(updateModel.isForce())
                     .setVersion(updateModel.getVersionName())
                     .setMessage(updateModel.getMessage())
                     .setImgSrc(updateModel.getImgSrc())
                     .setBottomBg(updateModel.getBottomBg())
+                    .setNegativeButton(updateModel.getNegativeStr(), (dialog, which) -> {
+                        if (listener != null) listener.cancelUpGrade();
+                    })
                     .setPositiveButton(updateModel.getPositiveStr(), (dialog, which) ->
                             downApk(activity, updateModel.getDownloadUrl(), updateModel.getAppId(), updateModel.getAppName()))
                     .create();
             updateDialog.show();
         } else {
-            listener.noUpGrade();
+            if (listener != null) listener.noUpGrade();
         }
     }
 
@@ -87,6 +90,19 @@ public class UpdateUtil {
                 }
             }
         });
+    }
+
+    /**
+     * @param activity         activity
+     * @param requestUrl       请求配置地址
+     * @param localVersionCode 本地versionCode
+     * @param buildType        本地编译类型
+     * @param imgSrc           -1 用默认
+     * @param bottomBg         -1 用默认
+     */
+    public void showUpdateDialog(Activity activity, String requestUrl, int localVersionCode, String buildType,
+                                 @DrawableRes int imgSrc, @DrawableRes int bottomBg) {
+        showUpdateDialog(activity, requestUrl, localVersionCode, buildType, imgSrc, bottomBg, null);
     }
 
     /**

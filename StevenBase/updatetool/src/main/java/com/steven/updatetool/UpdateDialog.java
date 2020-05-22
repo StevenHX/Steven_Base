@@ -26,9 +26,11 @@ public class UpdateDialog extends Dialog {
         private String versionStr;
         private String message;
         private String positiveButtonText;
+        private String negativeButtonText;
         private int imgSrc;
         private int bottomBg;
         private OnClickListener positiveButtonClickListener;
+        private OnClickListener negativeButtonClickListener;
 
         public Builder(Context context) {
             this.context = context;
@@ -70,6 +72,13 @@ public class UpdateDialog extends Dialog {
             return this;
         }
 
+        public Builder setNegativeButton(String negativeButtonText,
+                                         OnClickListener listener) {
+            this.negativeButtonText = negativeButtonText;
+            this.negativeButtonClickListener = listener;
+            return this;
+        }
+
         public Builder setImgSrc(@DrawableRes int imgSrc) {
             this.imgSrc = imgSrc;
             return this;
@@ -98,6 +107,13 @@ public class UpdateDialog extends Dialog {
                                     DialogInterface.BUTTON_POSITIVE));
                 }
             }
+
+            if (negativeButtonClickListener != null) {
+                dialog.setOnDismissListener(dialog1 -> {
+                    negativeButtonClickListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+                });
+            }
+
             if (versionStr != null) {
                 ((TextView) layout.findViewById(R.id.tv_version)).setText("发现新版本: " + versionStr);
             }
@@ -117,6 +133,7 @@ public class UpdateDialog extends Dialog {
             if (isForce) {
                 dialog.setCancelable(false);
             }
+
             return dialog;
         }
     }
