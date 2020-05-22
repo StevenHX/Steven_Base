@@ -25,6 +25,10 @@ public class UpdateModel {
         this.negativeStr = negativeStr;
     }
 
+    public UpdateModel() {
+
+    }
+
     public boolean isForce() {
         return isForce;
     }
