@@ -12,25 +12,25 @@
         android:background="@drawable/window_bg">
 
         <ImageView
-            android:scaleType="fitXY"
             android:id="@+id/iv_top"
             android:layout_width="match_parent"
             android:layout_height="155dp"
-            tools:background="@drawable/top_bg"/>
+            android:scaleType="fitXY"
+            tools:background="@drawable/top_bg" />
 
         <LinearLayout
             android:id="@+id/ll_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_upgrade_feature"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:paddingStart="16dp"
             android:paddingTop="5dp"
             android:paddingEnd="16dp"
             android:paddingBottom="5dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             tools:background="@drawable/btn_bg">
 
             <TextView
@@ -55,10 +55,12 @@
         <TextView
             android:id="@+id/tv_upgrade_feature"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:gravity="center_vertical|top"
+            android:layout_height="wrap_content"
+            android:minHeight="110dp"
             android:layout_below="@id/tv_version"
             android:background="#fff"
+            android:gravity="center_vertical|top"
+            android:lineSpacingExtra="10dp"
             android:paddingStart="25dp"
             android:paddingTop="10dp"
             android:paddingEnd="25dp"
@@ -74,12 +76,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_top"
             android:background="#fff"
+            android:gravity="center_horizontal"
             android:paddingStart="16dp"
             android:paddingTop="5dp"
             android:paddingEnd="0dp"
             android:paddingBottom="5dp"
             android:textColor="#000"
-            android:gravity="center_horizontal"
             android:textSize="18sp"
             android:textStyle="bold"
             tools:text="发现新版本: 1.0.1" />
