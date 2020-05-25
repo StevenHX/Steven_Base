@@ -34,6 +34,33 @@ import cn.jpush.android.api.JPushInterface;
 
 public class BaseWebInterface {
     /**
+     * 复制文本到粘贴板
+     */
+    @JavascriptInterface
+    public void copyTextInput(String data) {
+        final Map<String, Object> params = new HashMap<>();
+
+        try {
+            Map<String, String> param = JsonHelp.json2Bean(data, Map.class);
+            String text = param.get("text");
+
+            ClipData clip = ClipData.newPlainText("label", text);
+            ClipboardManager clipboardManager = (ClipboardManager) BaseApplication.getAppContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboardManager.setPrimaryClip(clip);
+
+            params.put("result", 1);
+            params.put("msg", "");
+
+        } catch (Exception e) {
+            params.put("result", 0);
+            params.put("msg", e.getMessage());
+        }
+
+        String result = JsonHelp.toJson(params);
+        WebManager.getInstance().getWebStrategyInterface().callJs("copyTextInputCallback", result);
+    }
+
+    /**
      * 获取粘贴板数据
      */
     @JavascriptInterface
@@ -43,8 +70,8 @@ public class BaseWebInterface {
         try {
             ClipboardManager clipboardManager = (ClipboardManager) BaseApplication.getAppContext()
                     .getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData abc = clipboardManager.getPrimaryClip();
-            ClipData.Item item = abc.getItemAt(0);
+            ClipData clipData = clipboardManager.getPrimaryClip();
+            ClipData.Item item = clipData.getItemAt(0);
             String text = item.getText().toString();
 
             params.put("result", 1);

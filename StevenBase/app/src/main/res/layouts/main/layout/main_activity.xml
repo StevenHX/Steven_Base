@@ -28,6 +28,11 @@
             android:text="goto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/hello2"
+            android:text="goto2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <com.hx.steven.component.FlowTag.FlowTagLayout
             android:id="@+id/color_flow_layout"
             android:layout_width="match_parent"

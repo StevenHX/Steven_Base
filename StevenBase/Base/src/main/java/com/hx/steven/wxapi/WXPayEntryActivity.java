@@ -58,6 +58,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             switch (resp.errCode) {
                 case 0:
+                    // TODO: 2020/5/23 将回调方法在文件里，并可自定义
                     WebManager.getInstance().getWebStrategyInterface().callJs("orderPayWithAppCallback", "1");
                     break;
                 case -1:
@@ -67,7 +68,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                 default:
                     break;
             }
-            WxManager.getInstance().destoryWx();
+            WxManager.getInstance().destroyWx();
         }
         finish();
 

@@ -398,7 +398,7 @@ public class WxManager {
         wxPay.toPay();
     }
 
-    public void destoryWx() {
+    public void destroyWx() {
         wxPay.DestroyWx();
     }
 }

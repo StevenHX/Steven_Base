@@ -5,15 +5,18 @@ import android.util.Log;
 import com.hx.steven.util.FileUtil;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+// TODO: 2020/5/23 添加OKHttp的封装类
 
 /**
  * 简单网络请求管理类
@@ -383,6 +386,62 @@ public class SimpleNetManager {
             }
         });
 
+    }
+
+    private long startIndex = 0;
+    private boolean isStopDownLoad = false;
+
+    public void setStopDownLoad(boolean stopDownLoad) {
+        isStopDownLoad = stopDownLoad;
+    }
+
+    /**
+     * 支持断点续传功能下载
+     *
+     * @param urlPath
+     * @param appId
+     * @param fileName
+     * @param listener
+     */
+    public void downloadBigFile(String urlPath, String appId, String fileName, NetDownloadCallBackListener listener) {
+        isStopDownLoad = false;
+        ThreadPoolManager.getInstance().execute(() -> {
+            URL url = null;
+            int count = 0;
+            try {
+                url = new URL(urlPath);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("Range", "bytes=" + startIndex + "-");
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                if (connection.getResponseCode() != HttpURLConnection.HTTP_PARTIAL) return;
+
+                int totalSize = connection.getContentLength();//获取文件总大小
+                File saveFile = FileUtil.getSaveFile(appId, fileName);
+                RandomAccessFile rafAccessFile = new RandomAccessFile(saveFile, "rw");
+                rafAccessFile.setLength(totalSize);
+                rafAccessFile.seek(startIndex);
+
+                InputStream is = connection.getInputStream();
+                int len = -1;
+                byte[] buffer = new byte[1024];
+                while ((len = is.read(buffer)) != -1) {
+                    if (isStopDownLoad) {
+                        startIndex = saveFile.length();
+                        break;
+                    } else {
+                        rafAccessFile.write(buffer, 0, len);
+                        count += len;
+                        listener.getProgress(count == totalSize, String.format("%.1f", count * 1f / totalSize * 100));
+                    }
+                }
+                rafAccessFile.close();
+                is.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void downloadFile(String urlPath, String appId, String fileName, NetDownloadCallBackListener listener) {

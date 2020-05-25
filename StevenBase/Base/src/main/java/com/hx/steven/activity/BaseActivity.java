@@ -1,5 +1,6 @@
 package com.hx.steven.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     private boolean enableMultiple;
 
+    @SuppressLint("StaticFieldLeak")
     private static BaseActivity baseActivity;
 
     @Override

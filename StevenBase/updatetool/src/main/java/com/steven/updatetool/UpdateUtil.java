@@ -111,6 +111,16 @@ public class UpdateUtil {
      * @param localVersionCode 本地versionCode
      * @param buildType        本地编译类型
      */
+    public void showUpdateDialog(Activity activity, String requestUrl, int localVersionCode, String buildType) {
+        showUpdateDialog(activity, requestUrl, localVersionCode, buildType, R.drawable.top_bg, R.drawable.btn_bg, null);
+    }
+
+    /**
+     * @param activity         activity
+     * @param requestUrl       请求配置地址
+     * @param localVersionCode 本地versionCode
+     * @param buildType        本地编译类型
+     */
     public void showUpdateDialog(Activity activity, String requestUrl, int localVersionCode,
                                  String buildType, CheckAppVersionListener listener) {
         showUpdateDialog(activity, requestUrl, localVersionCode, buildType,

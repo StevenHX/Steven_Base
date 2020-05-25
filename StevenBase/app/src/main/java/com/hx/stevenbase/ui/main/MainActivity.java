@@ -1,6 +1,7 @@
 package com.hx.stevenbase.ui.main;
 
 import android.Manifest;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.viewpager.widget.ViewPager;
@@ -8,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.ProgressBarView;
+import com.hx.steven.manager.SimpleNetManager;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.BuildConfig;
 import com.hx.stevenbase.R;
@@ -102,40 +104,50 @@ public class MainActivity extends BaseActivity {
 //        dialog.show();
 //        launch(this, WebActivity.class);
 
-        UpdateUtil updateUtil = new UpdateUtil();
-        updateUtil.setDebug(true);
-        UpdateModel updateModel = new UpdateModel();
-        updateModel.setForce(false);
-        updateModel.setTitle("喜阅商城");
-        updateModel.setVersionName("4.0.0");
-        updateModel.setVersionCode(400);
-        updateModel.setAppName("xyMall.apk");
-        updateModel.setDownloadUrl("https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk");
-        updateModel.setMessage("1.优化内容.....\n2.优化功能");
-        updateModel.setPositiveStr("立即升级");
-        updateModel.setNegativeStr("下次再说");
-        updateModel.setAppId(BuildConfig.APPLICATION_ID);
-        updateModel.setImgSrc(R.drawable.top_bg);
-        updateModel.setBottomBg(R.drawable.btn_bg);
-        updateUtil.showUpdateDialog(this, updateModel, BuildConfig.VERSION_CODE,
-                BuildConfig.BUILD_TYPE, new CheckAppVersionListener() {
-                    @Override
-                    public void readyToUpGrade() {
-                        Logger.e("readyToUpGrade");
-                    }
+//        SimpleNetManager.getInstance().downloadBigFile(
+//                "https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk",
+//                BuildConfig.APPLICATION_ID, "xyMall.apk", (isDone, present) ->
+//                        Log.e("xxxxxxx", "isDone:" + isDone + ",present:" + present + "%" + ",currentThread: " + Thread.currentThread().getName()))
+//        ;
 
-                    @Override
-                    public void cancelUpGrade() {
-                        Logger.e("cancelUpGrade");
-                    }
-
-                    @Override
-                    public void noUpGrade() {
-                        Logger.e("noUpGrade");
-                    }
-                });
+//        UpdateUtil updateUtil = new UpdateUtil();
+//        updateUtil.setDebug(true);
+//        UpdateModel updateModel = new UpdateModel();
+//        updateModel.setForce(false);
+//        updateModel.setTitle("喜阅商城");
+//        updateModel.setVersionName("4.0.0");
+//        updateModel.setVersionCode(400);
+//        updateModel.setAppName("xyMall.apk");
+//        updateModel.setDownloadUrl("https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk");
+//        updateModel.setMessage("1.优化内容.....\n2.优化功能");
+//        updateModel.setPositiveStr("立即升级");
+//        updateModel.setNegativeStr("下次再说");
+//        updateModel.setAppId(BuildConfig.APPLICATION_ID);
+//        updateModel.setImgSrc(R.drawable.top_bg);
+//        updateModel.setBottomBg(R.drawable.btn_bg);
+//        updateUtil.showUpdateDialog(this, updateModel, BuildConfig.VERSION_CODE,
+//                BuildConfig.BUILD_TYPE, new CheckAppVersionListener() {
+//                    @Override
+//                    public void readyToUpGrade() {
+//                        Logger.e("readyToUpGrade");
+//                    }
+//
+//                    @Override
+//                    public void cancelUpGrade() {
+//                        Logger.e("cancelUpGrade");
+//                    }
+//
+//                    @Override
+//                    public void noUpGrade() {
+//                        Logger.e("noUpGrade");
+//                    }
+//                });
     }
 
+    @OnClick(R.id.hello)
+    public void onViewClicked2() {
+        SimpleNetManager.getInstance().setStopDownLoad(true);
+    }
     //增
     private void realmInsert(Realm realm) {
         realm.beginTransaction();//开启事务
