@@ -13,6 +13,7 @@ import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.util.BarColorUtils;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.ui.main.MainActivity;
+import com.hx.stevenbase.ui.main.WebActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -27,7 +28,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void openMain() {
-        Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+        Intent intent = new Intent(WelcomeActivity.this, WebActivity.class);
         startActivity(intent);
         finish();
         overridePendingTransition(0, 0);

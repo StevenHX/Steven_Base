@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.webkit.JavascriptInterface;
 
 import com.hx.steven.activity.BaseActivity;
+import com.hx.steven.activity.BaseX5WebActivity;
 import com.hx.steven.app.BaseApplication;
 import com.hx.steven.manager.WxManager;
 import com.hx.steven.model.AppInfo;
@@ -197,6 +198,7 @@ public class BaseWebInterface {
      */
     @JavascriptInterface
     public void getAppVersionById(String data) {
+        Logger.d("getAppVersionById" + data);
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(data);
@@ -220,6 +222,7 @@ public class BaseWebInterface {
      */
     @JavascriptInterface
     public void getRegistrationId() {
+        Logger.d("getRegistrationId");
         try {
             String registrationId = JPushInterface.getRegistrationID(BaseApplication.getAppContext());
             Map params = new HashMap<String, String>();
@@ -238,12 +241,22 @@ public class BaseWebInterface {
      */
     @JavascriptInterface
     public void receivedMsg() {
+        Logger.d("receivedMsg");
         String value = SharedPreferencesUtil.getString(BaseApplication.getAppContext(), "msg_key", "");
         HashMap<String, String> map = new HashMap();
         map.put("result", TextUtils.isEmpty(value) ? "0" : "1");
         map.put("data", value);
         WebManager.getInstance().getWebStrategyInterface().callJs("receivedMsgCallback", JsonHelp.toJson(map));
         SharedPreferencesUtil.setString(BaseApplication.getAppContext(), "msg_key", "");
+    }
+
+    /**
+     * 移除启动图
+     */
+    @JavascriptInterface
+    public void removeLaunchImage() {
+        Logger.d("removeLaunchImage");
+        ((BaseX5WebActivity) BaseActivity.getThis()).removeImage();
     }
 
 }

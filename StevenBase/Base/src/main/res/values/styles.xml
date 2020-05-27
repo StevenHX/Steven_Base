@@ -19,7 +19,7 @@
     </style>
 
     <style name="MainIndexTheme" parent="NoTitleTheme">
-        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <!--自定义多状态view-->
