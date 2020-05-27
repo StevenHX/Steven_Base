@@ -7,7 +7,9 @@
     tools:context="com.hx.stevenbase.ui.main.MainActivity"
     android:orientation="vertical"
     android:clipChildren="false"
-    android:layout_centerInParent="true">
+    android:layout_centerInParent="true"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

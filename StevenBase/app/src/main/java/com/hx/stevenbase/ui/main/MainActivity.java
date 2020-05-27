@@ -10,6 +10,7 @@ import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.ProgressBarView;
 import com.hx.steven.manager.SimpleNetManager;
+import com.hx.steven.util.BarColorUtils;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.BuildConfig;
 import com.hx.stevenbase.R;
@@ -77,6 +78,7 @@ public class MainActivity extends BaseActivity {
         pbView.setMax(100);
         pbView.setProgress(43);
         updateUtil = new UpdateUtil();
+        BarColorUtils.setBarColor(this,"#C1FFC1",true);
     }
 
     @Override
@@ -102,7 +104,7 @@ public class MainActivity extends BaseActivity {
 //            Log.e("xxxxx","countDownFinish");
 //        });
 //        dialog.show();
-//        launch(this, WebActivity.class);
+        launch(this, WebActivity.class);
 
 //        SimpleNetManager.getInstance().downloadBigFile(
 //                "https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk",
