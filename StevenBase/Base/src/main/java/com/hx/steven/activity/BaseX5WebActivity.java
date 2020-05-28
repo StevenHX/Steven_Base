@@ -32,7 +32,7 @@ public abstract class BaseX5WebActivity extends BaseActivity {
     protected void initView() {
         mWebView = findViewById(R.id.web_webView);
         imageView = findViewById(R.id.main_launch_img);
-        imageView.setImageResource(getLaunchImageRes());
+        imageView.setBackgroundResource(getLaunchImageRes());
         WebManager.getInstance().initWebManager(mWebView, getWebInterface(), new X5Strategy());
     }
 
