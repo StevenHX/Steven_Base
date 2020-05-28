@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 
 import com.hx.steven.manager.WxManager;
 import com.hx.steven.util.JsonHelp;
+import com.hx.steven.web.CallBackNameContract;
 import com.hx.steven.web.WebManager;
 import com.orhanobut.logger.Logger;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
@@ -58,12 +59,11 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             switch (resp.errCode) {
                 case 0:
-                    // TODO: 2020/5/23 将回调方法在文件里，并可自定义
-                    WebManager.getInstance().getWebStrategyInterface().callJs("orderPayWithAppCallback", "1");
+                    WebManager.getInstance().getWebStrategyInterface().callJs(CallBackNameContract.ORDER_PAY_WITH_APP, "1");
                     break;
                 case -1:
                 case -2:
-                    WebManager.getInstance().getWebStrategyInterface().callJs("orderPayWithAppCallback", "0");
+                    WebManager.getInstance().getWebStrategyInterface().callJs(CallBackNameContract.ORDER_PAY_WITH_APP, "0");
                     break;
                 default:
                     break;

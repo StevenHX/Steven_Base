@@ -58,7 +58,7 @@ public class BaseWebInterface {
         }
 
         String result = JsonHelp.toJson(params);
-        WebManager.getInstance().getWebStrategyInterface().callJs("copyTextInputCallback", result);
+        WebManager.getInstance().getWebStrategyInterface().callJs(CallBackNameContract.COPY_TEXT_INPUT, result);
     }
 
     /**
@@ -84,7 +84,7 @@ public class BaseWebInterface {
         }
 
         String result = JsonHelp.toJson(params);
-        WebManager.getInstance().getWebStrategyInterface().callJs("getClipTextCallback", result);
+        WebManager.getInstance().getWebStrategyInterface().callJs(CallBackNameContract.GET_CLIP_TEXT, result);
     }
 
     /**
@@ -115,12 +115,12 @@ public class BaseWebInterface {
         WxManager.getInstance().sendAuth(new AuthCallback() {
             @Override
             public void onSuccess(String result) {
-                WebManager.getInstance().getWebStrategyInterface().callJs("wxLoginCallback", result);
+                WebManager.getInstance().getWebStrategyInterface().callJs(CallBackNameContract.WX_LOGIN, result);
             }
 
             @Override
             public void onFailure(int errCode, String msg) {
-                WebManager.getInstance().getWebStrategyInterface().callJs("wxLoginCallback", JsonHelp.toJson(new WxAuthDto()));
+                WebManager.getInstance().getWebStrategyInterface().callJs(CallBackNameContract.WX_LOGIN, JsonHelp.toJson(new WxAuthDto()));
             }
         });
     }
@@ -161,7 +161,7 @@ public class BaseWebInterface {
             Map<String, Object> params = new HashMap<>();
             params.put("result", 1);
             params.put("data", result);
-            WebManager.getInstance().getWebStrategyInterface().callJs("shareWithAppCallback", JsonHelp.toJson(params));
+            WebManager.getInstance().getWebStrategyInterface().callJs(CallBackNameContract.SHARE_WITH_APP, JsonHelp.toJson(params));
         }
 
         @Override
@@ -169,7 +169,7 @@ public class BaseWebInterface {
             Map<String, Object> params = new HashMap<>();
             params.put("result", 0);
             params.put("msg", msg);
-            WebManager.getInstance().getWebStrategyInterface().callJs("shareWithAppCallback", JsonHelp.toJson(params));
+            WebManager.getInstance().getWebStrategyInterface().callJs(CallBackNameContract.SHARE_WITH_APP, JsonHelp.toJson(params));
         }
     };
 
@@ -208,11 +208,11 @@ public class BaseWebInterface {
             params.put("result", 1);
             params.put("versionName", appInfo != null ? appInfo.getVersionName() : "");
             params.put("versionCode", appInfo != null ? appInfo.getVersionCode() : "");
-            WebManager.getInstance().getWebStrategyInterface().callJs("getAppVersionByIdCallBack", JsonHelp.toJson(params));
+            WebManager.getInstance().getWebStrategyInterface().callJs(CallBackNameContract.GET_APP_VERSION_BY_ID, JsonHelp.toJson(params));
         } catch (JSONException e) {
             Map<String, Object> params = new HashMap<>();
             params.put("result", 0);
-            WebManager.getInstance().getWebStrategyInterface().callJs("getAppVersionByIdCallBack", JsonHelp.toJson(params));
+            WebManager.getInstance().getWebStrategyInterface().callJs(CallBackNameContract.GET_APP_VERSION_BY_ID, JsonHelp.toJson(params));
             e.printStackTrace();
         }
     }
@@ -228,11 +228,11 @@ public class BaseWebInterface {
             Map params = new HashMap<String, String>();
             params.put("result", 1);
             params.put("data", registrationId);
-            WebManager.getInstance().getWebStrategyInterface().callJs("getRegistrationIdCallback", JsonHelp.toJson(params));
+            WebManager.getInstance().getWebStrategyInterface().callJs(CallBackNameContract.GET_REGISTRATION_ID, JsonHelp.toJson(params));
         } catch (Exception e) {
             Map params = new HashMap<String, String>();
             params.put("result", 0);
-            WebManager.getInstance().getWebStrategyInterface().callJs("getRegistrationIdCallback", JsonHelp.toJson(params));
+            WebManager.getInstance().getWebStrategyInterface().callJs(CallBackNameContract.GET_REGISTRATION_ID, JsonHelp.toJson(params));
         }
     }
 
@@ -246,7 +246,7 @@ public class BaseWebInterface {
         HashMap<String, String> map = new HashMap();
         map.put("result", TextUtils.isEmpty(value) ? "0" : "1");
         map.put("data", value);
-        WebManager.getInstance().getWebStrategyInterface().callJs("receivedMsgCallback", JsonHelp.toJson(map));
+        WebManager.getInstance().getWebStrategyInterface().callJs(CallBackNameContract.RECEIVED_MSG, JsonHelp.toJson(map));
         SharedPreferencesUtil.setString(BaseApplication.getAppContext(), "msg_key", "");
     }
 
