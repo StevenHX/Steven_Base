@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity {
 //            Log.e("xxxxx","countDownFinish");
 //        });
 //        dialog.show();
-        launch(this, WebActivity.class);
+//        launch(this, WebActivity.class);
 
 //        SimpleNetManager.getInstance().downloadBigFile(
 //                "https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk",
@@ -112,38 +112,38 @@ public class MainActivity extends BaseActivity {
 //                        Log.e("xxxxxxx", "isDone:" + isDone + ",present:" + present + "%" + ",currentThread: " + Thread.currentThread().getName()))
 //        ;
 
-//        UpdateUtil updateUtil = new UpdateUtil();
-//        updateUtil.setDebug(true);
-//        UpdateModel updateModel = new UpdateModel();
-//        updateModel.setForce(false);
-//        updateModel.setTitle("喜阅商城");
-//        updateModel.setVersionName("4.0.0");
-//        updateModel.setVersionCode(400);
-//        updateModel.setAppName("xyMall.apk");
-//        updateModel.setDownloadUrl("https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xylegusign306.apk");
-//        updateModel.setMessage("1.优化内容.....\n2.优化功能");
-//        updateModel.setPositiveStr("立即升级");
-//        updateModel.setNegativeStr("下次再说");
-//        updateModel.setAppId(BuildConfig.APPLICATION_ID);
-//        updateModel.setImgSrc(R.drawable.top_bg);
-//        updateModel.setBottomBg(R.drawable.btn_bg);
-//        updateUtil.showUpdateDialog(this, updateModel, BuildConfig.VERSION_CODE,
-//                BuildConfig.BUILD_TYPE, new CheckAppVersionListener() {
-//                    @Override
-//                    public void readyToUpGrade() {
-//                        Logger.e("readyToUpGrade");
-//                    }
-//
-//                    @Override
-//                    public void cancelUpGrade() {
-//                        Logger.e("cancelUpGrade");
-//                    }
-//
-//                    @Override
-//                    public void noUpGrade() {
-//                        Logger.e("noUpGrade");
-//                    }
-//                });
+        UpdateUtil updateUtil = new UpdateUtil();
+        updateUtil.setDebug(true);
+        UpdateModel updateModel = new UpdateModel();
+        updateModel.setForce(false);
+        updateModel.setTitle("喜阅商城");
+        updateModel.setVersionName("4.0.0");
+        updateModel.setVersionCode(400);
+        updateModel.setAppName("xyMall.apk");
+        updateModel.setDownloadUrl("https://myunonline-xiyue.oss-cn-hangzhou.aliyuncs.com/package_sc/xy-marketlegusign400.apk");
+        updateModel.setMessage("1.优化内容.....\n2.优化功能");
+        updateModel.setPositiveStr("立即升级");
+        updateModel.setNegativeStr("下次再说");
+        updateModel.setAppId(BuildConfig.APPLICATION_ID);
+        updateModel.setImgSrc(R.drawable.top_bg);
+        updateModel.setBottomBg(R.drawable.btn_bg);
+        updateUtil.showUpdateDialog(this, updateModel, BuildConfig.VERSION_CODE,
+                BuildConfig.BUILD_TYPE, new CheckAppVersionListener() {
+                    @Override
+                    public void readyToUpGrade() {
+                        Logger.e("readyToUpGrade");
+                    }
+
+                    @Override
+                    public void cancelUpGrade() {
+                        Logger.e("cancelUpGrade");
+                    }
+
+                    @Override
+                    public void noUpGrade() {
+                        Logger.e("noUpGrade");
+                    }
+                });
     }
 
     @OnClick(R.id.hello)

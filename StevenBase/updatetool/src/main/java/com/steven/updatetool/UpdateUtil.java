@@ -128,13 +128,13 @@ public class UpdateUtil {
     }
 
     private void downApk(Activity activity, String url, String appId, String fileName) {
-        SimpleNetManager.getInstance().downloadFile(
+        SimpleNetManager.getInstance().downloadFile(activity,
                 url, appId, fileName, (isDone, present) -> {
                     Log.e("xxxxxxx", "isDone:" + isDone + ",present:" + present + "%" + ",currentThread: " + Thread.currentThread().getName());
                     activity.runOnUiThread(() -> updateDialog.setDownloadPresent(present));
                     if (isDone) {
                         try {
-                            File file = FileUtil.getSaveFile(appId, fileName);
+                            File file = FileUtil.getSaveFile(activity.getApplication(), fileName);
                             Intent intent = new Intent(Intent.ACTION_VIEW);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                                 Uri contentUri = FileProvider.getUriForFile(activity, appId + ".fileProvider", file);

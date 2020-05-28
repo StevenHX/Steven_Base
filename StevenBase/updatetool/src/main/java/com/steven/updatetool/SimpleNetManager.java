@@ -1,5 +1,6 @@
 package com.steven.updatetool;
 
+import android.app.Activity;
 import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
@@ -383,7 +384,7 @@ public class SimpleNetManager {
 
     }
 
-    public void downloadFile(String urlPath, String appId, String fileName, NetDownloadCallBackListener listener) {
+    public void downloadFile(Activity activity,String urlPath, String appId, String fileName, NetDownloadCallBackListener listener) {
         ThreadPoolManager.getInstance().execute(() -> {
             URL url = null;
             int count = 0;
@@ -393,7 +394,7 @@ public class SimpleNetManager {
                 if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) return;
                 int totalSize = connection.getContentLength();//获取文件总大小
                 InputStream is = connection.getInputStream();
-                OutputStream os = new FileOutputStream(FileUtil.getSaveFile(appId, fileName));
+                OutputStream os = new FileOutputStream(FileUtil.getSaveFile(activity.getApplication(), fileName));
                 int len = 0;
                 byte bs[] = new byte[1024];
                 while ((len = is.read(bs)) != -1) {
