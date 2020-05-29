@@ -38,7 +38,7 @@ public class FileUtil {
      * 保存文件到根目录app名称文件夹下的目录
      */
     public static void saveFile2ExternalAppDirectory(Application app, String fileName, String content) throws Exception {
-        File file  =  app.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        File file  =  getSaveFile(app,fileName);
         String strContent = content + "\r\n";
         RandomAccessFile raf = new RandomAccessFile(file, "rwd");
         raf.seek(file.length());
