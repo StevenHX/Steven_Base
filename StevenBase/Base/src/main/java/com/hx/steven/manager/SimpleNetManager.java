@@ -49,7 +49,9 @@ public class SimpleNetManager {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             //设置请求方式
             connection.setRequestMethod("GET");
-            connection.setConnectTimeout(20000);
+            connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
             //连接
             connection.connect();
             //得到响应码
@@ -79,7 +81,9 @@ public class SimpleNetManager {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             //设置请求方式
             connection.setRequestMethod("GET");
-            connection.setConnectTimeout(20000);
+            connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
             // 添加请求头
             for (Map.Entry<String, String> entry : heads.entrySet()) {
                 connection.setRequestProperty(entry.getKey(), entry.getValue());
@@ -114,7 +118,9 @@ public class SimpleNetManager {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 //设置请求方式
                 connection.setRequestMethod("GET");
-                connection.setConnectTimeout(20000);
+                connection.setRequestProperty("Connection", "Keep-Alive");
+                connection.setConnectTimeout(5000);
+                connection.setReadTimeout(5000);
                 //连接
                 connection.connect();
                 //得到响应码
@@ -145,7 +151,9 @@ public class SimpleNetManager {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 //设置请求方式
                 connection.setRequestMethod("GET");
-                connection.setConnectTimeout(20000);
+                connection.setRequestProperty("Connection", "Keep-Alive");
+                connection.setConnectTimeout(5000);
+                connection.setReadTimeout(5000);
                 //连接
                 connection.connect();
                 //得到响应码
@@ -178,7 +186,9 @@ public class SimpleNetManager {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 //设置请求方式
                 connection.setRequestMethod("GET");
-                connection.setConnectTimeout(20000);
+                connection.setRequestProperty("Connection", "Keep-Alive");
+                connection.setConnectTimeout(5000);
+                connection.setReadTimeout(5000);
                 // 添加请求头
                 for (Map.Entry<String, String> entry : heads.entrySet()) {
                     connection.setRequestProperty(entry.getKey(), entry.getValue());
@@ -213,7 +223,9 @@ public class SimpleNetManager {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 //设置请求方式
                 connection.setRequestMethod("GET");
-                connection.setConnectTimeout(20000);
+                connection.setRequestProperty("Connection", "Keep-Alive");
+                connection.setConnectTimeout(5000);
+                connection.setReadTimeout(5000);
                 // 添加请求头
                 for (Map.Entry<String, String> entry : heads.entrySet()) {
                     connection.setRequestProperty(entry.getKey(), entry.getValue());
@@ -246,7 +258,9 @@ public class SimpleNetManager {
             URL url = new URL(urlPath);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
-            connection.setConnectTimeout(20000);
+            connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
             // 设置Content-Type
             connection.setRequestProperty("Content-Type", "application/json");
             // 设置是否向httpUrlConnection输出，post请求设置为true，默认是false
@@ -279,7 +293,9 @@ public class SimpleNetManager {
             URL url = new URL(urlPath);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
-            connection.setConnectTimeout(20000);
+            connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
             // 设置Content-Type
             connection.setRequestProperty("Content-Type", "application/json");
             // 添加请求头
@@ -317,7 +333,9 @@ public class SimpleNetManager {
                 URL url = new URL(urlPath);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
-                connection.setConnectTimeout(20000);
+                connection.setRequestProperty("Connection", "Keep-Alive");
+                connection.setConnectTimeout(5000);
+                connection.setReadTimeout(5000);
                 // 设置Content-Type
                 connection.setRequestProperty("Content-Type", "application/json");
                 // 设置是否向httpUrlConnection输出，post请求设置为true，默认是false
@@ -355,7 +373,9 @@ public class SimpleNetManager {
                 URL url = new URL(urlPath);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
-                connection.setConnectTimeout(20000);
+                connection.setRequestProperty("Connection", "Keep-Alive");
+                connection.setConnectTimeout(5000);
+                connection.setReadTimeout(5000);
                 // 设置Content-Type
                 connection.setRequestProperty("Content-Type", "application/json");
                 // 添加请求头
