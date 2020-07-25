@@ -21,19 +21,30 @@ public class FileUtil {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
+    public static boolean isSaveFileExits(Application app, String fileName) throws Exception{
+        File appDir  =  app.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        if (appDir == null) throw new Exception("sdCard not mounted");
+        File dataFile = new File(appDir, fileName);
+        return dataFile.exists();
+    }
     /**
      * 获取保存的文件路径
      */
     public static File getSaveFile(Application app, String fileName) throws Exception {
         File appDir  =  app.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         if (appDir == null) throw new Exception("sdCard not mounted");
-        File dataFile = new File(appDir, fileName);
-        if (!dataFile.exists()) {
-            dataFile.createNewFile();
-        }
-        return dataFile;
+        return new File(appDir, fileName);
     }
 
+    public static boolean deleteSaveFile(Application app, String fileName) throws Exception {
+        File appDir  =  app.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        if (appDir == null) throw new Exception("sdCard not mounted");
+        File dataFile = new File(appDir, fileName);
+        if (dataFile.exists()) {
+            return dataFile.delete();
+        }
+        return false;
+    }
     /**
      * 保存文件到根目录app名称文件夹下的目录
      */

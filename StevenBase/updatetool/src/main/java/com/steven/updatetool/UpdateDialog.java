@@ -138,6 +138,11 @@ public class UpdateDialog extends Dialog {
         }
     }
 
+    public void setPositionBtnEnable(boolean isEnable) {
+        TextView confirmBtn = findViewById(R.id.tv_upgrade_confirm);
+        confirmBtn.setEnabled(isEnable);
+    }
+
     public void setDownloadPresent(String present) {
         TextView confirmBtn = findViewById(R.id.tv_upgrade_confirm);
         confirmBtn.setEnabled(false);

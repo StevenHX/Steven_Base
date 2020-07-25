@@ -1,8 +1,5 @@
 package com.steven.updatetool;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-
 import androidx.annotation.DrawableRes;
 
 public class UpdateModel {
@@ -18,11 +15,14 @@ public class UpdateModel {
     private String negativeStr;
     private int imgSrc;
     private int bottomBg;
+    private String fileMd5;
+
+
 
     public UpdateModel(boolean isForce, String title, String versionName,
                        int versionCode, String message, String positiveStr,
                        String downloadUrl, String appId, String appName,
-                       String negativeStr, int imgSrc,int bottomBg) {
+                       String negativeStr, int imgSrc, int bottomBg, String fileMd5) {
         this.isForce = isForce;
         this.title = title;
         this.versionName = versionName;
@@ -35,6 +35,7 @@ public class UpdateModel {
         this.negativeStr = negativeStr;
         this.imgSrc = imgSrc;
         this.bottomBg = bottomBg;
+        this.fileMd5 = fileMd5;
     }
 
     public UpdateModel() {
@@ -135,5 +136,13 @@ public class UpdateModel {
 
     public void setBottomBg(int bottomBg) {
         this.bottomBg = bottomBg;
+    }
+
+    public String getFileMd5() {
+        return fileMd5;
+    }
+
+    public void setFileMd5(String fileMd5) {
+        this.fileMd5 = fileMd5;
     }
 }

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.core.content.FileProvider;
@@ -47,11 +48,29 @@ public class UpdateUtil {
                         if (listener != null) listener.cancelUpGrade();
                     })
                     .setPositiveButton(updateModel.getPositiveStr(), (dialog, which) ->
-                            downApk(activity, updateModel.getDownloadUrl(), updateModel.getAppId(), updateModel.getAppName()))
-                    .create();
+                            upGradeApk(activity, updateModel, updateModel.getDownloadUrl(), updateModel.getAppId(), updateModel.getAppName())
+                    ).create();
             updateDialog.show();
         } else {
             if (listener != null) listener.noUpGrade();
+        }
+    }
+
+    private void upGradeApk(Activity activity, UpdateModel updateModel, String downloadUrl, String appId, String appName) {
+        try {
+            String netMD5 = updateModel.getFileMd5();
+            Log.e(TAG,"netMD5:" + netMD5);
+            boolean isFileExits = FileUtil.isSaveFileExits(activity.getApplication(), appName);
+            File file = FileUtil.getSaveFile(activity.getApplication(), appName);
+            if (isFileExits && netMD5.equalsIgnoreCase(Md5Util.getFileMD5(file))) {
+                Log.e(TAG,"localMD5:" + Md5Util.getFileMD5(file));
+                doInstallApk(activity, appId, file);
+            } else {
+                FileUtil.deleteSaveFile(activity.getApplication(), appName);
+                downApk(activity, updateModel, downloadUrl, appId, appName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -80,10 +99,12 @@ public class UpdateUtil {
                     String appId = jsonObject.getString("appId");
                     String appName = jsonObject.getString("appName");
                     String negativeStr = jsonObject.getString("negativeStr");
+                    // TODO: 2020/7/25 接受后端传过来的md5
                     UpdateModel updateModel = new UpdateModel(isForce, title, versionName,
                             versionCode, message, positiveStr, downloadUrl, appId, appName, negativeStr,
                             imgSrc == -1 ? R.drawable.top_bg : imgSrc,
-                            bottomBg == -1 ? R.drawable.btn_bg : bottomBg);
+                            bottomBg == -1 ? R.drawable.btn_bg : bottomBg,
+                            "");
                     activity.runOnUiThread(() -> showUpdateDialog(activity, updateModel, localVersionCode, buildType, listener));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -127,32 +148,41 @@ public class UpdateUtil {
                 R.drawable.top_bg, R.drawable.btn_bg, listener);
     }
 
-    private void downApk(Activity activity, String url, String appId, String fileName) {
+    private void downApk(Activity activity, UpdateModel updateModel, String url, String appId, String fileName) {
         SimpleNetManager.getInstance().downloadFile(activity,
                 url, appId, fileName, (isDone, present) -> {
-                    Log.e("xxxxxxx", "isDone:" + isDone + ",present:" + present + "%" + ",currentThread: " + Thread.currentThread().getName());
+                    Log.e(TAG, "isDone:" + isDone + ",present:" + present + "%" + ",currentThread: " + Thread.currentThread().getName());
                     activity.runOnUiThread(() -> updateDialog.setDownloadPresent(present));
                     if (isDone) {
                         try {
+                            activity.runOnUiThread(() -> updateDialog.setPositionBtnEnable(true));
                             File file = FileUtil.getSaveFile(activity.getApplication(), fileName);
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                Uri contentUri = FileProvider.getUriForFile(activity, appId + ".fileProvider", file);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+                            String netMD5 = updateModel.getFileMd5();
+                            if (netMD5.equalsIgnoreCase(Md5Util.getFileMD5(file))) {
+                                doInstallApk(activity, appId, file);
                             } else {
-                                intent.setDataAndType(
-                                        Uri.fromFile(file),
-                                        "application/vnd.android.package-archive"
-                                );
+                                Toast.makeText(activity, "下载文件损坏", Toast.LENGTH_SHORT).show();
                             }
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            activity.startActivity(intent);
-
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 });
+    }
+
+    private void doInstallApk(Activity activity, String appId, File file) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Uri contentUri = FileProvider.getUriForFile(activity, appId + ".fileProvider", file);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+        } else {
+            intent.setDataAndType(
+                    Uri.fromFile(file),
+                    "application/vnd.android.package-archive"
+            );
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(intent);
     }
 }
