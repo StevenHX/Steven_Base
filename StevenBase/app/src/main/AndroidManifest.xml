@@ -10,14 +10,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppLocalLaunchTheme">
+        <activity android:name=".ui.jetpack.TestBindingActivity"
+        android:theme="@style/MainIndexTheme">
+        </activity>
         <activity
             android:name=".ui.main.WebActivity"
-            android:theme="@style/MainIndexTheme">
-        </activity>
+            android:theme="@style/MainIndexTheme"></activity>
         <activity
             android:name=".ui.main.MainActivity"
-            android:theme="@style/MainIndexTheme">
-        </activity>
+            android:theme="@style/MainIndexTheme"></activity>
         <activity
             android:name=".ui.Login.LoginActivity"
             android:theme="@style/AppTheme.Slide" />
