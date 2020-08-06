@@ -1,9 +1,5 @@
 package com.hx.stevenbase.ui.main;
 
-import android.os.Handler;
-import android.view.View;
-import android.view.WindowManager;
-
 import com.hx.steven.activity.BaseX5WebActivity;
 import com.hx.steven.util.BarColorUtils;
 import com.hx.steven.web.WebManager;
@@ -17,13 +13,15 @@ public class WebActivity extends BaseX5WebActivity {
 
     @Override
     protected int getLaunchImageRes() {
-        return R.drawable.launch_bg;
+        return R.color.transport;
     }
 
     @Override
     protected void initView() {
         super.initView();
-        WebManager.getInstance().getWebStrategyInterface().loadUrl("https://happy-read-h5-test.xiyueapp.info/");
+        BarColorUtils.setBarColor(this,"#F0F8FF",true);
+        WebManager.getInstance().getWebStrategyInterface().loadUrl("http://192.168.22.38:8084/");
+        removeImage();
     }
 
 
