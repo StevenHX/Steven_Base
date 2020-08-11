@@ -1,9 +1,8 @@
 package com.hx.steven.util;
 
+import android.app.Application;
 import android.os.Environment;
 import android.text.TextUtils;
-
-import com.hx.steven.BuildConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +13,6 @@ import java.math.BigDecimal;
  * 文件计算工具类
  */
 public class FileUtil {
-
     /**
      * 判断sd卡是否挂载
      */
@@ -22,41 +20,35 @@ public class FileUtil {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
-    /**
-     * 获取根目录下app的目录
-     *
-     * @return
-     */
-    private static File getExternalStorageAppDirectory(String appId) {
-        if (isSDMounted()) {
-            File sdFile = Environment.getExternalStorageDirectory();
-            File appDir = new File(sdFile, appId);
-            if (!appDir.exists()) {
-                appDir.mkdirs();
-            }
-            return appDir;
-        }
-        return null;
+    public static boolean isSaveFileExits(Application app, String fileName) throws Exception{
+        File appDir  =  app.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        if (appDir == null) throw new Exception("sdCard not mounted");
+        File dataFile = new File(appDir, fileName);
+        return dataFile.exists();
     }
-
     /**
      * 获取保存的文件路径
      */
-    public static File getSaveFile(String appId, String fileName) throws Exception {
-        File appDir = getExternalStorageAppDirectory(appId);
+    public static File getSaveFile(Application app, String fileName) throws Exception {
+        File appDir  =  app.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         if (appDir == null) throw new Exception("sdCard not mounted");
-        File dataFile = new File(appDir, fileName);
-        if (!dataFile.exists()) {
-            dataFile.createNewFile();
-        }
-        return dataFile;
+        return new File(appDir, fileName);
     }
 
+    public static boolean deleteSaveFile(Application app, String fileName) throws Exception {
+        File appDir  =  app.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        if (appDir == null) throw new Exception("sdCard not mounted");
+        File dataFile = new File(appDir, fileName);
+        if (dataFile.exists()) {
+            return dataFile.delete();
+        }
+        return false;
+    }
     /**
      * 保存文件到根目录app名称文件夹下的目录
      */
-    public static void saveFile2ExternalAppDirectory(String appId, String fileName, String content) throws Exception {
-        File file = getSaveFile(appId, fileName);
+    public static void saveFile2ExternalAppDirectory(Application app, String fileName, String content) throws Exception {
+        File file  =  getSaveFile(app,fileName);
         String strContent = content + "\r\n";
         RandomAccessFile raf = new RandomAccessFile(file, "rwd");
         raf.seek(file.length());
@@ -67,8 +59,8 @@ public class FileUtil {
     /**
      * 从指定目录，读取文件内容 默认从根目录appID文件夹下读取
      */
-    public static String getContentFromAppDirectory(String appId, String fileName) throws IOException {
-        File file = getExternalStorageAppDirectory(appId);
+    public static String getContentFromAppDirectory(Application app, String fileName) throws IOException {
+        File file  =  app.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
         File dataFile = new File(file, fileName);
         RandomAccessFile raf = new RandomAccessFile(dataFile, "rw");
         StringBuilder builder = new StringBuilder();
