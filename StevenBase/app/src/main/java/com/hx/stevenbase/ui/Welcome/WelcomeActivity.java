@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,17 +20,21 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.bumptech.glide.request.transition.Transition;
 import com.hx.stevenbase.R;
-import com.hx.stevenbase.ui.main.MainActivity;
 import com.hx.stevenbase.ui.main.WebActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
     private ImageView launch_img;
+    private TextView jumpAd_tv;
+    private Handler handler;
+
+    Runnable runnable = this::openMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_activity);
         launch_img = findViewById(R.id.launch_img);
+        jumpAd_tv = findViewById(R.id.jumpAd);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
@@ -46,14 +51,16 @@ public class WelcomeActivity extends AppCompatActivity {
                     }
                 });
 
-        Handler handler = new Handler();
-        handler.postDelayed(this::openMain, 6000);
+        handler = new Handler();
+        handler.postDelayed(runnable, 6000);
+        jumpAd_tv.setOnClickListener(v -> openMain());
     }
 
     private void openMain() {
-        Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+        Intent intent = new Intent(WelcomeActivity.this, WebActivity.class);
         startActivity(intent);
         finish();
         overridePendingTransition(0, 0);
+        handler.removeCallbacks(runnable);
     }
 }

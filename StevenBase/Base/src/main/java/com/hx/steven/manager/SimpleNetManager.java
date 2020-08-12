@@ -1,5 +1,6 @@
 package com.hx.steven.manager;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.hx.steven.util.FileUtil;
@@ -423,7 +424,7 @@ public class SimpleNetManager {
      * @param fileName
      * @param listener
      */
-    public void downloadBigFile(String urlPath, String appId, String fileName, NetDownloadCallBackListener listener) {
+    public void downloadBigFile(Activity activity,String urlPath, String appId, String fileName, NetDownloadCallBackListener listener) {
         isStopDownLoad = false;
         ThreadPoolManager.getInstance().execute(() -> {
             URL url = null;
@@ -438,7 +439,7 @@ public class SimpleNetManager {
                 if (connection.getResponseCode() != HttpURLConnection.HTTP_PARTIAL) return;
 
                 int totalSize = connection.getContentLength();//获取文件总大小
-                File saveFile = FileUtil.getSaveFile(appId, fileName);
+                File saveFile = FileUtil.getSaveFile(activity.getApplication(), fileName);
                 RandomAccessFile rafAccessFile = new RandomAccessFile(saveFile, "rw");
                 rafAccessFile.setLength(totalSize);
                 rafAccessFile.seek(startIndex);
@@ -464,7 +465,7 @@ public class SimpleNetManager {
         });
     }
 
-    public void downloadFile(String urlPath, String appId, String fileName, NetDownloadCallBackListener listener) {
+    public void downloadFile(Activity activity, String urlPath, String appId, String fileName, NetDownloadCallBackListener listener) {
         ThreadPoolManager.getInstance().execute(() -> {
             URL url = null;
             int count = 0;
@@ -474,7 +475,7 @@ public class SimpleNetManager {
                 if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) return;
                 int totalSize = connection.getContentLength();//获取文件总大小
                 InputStream is = connection.getInputStream();
-                OutputStream os = new FileOutputStream(FileUtil.getSaveFile(appId, fileName));
+                OutputStream os = new FileOutputStream(FileUtil.getSaveFile(activity.getApplication(), fileName));
                 int len = 0;
                 byte bs[] = new byte[1024];
                 while ((len = is.read(bs)) != -1) {

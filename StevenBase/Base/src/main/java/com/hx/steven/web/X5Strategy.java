@@ -22,6 +22,7 @@ public class X5Strategy implements WebStrategyInterface {
         this.webView.clearCache(true);
         this.webView.clearHistory();
         this.webView.requestFocus();
+        this.webView.removeJavascriptInterface("searchBoxJavaBridge_");
         WebSettings webSetting = this.webView.getSettings();
         webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
         //限制手机字体大小造成样式变样
@@ -36,6 +37,12 @@ public class X5Strategy implements WebStrategyInterface {
         webSetting.setJavaScriptEnabled(true);
         webSetting.setAppCacheEnabled(false);
         webSetting.setDomStorageEnabled(true);
+        webSetting.setSavePassword(false);
+
+        // 禁用 file 协议；
+        webSetting.setAllowFileAccess(false);
+        webSetting.setAllowFileAccessFromFileURLs(false);
+        webSetting.setAllowUniversalAccessFromFileURLs(false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSetting.setMixedContentMode(0);
@@ -126,7 +133,7 @@ public class X5Strategy implements WebStrategyInterface {
     public void callJs(String func, String data) {
         if (webView == null) return;
         Log.e(TAG, "callback js:" + func + "==>" + data);
-        webView.post(() -> webView.loadUrl("javascript:" + func + "(" + data + ")"));
+        webView.post(() -> webView.evaluateJavascript("javascript:" + func + "(" + data + ")",null));
     }
 
     @Override
