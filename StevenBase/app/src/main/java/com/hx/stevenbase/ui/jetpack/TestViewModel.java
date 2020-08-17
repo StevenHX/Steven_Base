@@ -1,11 +1,18 @@
 package com.hx.stevenbase.ui.jetpack;
 
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
 
-public class TestViewModel extends ViewModel {
-    UserInfoData userInfoData = new UserInfoData("张三",43);
+public class TestViewModel<T extends BaseRepository> extends BaseViewModel<T> {
 
-    public UserInfoData getUserInfo() {
-        return userInfoData;
+
+    public TestViewModel(T repository) {
+        super(repository);
+    }
+
+    public LiveData<String> getTestInfo() {
+        return ((TestRepository)getRepository()).getTestInfo();
+    }
+    public void setTestInfo(String info) {
+        ((TestRepository)getRepository()).setTestInfo(info);
     }
 }

@@ -12,6 +12,10 @@
         android:theme="@style/AppLocalLaunchTheme">
         <activity android:name=".ui.jetpack.TestBindingActivity"
         android:theme="@style/MainIndexTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.main.WebActivity"
@@ -30,10 +34,10 @@
             android:name=".ui.Welcome.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/AppLocalLaunchTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
     </application>
 </manifest>
