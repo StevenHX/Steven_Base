@@ -13,14 +13,14 @@ public class WebActivity extends BaseX5WebActivity {
 
     @Override
     protected int getLaunchImageRes() {
-        return R.color.transport;
+        return R.color.transparent;
     }
 
     @Override
     protected void initView() {
         super.initView();
         BarColorUtils.setBarColor(this,"#F0F8FF",true);
-        WebManager.getInstance().getWebStrategyInterface().loadUrl("http://192.168.22.38:8084/");
+        WebManager.getInstance().getWebStrategyInterface().loadUrl("https://www.starbucks.com.cn/");
         removeImage();
     }
 

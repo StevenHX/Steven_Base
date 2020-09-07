@@ -5,7 +5,7 @@
     android:id="@+id/dialog_window_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mn_colorDialogWindowBg"
+    android:background="@color/transparent"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -36,7 +36,7 @@
                 android:layout_height="45dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                wheel:mn_barColor="@color/mn_colorDialogProgressBarColor"
+                wheel:mn_barColor="@color/white"
                 wheel:mn_barWidth="3dp"
                 wheel:mn_fillRadius="true"
                 wheel:mn_progressIndeterminate="true"
@@ -51,7 +51,7 @@
                 android:ellipsize="end"
                 android:maxLines="6"
                 android:text="加载中..."
-                android:textColor="@color/mn_colorDialogTextColor"
+                android:textColor="@color/white"
                 android:textSize="13sp"
                 android:visibility="visible"
                 />

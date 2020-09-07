@@ -128,4 +128,13 @@
         <attr name="wheelview_dividerColor" format="color"/>
         <attr name="wheelview_lineSpacingMultiplier" format="float"/>
     </declare-styleable>
+
+    <declare-styleable name="SuperTextView">
+        <attr format="string" name="dynamicText"/><attr format="integer" name="duration"/><attr format="color" name="selectedColor"/><attr format="enum" name="dynamicStyle">
+            <enum name="normal" value="0"/>
+            <enum name="typewriting" value="1"/>
+            <enum name="changeColor" value="2"/>
+        </attr>
+    </declare-styleable>
+
 </resources>

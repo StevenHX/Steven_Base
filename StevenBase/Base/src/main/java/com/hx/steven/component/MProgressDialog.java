@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -12,6 +11,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.hx.steven.R;
 
@@ -235,16 +236,16 @@ public class MProgressDialog implements View.OnClickListener {
             mContext = context;
             //默认参数
             canceledOnTouchOutside = false;
-            backgroundWindowColor = mContext.getResources().getColor(R.color.mn_colorDialogWindowBg);
+            backgroundWindowColor = mContext.getResources().getColor(R.color.transparent);
             backgroundViewColor = mContext.getResources().getColor(R.color.mn_colorDialogViewBg);
-            strokeColor = mContext.getResources().getColor(R.color.mn_colorDialogTrans);
+            strokeColor = mContext.getResources().getColor(R.color.transparent);
             cornerRadius = 6;
             strokeWidth = 0;
-            progressColor = mContext.getResources().getColor(R.color.mn_colorDialogProgressBarColor);
-            progressRimColor = mContext.getResources().getColor(R.color.mn_colorDialogTrans);
+            progressColor = mContext.getResources().getColor(R.color.white);
+            progressRimColor = mContext.getResources().getColor(R.color.transparent);
             progressWidth = 2;
             progressRimWidth = 0;
-            textColor = mContext.getResources().getColor(R.color.mn_colorDialogTextColor);
+            textColor = mContext.getResources().getColor(R.color.white);
             dialogDismissListener = null;
         }
 
