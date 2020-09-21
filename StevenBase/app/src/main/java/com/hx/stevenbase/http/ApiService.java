@@ -8,6 +8,7 @@ import com.hx.stevenbase.ui.Set.about.aboutBean;
 import com.hx.stevenbase.ui.Set.about.aboutDto;
 import com.hx.stevenbase.ui.Set.home.homeBannerBean;
 import com.hx.stevenbase.ui.Set.home.homeBean;
+import com.hx.stevenbase.ui.bingGallery.ImageBean;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService extends BaseApiService {
     /**
@@ -47,4 +49,11 @@ public interface ApiService extends BaseApiService {
      */
     @GET("/banner/json")
     Call<BaseBean<List<homeBannerBean>>> getHomeBanners();
+
+    @GET("https://cn.bing.com/HPImageArchive.aspx")
+    Observable<ImageBean> getImage(
+            @Query("format") String format,
+            @Query("idx") int idx,
+            @Query("n") int n
+    );
 }

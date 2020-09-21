@@ -88,6 +88,9 @@ android {
         }
     }
 
+    dataBinding{
+        enabled=true
+    }
 }
 repositories {
     flatDir {
@@ -96,7 +99,8 @@ repositories {
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
