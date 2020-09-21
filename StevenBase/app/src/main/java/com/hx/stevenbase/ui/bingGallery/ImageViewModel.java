@@ -24,7 +24,7 @@ public class ImageViewModel extends ViewModel {
     }
 
     public void LoadImage() {
-        mRepertory.getImage("js", idx, 1)
+        mRepertory.getApiService().getImage("js", idx, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ImageBean>() {
@@ -53,7 +53,7 @@ public class ImageViewModel extends ViewModel {
     }
 
     public void nextImage() {
-        mRepertory.getImage("js", ++idx, 1)
+        mRepertory.getApiService().getImage("js", ++idx, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ImageBean>() {
@@ -89,7 +89,7 @@ public class ImageViewModel extends ViewModel {
             ));
             return;
         }
-        mRepertory.getImage("js", --idx, 1)
+        mRepertory.getApiService().getImage("js", --idx, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ImageBean>() {

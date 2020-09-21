@@ -14,6 +14,7 @@ import com.hx.stevenbase.BuildConfig;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.Realm.UserDB;
 import com.hx.stevenbase.ui.bingGallery.BingGalleryActivity;
+import com.hx.stevenbase.ui.bingGallery.WanAndroidActivity;
 import com.orhanobut.logger.Logger;
 import com.steven.updatetool.CheckAppVersionListener;
 import com.steven.updatetool.UpdateModel;
@@ -148,7 +149,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.hello2)
     public void onViewClicked2() {
-        launch(this, BingGalleryActivity.class);
+        launch(this, WanAndroidActivity.class);
     }
     //增
     private void realmInsert(Realm realm) {
