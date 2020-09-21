@@ -15,8 +15,6 @@ import com.hx.stevenbase.R;
 import com.hx.stevenbase.Realm.UserDB;
 import com.orhanobut.logger.Logger;
 import com.steven.updatetool.CheckAppVersionListener;
-import com.steven.updatetool.FileUtil;
-import com.steven.updatetool.Md5Util;
 import com.steven.updatetool.UpdateModel;
 import com.steven.updatetool.UpdateUtil;
 
@@ -149,12 +147,6 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.hello2)
     public void onViewClicked2() {
-        try {
-            Logger.e(Md5Util.getFileMD5(FileUtil.getSaveFile(getApplication(), "xyMall.apk")));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-//        SimpleNetManager.getInstance().setStopDownLoad(true);
     }
     //增
     private void realmInsert(Realm realm) {

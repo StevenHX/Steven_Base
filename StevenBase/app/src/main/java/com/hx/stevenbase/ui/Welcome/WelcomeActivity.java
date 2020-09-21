@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hx.steven.component.SuperTextView;
 import com.hx.stevenbase.R;
+import com.hx.stevenbase.ui.main.MainActivity;
 import com.hx.stevenbase.ui.main.WebActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -69,7 +70,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void openMain() {
-        Intent intent = new Intent(WelcomeActivity.this, WebActivity.class);
+        Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
         overridePendingTransition(0, 0);

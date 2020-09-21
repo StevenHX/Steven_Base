@@ -1,0 +1,71 @@
+System.setProperty('java.awt.headless', 'false')
+import groovy.swing.SwingBuilder
+
+def buildInfoStr
+
+task getBuildInfo {
+    doLast {
+        // 工程的根目录是否存在local.properties文件
+        if (rootProject.file('local.properties').exists()) {
+            // 如果存在，则读取其中的文本，直接使用
+            java.util.Properties properties = new Properties()
+            properties.load(rootProject.file('local.properties').newDataInputStream())
+            buildInfoStr = properties.getProperty("debug_info")
+        }
+        // 如果不存在文件
+        if (!buildInfoStr?.trim()) {
+            if (System.console() == null) {
+                System.setProperty('java.awt.headless', 'false')
+                def tempText = ''
+                // 通过swing显示出一个输入框
+                new SwingBuilder().edt {
+                    dialog(modal: true, title: 'Enter debug Info', alwaysOnTop: true, resizable: true, locationRelativeTo: null, pack: true, show: true) {
+                        vbox {
+                            // Put everything below each other
+                            label(text: "Please enter build Info:")
+                            // 获取输入的文本
+                            def input1 = textField()
+                            button(defaultButton: true, text: 'OK', actionPerformed: {
+                                tempText = input1.text
+                                println(tempText)
+                                dispose()
+                            })
+                        }
+                    }
+                }
+                if (tempText.size() <= 0) {
+                    throw new InvalidUserDataException("You must enter the build info to proceed.")
+                } else {
+                    buildInfoStr = new String(tempText)
+                }
+            }
+        }
+
+    }
+}
+
+task copyDebugApk(type: Copy) {
+    def createTimeDay = new Date().format("YYYY-MM-dd", TimeZone.getTimeZone("GMT+08:00"))
+    def createTime = new Date().format("kk_mm", TimeZone.getTimeZone("GMT+08:00"))
+    File file = new File(project.rootDir.absolutePath + "/apks/debug/${createTimeDay}")
+    if (!file.exists())
+        file.mkdir()
+    from "${buildDir}/outputs/apk/debug/app-debug.apk"
+    into file
+    rename { String fileName ->
+        fileName = "wt_v${android.defaultConfig.versionCode}" + "_" + createTime + buildInfoStr + ".apk"
+    }
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name == 'assembleDebug') {
+        task.finalizedBy "copyDebugApk"
+    }
+}
+
+tasks.whenTaskAdded { theTask ->
+    if (theTask.name.equals("assembleDebug")) {
+        theTask.dependsOn(getBuildInfo)
+        theTask.mustRunAfter(getBuildInfo)
+    }
+}

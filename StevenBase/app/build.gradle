@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+apply from: 'build_info.gradle'
 android {
 
     compileOptions {
@@ -24,23 +25,50 @@ android {
     }
 
     signingConfigs {
-        steven {
-            storeFile file("../StevenBase.jks")
+        release {
+            storeFile file("$rootDir/StevenBase.jks")
             storePassword "1234567890"
             keyAlias "stevenbase"
             keyPassword "1234567890"
+        }
+        debug {
+            storeFile file("$rootDir/debug.keystore")
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
         }
     }
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.steven
+            shrinkResources false
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.steven
+            shrinkResources false
+            zipAlignEnabled true
+            signingConfig signingConfigs.debug
+            proguardFiles 'proguard-rules.pro'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        def buildType = variant.buildType.name
+        def fileName
+        def createTimeDay = new Date().format("YYYY-MM-dd", TimeZone.getTimeZone("GMT+08:00"))
+        def createTime = new Date().format("kk_mm", TimeZone.getTimeZone("GMT+08:00"))
+        if (buildType != 'debug') {
+            variant.getPackageApplicationProvider().get().outputDirectory = new File(project.rootDir.absolutePath + "/apks/${buildType}/${createTimeDay}")
+        }
+        variant.outputs.each {
+            if (buildType != 'debug') {
+                fileName = "wt_v${defaultConfig.versionCode}_${createTime}_${buildType}.apk"
+                println("---------fileName------->" + fileName)
+                it.outputFileName = fileName
+            }
         }
     }
 
@@ -68,9 +96,9 @@ repositories {
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation'androidx.test.espresso:espresso-core:3.3.0'
     testImplementation 'junit:junit:4.12'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
@@ -78,5 +106,4 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation project(':Base')
-    implementation project(':updatetool')
 }
