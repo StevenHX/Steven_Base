@@ -28,7 +28,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String","wxWeChatId",properties.getProperty("wxWeChatId"))
             buildConfigField("String","wxWeChatSec",properties.getProperty("wxWeChatSec"))
-            buildConfigField("String","wxWeChatSec",properties.getProperty("wxWeChatSec"))
             buildConfigField("String","buglyAppId",properties.getProperty("buglyAppId"))
         }
     }
