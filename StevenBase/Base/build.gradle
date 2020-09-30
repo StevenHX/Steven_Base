@@ -5,11 +5,11 @@ InputStream inputStream = project.rootProject.file('local.properties').newDataIn
 properties.load( inputStream )
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 29
+        targetSdkVersion 30
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters 'armeabi-v7a'

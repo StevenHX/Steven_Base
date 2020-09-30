@@ -33,5 +33,11 @@
                 dirs 'libs', '../Base/libs'
             }
         }
+
+        local.properties
+         ====>
+            wxWeChatId="23223"
+            wxWeChatSec="123123"
+            buglyAppId="123132"
 ```
 
