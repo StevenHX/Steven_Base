@@ -71,7 +71,7 @@ dependencies {
     //Glide
     api 'com.github.bumptech.glide:glide:4.9.0'
     //约束布局
-    api 'androidx.constraintlayout:constraintlayout:2.0.1'
+    api 'androidx.constraintlayout:constraintlayout:2.0.2'
     //bigkoo picker
     api 'com.contrarywind:Android-PickerView:4.1.6'
     // 沉浸式库
@@ -86,16 +86,36 @@ dependencies {
     // 极光推送
     implementation 'cn.jiguang.sdk:jpush:3.6.0'
     implementation 'cn.jiguang.sdk:jcore:2.3.4'
-    // 升级sdk
-    api(name: 'updatetool-release', ext: 'aar')
 }
-apply plugin: 'com.novoda.bintray-release'
-publish {
-    repoName = "StevenBase"
-    userOrg = 'horizonsteven'
-    groupId = 'com.hx.steven'
-    artifactId = 'StevenBase'
-    publishVersion = '1.0.1'
-    desc = 'novoad bintraybuild project'
-    website = 'https://github.com/you project'
-}
+//apply plugin: 'com.novoda.bintray-release'
+//publish {
+//    repoName = "StevenBase"
+//    userOrg = 'horizonsteven'
+//    groupId = 'com.hx.steven'
+//    artifactId = 'StevenBase'
+//    publishVersion = '1.0.1'
+//    desc = 'novoad bintraybuild project'
+//    website = 'https://github.com/you project'
+//}
+// 添加 maven 插件
+//apply plugin: 'maven'
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: 'http://192.168.44.128:8081/repository/wingtech-Release/') {
+//                // 你 Nexus 的账户密码
+//                authentication(userName: 'admin', password: 'admin')
+//            }
+//            pom.project {
+//                // 自定义的项目分组
+//                groupId 'com.hx.steven'
+//                // 自定义项目名称
+//                artifactId 'StevenBase'
+//                // 项目版本号
+//                version '1.0.1'
+//            }
+//        }
+//    }
+//}
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.StevenHX'
