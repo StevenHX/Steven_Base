@@ -31,3 +31,24 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
+
+// 添加 maven 插件
+apply plugin: 'maven'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: 'http://192.168.44.128:8081/repository/wingtech-Release/') {
+                // 你 Nexus 的账户密码
+                authentication(userName: 'admin', password: 'admin')
+            }
+            pom.project {
+                // 自定义的项目分组
+                groupId 'com.steven.updatetool'
+                // 自定义项目名称
+                artifactId 'UpdateTool'
+                // 项目版本号
+                version '1.0.0'
+            }
+        }
+    }
+}

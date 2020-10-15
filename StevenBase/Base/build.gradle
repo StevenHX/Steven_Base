@@ -47,10 +47,6 @@ repositories {
 }
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testImplementation 'junit:junit:4.12'
     api 'com.android.support:multidex:1.0.3'
     api 'com.google.android.material:material:1.2.1'
     //banner
@@ -98,24 +94,22 @@ dependencies {
 //    website = 'https://github.com/you project'
 //}
 // 添加 maven 插件
-//apply plugin: 'maven'
-//uploadArchives {
-//    repositories {
-//        mavenDeployer {
-//            repository(url: 'http://192.168.44.128:8081/repository/wingtech-Release/') {
-//                // 你 Nexus 的账户密码
-//                authentication(userName: 'admin', password: 'admin')
-//            }
-//            pom.project {
-//                // 自定义的项目分组
-//                groupId 'com.hx.steven'
-//                // 自定义项目名称
-//                artifactId 'StevenBase'
-//                // 项目版本号
-//                version '1.0.1'
-//            }
-//        }
-//    }
-//}
-apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.StevenHX'
+apply plugin: 'maven'
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: 'http://192.168.44.128:8081/repository/wingtech-Release/') {
+                // 你 Nexus 的账户密码
+                authentication(userName: 'admin', password: 'admin')
+            }
+            pom.project {
+                // 自定义的项目分组
+                groupId 'com.hx.steven'
+                // 自定义项目名称
+                artifactId 'StevenBase'
+                // 项目版本号
+                version '1.0.1'
+            }
+        }
+    }
+}
