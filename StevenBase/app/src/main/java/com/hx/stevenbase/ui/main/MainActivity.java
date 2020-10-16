@@ -149,7 +149,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.hello2)
     public void onViewClicked2() {
-        launch(this, WanAndroidActivity.class);
+        launch(this, BingGalleryActivity.class);
     }
     //增
     private void realmInsert(Realm realm) {
