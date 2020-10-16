@@ -1,5 +1,10 @@
 package com.hx.steven.activity;
 
+import android.annotation.TargetApi;
+import android.content.ClipData;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,6 +26,7 @@ public abstract class BaseX5WebActivity extends BaseActivity {
     private WebView mWebView;
     private ImageView imageView;
     private long mExitTime;
+    private X5Strategy x5Strategy;
 
     protected abstract Object getWebInterface();
 
@@ -36,7 +42,8 @@ public abstract class BaseX5WebActivity extends BaseActivity {
         mWebView = findViewById(R.id.web_webView);
         imageView = findViewById(R.id.main_launch_img);
         imageView.setBackgroundResource(getLaunchImageRes());
-        WebManager.getInstance().initWebManager(mWebView, getWebInterface(), new X5Strategy());
+        x5Strategy = new X5Strategy();
+        WebManager.getInstance().initWebManager(mWebView, getWebInterface(), x5Strategy);
     }
 
     @Override
@@ -54,6 +61,41 @@ public abstract class BaseX5WebActivity extends BaseActivity {
             getWindow().clearFlags(
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == X5Strategy.FILE_CHOOSER_REQUEST_CODE) {
+            Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
+            if (x5Strategy.getUploadMessageAboveL() != null) {
+                onActivityResultAboveL(data);
+            } else if (x5Strategy.getUploadMessage() != null) {
+                x5Strategy.getUploadMessage().onReceiveValue(result);
+                x5Strategy.setUploadMessage(null);
+            }
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void onActivityResultAboveL(Intent intent) {
+        Uri[] results = null;
+        if (intent != null) {
+            String dataString = intent.getDataString();
+            ClipData clipData = intent.getClipData();
+            if (clipData != null) {
+                results = new Uri[clipData.getItemCount()];
+                for (int i = 0; i < clipData.getItemCount(); i++) {
+                    ClipData.Item item = clipData.getItemAt(i);
+                    results[i] = item.getUri();
+                }
+            }
+            if (dataString != null)
+                results = new Uri[]{Uri.parse(dataString)};
+        }
+        x5Strategy.getUploadMessageAboveL().onReceiveValue(results);
+        x5Strategy.setUploadMessageAboveL(null);
     }
 
     @Override

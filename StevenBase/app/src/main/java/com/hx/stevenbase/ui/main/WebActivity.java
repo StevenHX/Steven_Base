@@ -20,7 +20,7 @@ public class WebActivity extends BaseX5WebActivity {
     protected void initView() {
         super.initView();
         BarColorUtils.setBarColor(this,"#F0F8FF",true);
-        WebManager.getInstance().getWebStrategyInterface().loadUrl("https://www.starbucks.com.cn/");
+        WebManager.getInstance().getWebStrategyInterface().loadUrl("http://192.168.22.13:9527");
         removeImage();
     }
 
