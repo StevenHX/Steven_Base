@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <paths>
-        <external-path path="" name="download"/>
+        <external-path path="." name="download"/>
+        <root-path path="." name="root_path" />
     </paths>
 </resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="album_item_count_easy_photos">#4f5555</color>
+    <color name="album_item_name_easy_photos">#3e4145</color>
+    <color name="album_items_background_easy_photos">#FFFFFF</color>
+    <color name="colorPrimaryDark">#303135</color>
+    <color name="easy_photos_bar_primary">#393a3f</color>
+    <color name="easy_photos_bar_primary_dark">#303135</color>
+    <color name="easy_photos_bar_primary_translation">#eb212123</color>
+    <color name="easy_photos_bg_primary">#000000</color>
+    <color name="easy_photos_fg_accent">#00AA00</color>
+    <color name="easy_photos_fg_primary">#ffffff</color>
+    <color name="easy_photos_fg_primary_dark">#9b9b9b</color>
+    <color name="easy_photos_status_bar">#393a3f</color>
+    <color name="menu_text_easy_photos">#FFFFFF</color>
+    <color name="text_sticker_black_easy_photos">#000000</color>
+    <color name="text_sticker_blue_easy_photos">#4a90e2</color>
+    <color name="text_sticker_cyan_easy_photos">#50e3c2</color>
+    <color name="text_sticker_editor_fragment_bar_easy_photos">#393a3f</color>
+    <color name="text_sticker_editor_fragment_bg_easy_photos">#2c2e30</color>
+    <color name="text_sticker_gray_easy_photos">#4a4a4a</color>
+    <color name="text_sticker_green_easy_photos">#7ed321</color>
+    <color name="text_sticker_orange_easy_photos">#f5a623</color>
+    <color name="text_sticker_purple_easy_photos">#9013fe</color>
+    <color name="text_sticker_red_easy_photos">#d0021b</color>
+    <color name="text_sticker_white_easy_photos">#ffffff</color>
+    <color name="text_sticker_yellow_easy_photos">#f8e71c</color>
+    <color name="transparent_easy_photos">#00000000</color>
+    <color name="white_easy_photos">#FFFFFF</color>
+</resources>

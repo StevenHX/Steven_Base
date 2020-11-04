@@ -1,2 +1,3 @@
+include ':MediaSelect'
 include ':app', ':Base'
 include ':updatetool'

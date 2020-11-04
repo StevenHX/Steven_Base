@@ -1,10 +1,16 @@
 package com.hx.stevenbase.ui.main;
 
 import android.Manifest;
+import android.content.Intent;
 import android.widget.Button;
 
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.hx.mediaselect.constract.AlbumBuilder;
+import com.hx.mediaselect.constract.Code;
+import com.hx.mediaselect.ui.Photo;
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.ProgressBarView;
@@ -13,8 +19,6 @@ import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.BuildConfig;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.Realm.UserDB;
-import com.hx.stevenbase.ui.bingGallery.BingGalleryActivity;
-import com.hx.stevenbase.ui.bingGallery.WanAndroidActivity;
 import com.orhanobut.logger.Logger;
 import com.steven.updatetool.CheckAppVersionListener;
 import com.steven.updatetool.UpdateModel;
@@ -45,6 +49,8 @@ public class MainActivity extends BaseActivity {
     FlowTagLayout colorFlowLayout;
     @BindView(R.id.pbView)
     ProgressBarView pbView;
+    @BindView(R.id.selectPhoto)
+    AppCompatImageView selectPhoto;
 
     private Realm realm;
 
@@ -78,7 +84,7 @@ public class MainActivity extends BaseActivity {
         pbView.setMax(100);
         pbView.setProgress(43);
         updateUtil = new UpdateUtil();
-        BarColorUtils.setBarColor(this,"#C1FFC1",true);
+        BarColorUtils.setBarColor(this, "#C1FFC1", true);
     }
 
     @Override
@@ -149,8 +155,12 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.hello2)
     public void onViewClicked2() {
-        launch(this, BingGalleryActivity.class);
+        AlbumBuilder.createAlbumCamera(this)
+                .setCount(10)
+                .setFileProviderAuthority("com.hx.stevenbase.fileProvider")
+                .start(101);
     }
+
     //增
     private void realmInsert(Realm realm) {
         realm.beginTransaction();//开启事务
@@ -175,5 +185,18 @@ public class MainActivity extends BaseActivity {
             list.add(map);
         }
         return list;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (RESULT_OK == resultCode) {
+            //相机或相册回调
+            if (requestCode == 101) {
+                ArrayList<Photo> resultPhotos = data.getParcelableArrayListExtra(Code.PHOTO_RESULT_KEY);
+                Logger.d(resultPhotos);
+                Glide.with(this).load(resultPhotos.get(0).getUri()).into(selectPhoto);
+            }
+        }
     }
 }

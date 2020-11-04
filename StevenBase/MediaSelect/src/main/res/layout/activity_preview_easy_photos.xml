@@ -1,0 +1,42 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/m_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/easy_photos_bg_primary">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.viewpager2.widget.ViewPager2>
+        <RelativeLayout
+            android:id="@+id/m_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_gravity="top"
+            android:background="@color/easy_photos_bar_primary"
+            android:clickable="true"
+            android:fitsSystemWindows="true"
+            android:focusable="true">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="42dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:padding="10dp"
+                app:srcCompat="@drawable/ic_arrow_back_easy_photos" />
+
+            <View
+                android:id="@+id/m_back_line"
+                android:layout_width="1dp"
+                android:layout_height="22dp"
+                android:layout_alignEnd="@+id/iv_back"
+                android:layout_alignRight="@+id/iv_back"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:background="@color/easy_photos_bar_primary_dark" />
+        </RelativeLayout>
+</FrameLayout>

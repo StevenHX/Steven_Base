@@ -46,6 +46,11 @@
             android:layout_height="200dp"
             android:visibility="gone" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/selectPhoto"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"/>
+
     </LinearLayout>
 
 
