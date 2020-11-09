@@ -60,15 +60,19 @@ public class PhotosAdapter extends RecyclerView.Adapter {
             if (item == null) return;
             updateSelector(((PhotoViewHolder) holder).tvSelector, item.selected, item, p);
             String path = item.getPath();
-
-            Glide.with(((PhotoViewHolder) holder).ivPhoto.getContext()).load(item.getUri()).into(((PhotoViewHolder) holder).ivPhoto);
-
-            final boolean isGif = path.endsWith("gif") || item.getType().endsWith("gif");
+            boolean isGif = path.endsWith("gif") || item.getType().endsWith("gif");
             if (isGif) {
                 ((PhotoViewHolder) holder).tvType.setVisibility(View.VISIBLE);
                 ((PhotoViewHolder) holder).tvType.setText(R.string.gif_easy_photos);
+                Glide.with(((PhotoViewHolder) holder).ivPhoto.getContext())
+                        .asGif()
+                        .load(item.getUri())
+                        .into(((PhotoViewHolder) holder).ivPhoto);
             } else {
                 ((PhotoViewHolder) holder).tvType.setVisibility(View.GONE);
+                Glide.with(((PhotoViewHolder) holder).ivPhoto.getContext())
+                        .load(item.getUri())
+                        .into(((PhotoViewHolder) holder).ivPhoto);
             }
 
             ((PhotoViewHolder) holder).vSelector.setVisibility(View.VISIBLE);
@@ -79,12 +83,16 @@ public class PhotosAdapter extends RecyclerView.Adapter {
                 if (Setting.isShowCamera) {
                     realPosition--;
                 }
+                int selectPosition = 0;
+                if (item.selected) {
+                    selectPosition = selectPhotos.indexOf(item);
+                }
                 ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0.95f, 1f, 0.95f,
                         Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 scaleAnimation.setDuration(200);
                 v.startAnimation(scaleAnimation);
 
-                listener.onPhotoClick(p, realPosition);
+                listener.onPhotoClick(p, realPosition, selectPosition);
             });
 
 
@@ -132,7 +140,7 @@ public class PhotosAdapter extends RecyclerView.Adapter {
     public interface OnClickListener {
         void onCameraClick();
 
-        void onPhotoClick(int position, int realPosition);
+        void onPhotoClick(int position, int realPosition, int selectPosition);
 
         void onSelectorOutOfMax(@Nullable Integer result);
 

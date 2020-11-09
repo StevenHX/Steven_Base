@@ -45,10 +45,12 @@ import java.util.ArrayList;
 public class PreviewActivity extends AppCompatActivity implements PreviewPhotosAdapter.OnClickListener, View.OnClickListener{
     private static final String TAG = "PreviewActivity";
     private ArrayList<Photo> photos = new ArrayList<>();
+    private int previewIndex;
 
-    public static void start(Activity act, ArrayList<Photo> photos) {
+    public static void start(Activity act, ArrayList<Photo> photos,int index) {
         Intent intent = new Intent(act, PreviewActivity.class);
         intent.putParcelableArrayListExtra("photos",photos);
+        intent.putExtra("index",index);
         act.startActivityForResult(intent, Code.REQUEST_PREVIEW_ACTIVITY);
     }
 
@@ -77,7 +79,9 @@ public class PreviewActivity extends AppCompatActivity implements PreviewPhotosA
     private void initData() {
         Intent intent = getIntent();
         photos = intent.getParcelableArrayListExtra("photos");
+        previewIndex = intent.getIntExtra("index",0);
         previewPhotosAdapter.setPhotos(photos);
+        vp2.setCurrentItem(previewIndex);
         previewPhotosAdapter.notifyDataSetChanged();
     }
 

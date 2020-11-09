@@ -346,9 +346,9 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
     }
 
     @Override
-    public void onPhotoClick(int position, int realPosition) {
+    public void onPhotoClick(int position, int realPosition, int selectPosition) {
         if (photosAdapter.getSelectPhotos().size() > 0)
-            PreviewActivity.start(this, photosAdapter.getSelectPhotos());
+            PreviewActivity.start(this, photosAdapter.getSelectPhotos(),selectPosition);
     }
 
     @Override
@@ -396,7 +396,7 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
         int id = view.getId();
         if (id == R.id.tv_preview) {
             if (photosAdapter.getSelectPhotos().size() > 0)
-                PreviewActivity.start(this, photosAdapter.getSelectPhotos());
+                PreviewActivity.start(this, photosAdapter.getSelectPhotos(),0);
         } else if (id ==  R.id.tv_done) {
             done();
         }

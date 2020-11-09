@@ -3,6 +3,8 @@ package com.hx.steven.web;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.webkit.JavascriptInterface;
 
@@ -259,4 +261,33 @@ public class BaseWebInterface {
         ((BaseX5WebActivity) BaseActivity.getThis()).removeImage();
     }
 
+    /**
+     * 跳转系统INTENT (dial.跳转到拨号界面 call.直接拨打电话 web.跳转到系统浏览器打开网页)
+     */
+    @JavascriptInterface
+    public void jumpSystemIntent(String config) {
+        Logger.d("jumpSystemIntent" + config);
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(config);
+            String type = obj.getString("type");
+            String data = obj.getString("data");
+            switch (type) {
+                case "dial":
+                    Uri uri = Uri.parse("tel:" + data);
+                    Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    BaseApplication.getAppContext().startActivity(intent);
+                    break;
+                case "web":
+                    uri = Uri.parse(data);
+                    intent = new Intent(Intent.ACTION_VIEW, uri);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    BaseApplication.getAppContext().startActivity(intent);
+                    break;
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
