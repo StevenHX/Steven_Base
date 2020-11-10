@@ -13,4 +13,15 @@ public class AppUtil {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageUri);
         cxt.startActivityForResult(intent, Code.REQUEST_SETTING_APP_DETAILS);
     }
+
+    public static String getLastPathSegment(String content) {
+        if (content == null || content.length() == 0) {
+            return "";
+        }
+        String[] segments = content.split("/");
+        if (segments.length > 0) {
+            return segments[segments.length - 2];
+        }
+        return "";
+    }
 }

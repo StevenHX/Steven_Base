@@ -1,24 +1,16 @@
 package com.hx.mediaselect.ui;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.core.content.FileProvider;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DataSetObserver;
 import android.hardware.Camera;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -27,16 +19,30 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.FileProvider;
+import androidx.loader.content.CursorLoader;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.hx.mediaselect.R;
 import com.hx.mediaselect.constract.Code;
 import com.hx.mediaselect.constract.Setting;
+import com.hx.mediaselect.model.Album;
+import com.hx.mediaselect.model.Photo;
 import com.hx.mediaselect.ui.adapter.AlbumItemsAdapter;
 import com.hx.mediaselect.ui.adapter.LoadImageCallBack;
 import com.hx.mediaselect.ui.adapter.PhotosAdapter;
@@ -44,25 +50,30 @@ import com.hx.mediaselect.util.AppUtil;
 import com.hx.mediaselect.util.PermissionUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MediaSelectActivity extends AppCompatActivity implements PhotosAdapter.OnClickListener, View.OnClickListener {
+public class MediaSelectActivity extends AppCompatActivity implements PhotosAdapter.OnClickListener, View.OnClickListener, AlbumItemsAdapter.OnClickListener {
 
     private static final String TAG = "MediaSelect";
 
+    private AnimatorSet setHide;
+    private AnimatorSet setShow;
+    private View bottomBar;
+    private AppCompatTextView tvAlbumItems;
+    private AppCompatImageView ivAlbumItems;
     private RecyclerView rvAlbumItems;
     private AlbumItemsAdapter albumItemsAdapter;
     private RelativeLayout rootViewAlbumItems;
     private ArrayList<Object> albumItemList = new ArrayList<>();
+
+    public Album album = new Album();
 
     private AppCompatTextView tvDone;
     private RecyclerView rvPhotos;
     private PhotosAdapter photosAdapter;
     private GridLayoutManager gridLayoutManager;
     private ArrayList<Photo> photoList = new ArrayList<>();
-
 
     private RelativeLayout permissionView;
     private TextView tvPermission;
@@ -90,7 +101,12 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meida_select);
         permissionView = findViewById(R.id.rl_permissions_view);
+        bottomBar = findViewById(R.id.m_bottom_bar);
         tvPermission = findViewById(R.id.tv_permission);
+        tvAlbumItems = findViewById(R.id.tv_album_items);
+        ivAlbumItems = findViewById(R.id.iv_album_items);
+        tvAlbumItems.setOnClickListener(this);
+        ivAlbumItems.setOnClickListener(this);
         rvAlbumItems = findViewById(R.id.rv_album_items);
         rootViewAlbumItems = findViewById(R.id.root_view_album_items);
         rvPhotos = findViewById(R.id.rv_photos);
@@ -139,19 +155,28 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
                 });
     }
 
+    private void initAlbum() {
+        albumItemsAdapter = new AlbumItemsAdapter(this, album.getAlbumItems(), 0, this);
+        rvAlbumItems.setLayoutManager(new LinearLayoutManager(this));
+        rvAlbumItems.setAdapter(albumItemsAdapter);
+    }
+
+    private void initPhoto() {
+        tvAlbumItems.setText(album.getAlbumItem(0).name);
+        photosAdapter = new PhotosAdapter(MediaSelectActivity.this, album.getAlbumItem(0).photos, MediaSelectActivity.this);
+        gridLayoutManager = new GridLayoutManager(MediaSelectActivity.this, 3);
+        rvPhotos.setLayoutManager(gridLayoutManager);
+        rvPhotos.setAdapter(photosAdapter);
+    }
+
     public void hasPermissions() {
         permissionView.setVisibility(View.GONE);
         if (Setting.isShowCamera) {
             photoList.add(0, null);
         }
-        getImages(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, photoList, new LoadImageCallBack() {
-            @Override
-            public void onComplete() {
-                photosAdapter = new PhotosAdapter(MediaSelectActivity.this, photoList, MediaSelectActivity.this);
-                gridLayoutManager = new GridLayoutManager(MediaSelectActivity.this, 3);
-                rvPhotos.setLayoutManager(gridLayoutManager);
-                rvPhotos.setAdapter(photosAdapter);
-            }
+        getImages(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, photoList, () -> {
+            initAlbum();
+            initPhoto();
         });
     }
 
@@ -183,7 +208,8 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
                 MediaStore.Images.Media.MIME_TYPE,
                 MediaStore.Images.Media.DESCRIPTION};
         String sortOrder = MediaStore.Files.FileColumns.DATE_MODIFIED + " DESC";
-        Cursor externalCursor = new CursorLoader(this, uri, columns, null, null, sortOrder).loadInBackground();
+        final String selection = MediaStore.MediaColumns.SIZE + ">0";
+        Cursor externalCursor = new CursorLoader(this, uri, columns, selection, null, sortOrder).loadInBackground();
         if (externalCursor != null) {
             while (externalCursor.moveToNext()) {
                 Photo model = new Photo();
@@ -197,6 +223,9 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
                         .getColumnIndex(MediaStore.Images.Media.MIME_TYPE)));
                 String id = externalCursor.getString(externalCursor.getColumnIndex(MediaStore.MediaColumns._ID));
                 model.setUri(Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id));
+                String albumName = AppUtil.getLastPathSegment(model.getPath());
+                album.addAlbumItem(albumName, model.getPath(), model.getPath(), model.getUri());
+                album.getAlbumItem(albumName).addImageItem(model);
                 list.add(model);
             }
             callBack.onComplete();
@@ -348,7 +377,7 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
     @Override
     public void onPhotoClick(int position, int realPosition, int selectPosition) {
         if (photosAdapter.getSelectPhotos().size() > 0)
-            PreviewActivity.start(this, photosAdapter.getSelectPhotos(),selectPosition);
+            PreviewActivity.start(this, photosAdapter.getSelectPhotos(), selectPosition);
     }
 
     @Override
@@ -383,6 +412,7 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
                 Setting.mostSelectCount));
         tvDone.setOnClickListener(this);
     }
+
     private void done() {
         Intent intent = new Intent();
         intent.putParcelableArrayListExtra(Code.PHOTO_RESULT_KEY, photosAdapter.getSelectPhotos());
@@ -396,10 +426,61 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
         int id = view.getId();
         if (id == R.id.tv_preview) {
             if (photosAdapter.getSelectPhotos().size() > 0)
-                PreviewActivity.start(this, photosAdapter.getSelectPhotos(),0);
-        } else if (id ==  R.id.tv_done) {
+                PreviewActivity.start(this, photosAdapter.getSelectPhotos(), 0);
+        } else if (id == R.id.tv_done) {
             done();
+        } else if (id == R.id.tv_album_items || id == R.id.iv_album_items) {
+            // 点击选择专辑
+            showAlbumItems(View.GONE == rootViewAlbumItems.getVisibility());
+        } else if (id == R.id.root_view_album_items) {
+            // 点击选择专辑空白区域
+            showAlbumItems(false);
         }
+    }
+
+    private void showAlbumItems(boolean isShow) {
+        if (null == setShow) {
+            newAnimators();
+        }
+        if (isShow) {
+            rootViewAlbumItems.setVisibility(View.VISIBLE);
+            setShow.start();
+        } else {
+            setHide.start();
+        }
+
+    }
+
+    private void newAnimators() {
+        newHideAnim();
+        newShowAnim();
+    }
+
+    private void newShowAnim() {
+        ObjectAnimator translationShow = ObjectAnimator.ofFloat(rvAlbumItems, "translationY",
+                bottomBar.getTop(), 0);
+        ObjectAnimator alphaShow = ObjectAnimator.ofFloat(rootViewAlbumItems, "alpha", 0.0f, 1.0f);
+        translationShow.setDuration(300);
+        setShow = new AnimatorSet();
+        setShow.setInterpolator(new AccelerateDecelerateInterpolator());
+        setShow.play(translationShow).with(alphaShow);
+    }
+
+    private void newHideAnim() {
+        ObjectAnimator translationHide = ObjectAnimator.ofFloat(rvAlbumItems, "translationY", 0,
+                bottomBar.getTop());
+        ObjectAnimator alphaHide = ObjectAnimator.ofFloat(rootViewAlbumItems, "alpha", 1.0f, 0.0f);
+        translationHide.setDuration(200);
+        setHide = new AnimatorSet();
+        setHide.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                rootViewAlbumItems.setVisibility(View.GONE);
+            }
+        });
+        setHide.setInterpolator(new AccelerateInterpolator());
+        setHide.play(translationHide).with(alphaHide);
     }
 
     @Override
@@ -417,6 +498,7 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
                     photo.setType("image/jpeg");
                     photo.setPath(photoUri.getPath());
                     photoList.add(Setting.isShowCamera ? 1 : 0, photo);
+                    album.getAlbumItem(currAlbumItemIndex).photos.add(0, photo);
                     photosAdapter.notifyData();
                     return;
                 }
@@ -425,6 +507,35 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onAlbumItemClick(int position, int realPosition) {
+        updatePhotos(realPosition);
+        showAlbumItems(false);
+        tvAlbumItems.setText(album.getAlbumItems().get(realPosition).name);
+    }
+
+    private int currAlbumItemIndex;
+
+    private void updatePhotos(int currAlbumItemIndex) {
+        this.currAlbumItemIndex = currAlbumItemIndex;
+        photoList.clear();
+        if (Setting.isShowCamera) {
+            photoList.add(0, null);
+        }
+        photoList.addAll(Setting.isShowCamera ? 1 : 0, album.getAlbumItem(currAlbumItemIndex).photos);
+        photosAdapter.updateData(photoList);
+        rvPhotos.scrollToPosition(0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (null != rootViewAlbumItems && rootViewAlbumItems.getVisibility() == View.VISIBLE) {
+            showAlbumItems(false);
+        } else {
+            super.onBackPressed();
         }
     }
 }

@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.hx.mediaselect.R;
 import com.hx.mediaselect.constract.Setting;
-import com.hx.mediaselect.ui.Photo;
+import com.hx.mediaselect.model.Photo;
 
 import java.util.ArrayList;
 
@@ -134,6 +134,11 @@ public class PhotosAdapter extends RecyclerView.Adapter {
     }
 
     public void notifyData() {
+        notifyDataSetChanged();
+    }
+
+    public void updateData(ArrayList<Photo> dataList) {
+        this.dataList = dataList;
         notifyDataSetChanged();
     }
 

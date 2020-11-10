@@ -10,7 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.hx.mediaselect.constract.AlbumBuilder;
 import com.hx.mediaselect.constract.Code;
-import com.hx.mediaselect.ui.Photo;
+import com.hx.mediaselect.model.Photo;
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.ProgressBarView;

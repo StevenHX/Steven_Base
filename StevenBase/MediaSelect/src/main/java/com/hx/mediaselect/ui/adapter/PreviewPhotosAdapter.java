@@ -16,13 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
-import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.github.chrisbanes.photoview.OnScaleChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.hx.mediaselect.R;
 import com.hx.mediaselect.constract.Setting;
-import com.hx.mediaselect.ui.Photo;
+import com.hx.mediaselect.model.Photo;
 
 import java.io.File;
 import java.util.ArrayList;

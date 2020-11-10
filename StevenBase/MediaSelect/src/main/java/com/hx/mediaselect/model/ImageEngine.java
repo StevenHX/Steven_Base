@@ -1,4 +1,4 @@
-package com.hx.mediaselect.ui;
+package com.hx.mediaselect.model;
 
 import android.content.Context;
 import android.graphics.Bitmap;
