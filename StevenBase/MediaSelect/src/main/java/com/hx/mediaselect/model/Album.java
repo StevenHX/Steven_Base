@@ -18,14 +18,14 @@ public class Album {
         hasAlbumItems = new LinkedHashMap<>();
     }
 
-    private void addAlbumItem(AlbumItem albumItem) {
+    private void addAlbumItem(int i, AlbumItem albumItem) {
         this.hasAlbumItems.put(albumItem.name, albumItem);
-        this.albumItems.add(albumItem);
+        this.albumItems.add(i,albumItem);
     }
 
     public void addAlbumItem(String name, String folderPath, String coverImagePath, Uri coverImageUri) {
         if (null == hasAlbumItems.get(name)) {
-            addAlbumItem(new AlbumItem(name, folderPath, coverImagePath,coverImageUri));
+            addAlbumItem(0,new AlbumItem(name, folderPath, coverImagePath,coverImageUri));
         }
     }
 

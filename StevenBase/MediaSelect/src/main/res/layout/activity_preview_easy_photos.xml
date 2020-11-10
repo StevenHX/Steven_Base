@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     android:background="@color/easy_photos_bg_primary">
 
-        <androidx.viewpager2.widget.ViewPager2
+        <com.hx.mediaselect.ui.MyRecycleView
             android:id="@+id/vp2"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </androidx.viewpager2.widget.ViewPager2>
+        </com.hx.mediaselect.ui.MyRecycleView>
         <RelativeLayout
             android:id="@+id/m_top_bar"
             android:layout_width="match_parent"

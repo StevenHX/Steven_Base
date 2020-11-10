@@ -42,6 +42,7 @@ import com.hx.mediaselect.R;
 import com.hx.mediaselect.constract.Code;
 import com.hx.mediaselect.constract.Setting;
 import com.hx.mediaselect.model.Album;
+import com.hx.mediaselect.model.AlbumItem;
 import com.hx.mediaselect.model.Photo;
 import com.hx.mediaselect.ui.adapter.AlbumItemsAdapter;
 import com.hx.mediaselect.ui.adapter.LoadImageCallBack;
@@ -236,6 +237,12 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
                 album.addAlbumItem(albumName, model.getPath(), model.getPath(), model.getUri());
                 album.getAlbumItem(albumName).addImageItem(model);
             }
+            for (int i = 0; i < album.getAlbumItems().size(); i++) {
+                AlbumItem item = album.getAlbumItem(i);
+                photoList.addAll(item.photos);
+            }
+            album.addAlbumItem("全部图片","",album.getAlbumItem(0).coverImagePath,album.getAlbumItem(0).coverImageUri);
+            album.getAlbumItem("全部图片").addAllImageItem(photoList);
             callBack.onComplete();
         }
     }

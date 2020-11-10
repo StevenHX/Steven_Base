@@ -7,8 +7,9 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.viewpager2.widget.ViewPager2;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.hx.mediaselect.R;
 import com.hx.mediaselect.constract.Code;
@@ -20,19 +21,19 @@ import java.util.ArrayList;
 /**
  * 预览页
  */
-public class PreviewActivity extends AppCompatActivity implements PreviewPhotosAdapter.OnClickListener, View.OnClickListener{
+public class PreviewActivity extends AppCompatActivity implements PreviewPhotosAdapter.OnClickListener, View.OnClickListener {
     private static final String TAG = "PreviewActivity";
     private ArrayList<Photo> photos = new ArrayList<>();
     private int previewIndex;
 
-    public static void start(Activity act, ArrayList<Photo> photos,int index) {
+    public static void start(Activity act, ArrayList<Photo> photos, int index) {
         Intent intent = new Intent(act, PreviewActivity.class);
-        intent.putParcelableArrayListExtra("photos",photos);
-        intent.putExtra("index",index);
+        intent.putParcelableArrayListExtra("photos", photos);
+        intent.putExtra("index", index);
         act.startActivityForResult(intent, Code.REQUEST_PREVIEW_ACTIVITY);
     }
 
-    private ViewPager2 vp2;
+    private MyRecycleView vp2;
     private PreviewPhotosAdapter previewPhotosAdapter;
     private AppCompatImageView ivBack;
 
@@ -49,17 +50,20 @@ public class PreviewActivity extends AppCompatActivity implements PreviewPhotosA
 
 
     private void initView() {
-        previewPhotosAdapter = new PreviewPhotosAdapter(this,photos,this);
-        vp2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        previewPhotosAdapter = new PreviewPhotosAdapter(this, photos, this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        vp2.setLayoutManager(linearLayoutManager);
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(vp2);
         vp2.setAdapter(previewPhotosAdapter);
     }
 
     private void initData() {
         Intent intent = getIntent();
         photos = intent.getParcelableArrayListExtra("photos");
-        previewIndex = intent.getIntExtra("index",0);
+        previewIndex = intent.getIntExtra("index", 0);
         previewPhotosAdapter.setPhotos(photos);
-        vp2.setCurrentItem(previewIndex);
+        vp2.scrollToPosition(previewIndex);
         previewPhotosAdapter.notifyDataSetChanged();
     }
 
