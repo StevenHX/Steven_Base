@@ -70,6 +70,7 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
     public Album album = new Album();
 
     private AppCompatTextView tvDone;
+    private AppCompatImageView ivBack;
     private RecyclerView rvPhotos;
     private PhotosAdapter photosAdapter;
     private GridLayoutManager gridLayoutManager;
@@ -111,6 +112,8 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
         rootViewAlbumItems = findViewById(R.id.root_view_album_items);
         rvPhotos = findViewById(R.id.rv_photos);
         tvDone = findViewById(R.id.tv_done);
+        ivBack = findViewById(R.id.iv_back);
+        ivBack.setOnClickListener(this);
         tv_preview = findViewById(R.id.tv_preview);
         tv_preview.setOnClickListener(this);
 
@@ -163,18 +166,24 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
 
     private void initPhoto() {
         tvAlbumItems.setText(album.getAlbumItem(0).name);
-        photosAdapter = new PhotosAdapter(MediaSelectActivity.this, album.getAlbumItem(0).photos, MediaSelectActivity.this);
+        preparePhotoList(currAlbumItemIndex);
+        photosAdapter = new PhotosAdapter(MediaSelectActivity.this, photoList, MediaSelectActivity.this);
         gridLayoutManager = new GridLayoutManager(MediaSelectActivity.this, 3);
         rvPhotos.setLayoutManager(gridLayoutManager);
         rvPhotos.setAdapter(photosAdapter);
     }
 
-    public void hasPermissions() {
-        permissionView.setVisibility(View.GONE);
+    private void preparePhotoList(int currAlbumItemIndex) {
+        photoList.clear();
         if (Setting.isShowCamera) {
             photoList.add(0, null);
         }
-        getImages(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, photoList, () -> {
+        photoList.addAll(Setting.isShowCamera ? 1 : 0, album.getAlbumItem(currAlbumItemIndex).photos);
+    }
+
+    public void hasPermissions() {
+        permissionView.setVisibility(View.GONE);
+        getImages(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, () -> {
             initAlbum();
             initPhoto();
         });
@@ -198,7 +207,7 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
         }
     }
 
-    private void getImages(Uri uri, List<Photo> list, LoadImageCallBack callBack) {
+    private void getImages(Uri uri, LoadImageCallBack callBack) {
         String[] columns = {
                 MediaStore.MediaColumns._ID,
                 MediaStore.Images.Media.TITLE,
@@ -226,7 +235,6 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
                 String albumName = AppUtil.getLastPathSegment(model.getPath());
                 album.addAlbumItem(albumName, model.getPath(), model.getPath(), model.getUri());
                 album.getAlbumItem(albumName).addImageItem(model);
-                list.add(model);
             }
             callBack.onComplete();
         }
@@ -429,6 +437,8 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
                 PreviewActivity.start(this, photosAdapter.getSelectPhotos(), 0);
         } else if (id == R.id.tv_done) {
             done();
+        } else if (id == R.id.iv_back) {
+            finish();
         } else if (id == R.id.tv_album_items || id == R.id.iv_album_items) {
             // 点击选择专辑
             showAlbumItems(View.GONE == rootViewAlbumItems.getVisibility());
@@ -497,9 +507,9 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
                     photo.setUri(photoUri);
                     photo.setType("image/jpeg");
                     photo.setPath(photoUri.getPath());
-                    photoList.add(Setting.isShowCamera ? 1 : 0, photo);
                     album.getAlbumItem(currAlbumItemIndex).photos.add(0, photo);
-                    photosAdapter.notifyData();
+                    preparePhotoList(currAlbumItemIndex);
+                    photosAdapter.updateData(photoList);
                     return;
                 }
                 break;
@@ -521,11 +531,7 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
 
     private void updatePhotos(int currAlbumItemIndex) {
         this.currAlbumItemIndex = currAlbumItemIndex;
-        photoList.clear();
-        if (Setting.isShowCamera) {
-            photoList.add(0, null);
-        }
-        photoList.addAll(Setting.isShowCamera ? 1 : 0, album.getAlbumItem(currAlbumItemIndex).photos);
+        preparePhotoList(currAlbumItemIndex);
         photosAdapter.updateData(photoList);
         rvPhotos.scrollToPosition(0);
     }
