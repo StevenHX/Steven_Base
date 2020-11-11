@@ -8,7 +8,6 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
-import com.hx.mediaselect.constract.AlbumBuilder;
 import com.hx.mediaselect.constract.Code;
 import com.hx.mediaselect.model.Photo;
 import com.hx.steven.activity.BaseActivity;
@@ -155,10 +154,12 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.hello2)
     public void onViewClicked2() {
-        AlbumBuilder.createAlbumCamera(this)
-                .setCount(10)
-                .setFileProviderAuthority("com.hx.stevenbase.fileProvider")
-                .start(101);
+        launch(this, WebActivity.class);
+//        AlbumBuilder.with(this)
+//                .setCount(10)
+//                .setIsShowCamera(true)
+//                .setFileProviderAuthority("com.hx.stevenbase.fileProvider")
+//                .start(101);
     }
 
     //增

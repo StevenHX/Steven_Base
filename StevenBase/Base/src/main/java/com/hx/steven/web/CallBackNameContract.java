@@ -9,4 +9,5 @@ public class CallBackNameContract {
     public static String GET_APP_VERSION_BY_ID = "getAppVersionByIdCallBack";
     public static String GET_REGISTRATION_ID = "getRegistrationIdCallback";
     public static String RECEIVED_MSG = "receivedMsgCallback";
+    public static String OPEN_ALBUM = "openAlbumCallback";
 }

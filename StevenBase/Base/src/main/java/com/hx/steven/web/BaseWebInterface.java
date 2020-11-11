@@ -157,7 +157,7 @@ public class BaseWebInterface {
         }
     }
 
-    private ShareCallback shareCallback = new ShareCallback() {
+    final private ShareCallback shareCallback = new ShareCallback() {
         @Override
         public void onSuccess(String result) {
             Map<String, Object> params = new HashMap<>();

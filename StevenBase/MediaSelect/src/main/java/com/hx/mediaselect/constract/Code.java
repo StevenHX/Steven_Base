@@ -15,4 +15,6 @@ public class Code {
 
 
     public static final String PHOTO_RESULT_KEY = "keyOfPhotosResult";
+
+    public static final int SELECT_ALBUM_REQUEST_CODE = 100;
 }

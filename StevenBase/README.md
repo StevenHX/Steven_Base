@@ -41,3 +41,5 @@
             buglyAppId="123132"
 ```
 
+### app里添加fileProvider配置
+
