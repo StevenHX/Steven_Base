@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
@@ -72,7 +73,7 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
 
     private AppCompatTextView tvDone;
     private AppCompatImageView ivBack;
-    private RecyclerView rvPhotos;
+    private DragSelectRecycleView rvPhotos;
     private PhotosAdapter photosAdapter;
     private GridLayoutManager gridLayoutManager;
     private ArrayList<Photo> photoList = new ArrayList<>();
@@ -172,6 +173,44 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
         gridLayoutManager = new GridLayoutManager(MediaSelectActivity.this, 3);
         rvPhotos.setLayoutManager(gridLayoutManager);
         rvPhotos.setAdapter(photosAdapter);
+        rvPhotos.setDispatchTouchEventListener(new DragSelectRecycleView.DispatchTouchEventListener() {
+            int lastPosition = -1;
+            int downX;
+            int downY;
+            @Override
+            public void action(MotionEvent ev) {
+                switch (ev.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        downX = (int) ev.getX();
+                        downY = (int) ev.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        int moveX = (int) ev.getX();
+                        int moveY = (int) ev.getY();
+                        if (Math.abs(moveX - downX) > 50 &&  Math.abs(moveY - downY) < 50) {
+                            //左右滑动
+                            View childViewUnder = rvPhotos.findChildViewUnder(moveX, moveY);
+                            if (childViewUnder != null) {
+                                int tag = (Integer) childViewUnder.getTag();
+                                if (lastPosition == tag) {
+                                    return;
+                                }
+                                RecyclerView.ViewHolder viewHolder = rvPhotos.findViewHolderForLayoutPosition(tag);
+                                if (viewHolder instanceof PhotosAdapter.PhotoViewHolder) {
+                                    ((PhotosAdapter.PhotoViewHolder) viewHolder).setSelect();
+                                }
+                                lastPosition = tag;
+                            }
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        lastPosition = -1;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     private void preparePhotoList(int currAlbumItemIndex) {

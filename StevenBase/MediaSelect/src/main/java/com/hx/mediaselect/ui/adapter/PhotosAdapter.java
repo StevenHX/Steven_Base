@@ -56,6 +56,7 @@ public class PhotosAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         final int p = position;
         if (holder instanceof PhotoViewHolder) {
+            holder.itemView.setTag(position);
             final Photo item = dataList.get(p);
             if (item == null) return;
             updateSelector(((PhotoViewHolder) holder).tvSelector, item.selected, item, p);
@@ -97,18 +98,7 @@ public class PhotosAdapter extends RecyclerView.Adapter {
 
 
             ((PhotoViewHolder) holder).vSelector.setOnClickListener(view -> {
-                if (selectPhotos.size() >= Setting.mostSelectCount && !item.isSelected()) {
-                    listener.onSelectorOutOfMax(Setting.mostSelectCount);
-                } else {
-                    item.selected = !item.selected;
-                    if (item.isSelected()) {
-                        selectPhotos.add(item);
-                    } else {
-                        selectPhotos.remove(item);
-                    }
-                    notifyDataSetChanged();
-                }
-                listener.onSelectorChanged();
+                ((PhotoViewHolder) holder).setSelect();
             });
             return;
         }
@@ -173,6 +163,23 @@ public class PhotosAdapter extends RecyclerView.Adapter {
             this.tvSelector = itemView.findViewById(R.id.tv_selector);
             this.vSelector = itemView.findViewById(R.id.v_selector);
             this.tvType = itemView.findViewById(R.id.tv_type);
+        }
+
+        public void setSelect() {
+            int position = (int) itemView.getTag();
+            Photo item = dataList.get(position);
+            if (selectPhotos.size() >= Setting.mostSelectCount && !item.isSelected()) {
+                listener.onSelectorOutOfMax(Setting.mostSelectCount);
+            } else {
+                item.selected = !item.selected;
+                if (item.isSelected()) {
+                    selectPhotos.add(item);
+                } else {
+                    selectPhotos.remove(item);
+                }
+                notifyItemChanged(position);
+            }
+            listener.onSelectorChanged();
         }
     }
 
