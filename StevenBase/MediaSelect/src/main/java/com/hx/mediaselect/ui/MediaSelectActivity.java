@@ -167,8 +167,10 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
     }
 
     private void initPhoto() {
-        tvAlbumItems.setText(album.getAlbumItem(0).name);
-        preparePhotoList(currAlbumItemIndex);
+        if (album.getAlbumItems().size() > 0){
+            tvAlbumItems.setText(album.getAlbumItem(0).name);
+            preparePhotoList(currAlbumItemIndex);
+        }
         photosAdapter = new PhotosAdapter(MediaSelectActivity.this, photoList, MediaSelectActivity.this);
         gridLayoutManager = new GridLayoutManager(MediaSelectActivity.this, 3);
         rvPhotos.setLayoutManager(gridLayoutManager);
@@ -280,8 +282,10 @@ public class MediaSelectActivity extends AppCompatActivity implements PhotosAdap
                 AlbumItem item = album.getAlbumItem(i);
                 photoList.addAll(item.photos);
             }
-            album.addAlbumItem("全部图片","",album.getAlbumItem(0).coverImagePath,album.getAlbumItem(0).coverImageUri);
-            album.getAlbumItem("全部图片").addAllImageItem(photoList);
+            if (album.getAlbumItems().size() > 0) {
+                album.addAlbumItem("全部图片","",album.getAlbumItem(0).coverImagePath,album.getAlbumItem(0).coverImageUri);
+                album.getAlbumItem("全部图片").addAllImageItem(photoList);
+            }
             callBack.onComplete();
         }
     }
