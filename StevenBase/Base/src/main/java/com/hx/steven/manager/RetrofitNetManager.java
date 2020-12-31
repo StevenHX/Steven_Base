@@ -1,7 +1,5 @@
 package com.hx.steven.manager;
 
-import com.hx.steven.http.BaseApiService;
-
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -15,8 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitNetManager {
     private static final String TAG = "RetrofitNetManager";
     private static RetrofitNetManager instance;
-    private static volatile BaseApiService apiService = null;
-    private static Retrofit retrofit;
+    private Retrofit retrofit;
+    private Object apiService;
 
     public static RetrofitNetManager getInstance() {
         if (instance == null) {
@@ -71,13 +69,16 @@ public class RetrofitNetManager {
         return logging;
     }
 
-    public BaseApiService getApiService() {
-        if (apiService == null) {
-            synchronized (Object.class) {
-                apiService = retrofit.create(BaseApiService.class);
-            }
-        }
-        return apiService;
+    public Retrofit getRetrofit() throws Exception {
+        if(retrofit == null) throw new Exception("未初始化");
+        return retrofit;
     }
 
+    public void  setApiService(Object apiService) {
+        this.apiService = apiService;
+    }
+
+    public Object getApiService(){
+        return apiService;
+    }
 }

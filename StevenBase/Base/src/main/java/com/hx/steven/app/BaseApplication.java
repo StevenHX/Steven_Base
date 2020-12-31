@@ -31,45 +31,21 @@ import cn.jpush.android.api.JPushInterface;
  * Created by user on 2018/1/15.
  */
 
-public class BaseApplication extends Application {
+public abstract class BaseApplication extends Application {
     private static final String TAG = "BaseApplication";
     private static BaseApplication mApp;
+
+    public abstract AppInitBuilder getAppInitBuilder();
 
     @Override
     public void onCreate() {
         super.onCreate();
         mApp = this;
-        /**
-         * 初始化logger
-         */
-        initLogger();
-        /**
-         * 初始化x5
-         */
-        initX5WebView();
-        /**
-         * 初始化微信
-         */
-        WxManager.getInstance().regToWx();
-
-
-        /**
-         * 初始化bugly
-         */
-        // 获取当前包名
-        String packageName = getPackageName();
-        // 获取当前进程名
-        String processName = AppUtils.getProcessName(android.os.Process.myPid());
-        // 设置是否为上报进程
-        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
-        strategy.setUploadProcess(processName == null || processName.equals(packageName));
-        Bugly.init(this, BuildConfig.buglyAppId, TextUtils.equals(BuildConfig.BUILD_TYPE, "debug"), strategy);
-
-        /**
-         * 初始化jpush
-         */
-        JPushInterface.setDebugMode(TextUtils.equals(BuildConfig.BUILD_TYPE, "debug"));
-        JPushInterface.init(this);
+        if (getAppInitBuilder().isInitLogger()) initLogger();
+        if (getAppInitBuilder().isInitX5()) initX5WebView();
+        if (getAppInitBuilder().isInitWXSDK()) WxManager.getInstance().regToWx();
+        if (getAppInitBuilder().isInitBugly()) initBugly();
+        if (getAppInitBuilder().isInitBugly()) initJpush();
 
         registerActivityLifecycleCallbacks(new SwitchBackgroundCallbacks());
     }
@@ -81,15 +57,29 @@ public class BaseApplication extends Application {
         MultiDex.install(this);
     }
 
+    private void initJpush() {
+        JPushInterface.setDebugMode(TextUtils.equals(BuildConfig.BUILD_TYPE, "debug"));
+        JPushInterface.init(this);
+    }
+
+    private void initBugly() {
+        // 获取当前包名
+        String packageName = getPackageName();
+        // 获取当前进程名
+        String processName = AppUtils.getProcessName(android.os.Process.myPid());
+        // 设置是否为上报进程
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
+        strategy.setUploadProcess(processName == null || processName.equals(packageName));
+        Bugly.init(this, BuildConfig.buglyAppId, TextUtils.equals(BuildConfig.BUILD_TYPE, "debug"), strategy);
+    }
+
     private void initLogger() {
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
                 .showThreadInfo(true)  // (Optional) Whether to show thread info or not. Default true
-//                .methodCount(0)         // (Optional) How many method line to show. Default 2
-//                .methodOffset(7)        // (Optional) Hides internal method calls up to offset. Default 5
-//                .logStrategy(customLog) // (Optional) Changes the log strategy to print out. Default LogCat
+                .methodCount(2)         // (Optional) How many method line to show. Default 2
+                .methodOffset(7)        // (Optional) Hides internal method calls up to offset. Default 5
                 .tag("StevenBase")   // (Optional) Global tag for every log. Default PRETTY_LOGGER
                 .build();
-
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
     }
 
@@ -108,7 +98,7 @@ public class BaseApplication extends Application {
             }
         };
         // 防止和crosswalk冲突、多进程加快初始化速度
-        HashMap map = new HashMap();
+        HashMap<String, Object> map = new HashMap();
         map.put(TbsCoreSettings.TBS_SETTINGS_USE_PRIVATE_CLASSLOADER, true);
         map.put(TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER, true);
         map.put(TbsCoreSettings.TBS_SETTINGS_USE_DEXLOADER_SERVICE, true);
@@ -126,7 +116,7 @@ public class BaseApplication extends Application {
         return mApp;
     }
 
-    private class SwitchBackgroundCallbacks implements Application.ActivityLifecycleCallbacks {
+    private static class SwitchBackgroundCallbacks implements Application.ActivityLifecycleCallbacks {
 
         @Override
         public void onActivityCreated(Activity activity, Bundle bundle) {

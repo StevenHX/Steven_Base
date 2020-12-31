@@ -17,8 +17,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-// TODO: 2020/5/23 添加OKHttp的封装类
-
 /**
  * 简单网络请求管理类
  *
@@ -26,6 +24,8 @@ import java.util.Map;
  */
 public class SimpleNetManager {
     private static final String TAG = "SimpleNetManager";
+    private static  final int CONNECT_TIME_OUT = 5000;
+    private static  final int READ_TIME_OUT = 5000;
     private static SimpleNetManager instance;
 
     public static SimpleNetManager getInstance() {
@@ -51,8 +51,8 @@ public class SimpleNetManager {
             //设置请求方式
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
+            connection.setConnectTimeout(CONNECT_TIME_OUT);
+            connection.setReadTimeout(READ_TIME_OUT);
             //连接
             connection.connect();
             //得到响应码
@@ -83,8 +83,8 @@ public class SimpleNetManager {
             //设置请求方式
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
+            connection.setConnectTimeout(CONNECT_TIME_OUT);
+            connection.setReadTimeout(READ_TIME_OUT);
             // 添加请求头
             for (Map.Entry<String, String> entry : heads.entrySet()) {
                 connection.setRequestProperty(entry.getKey(), entry.getValue());
@@ -120,8 +120,8 @@ public class SimpleNetManager {
                 //设置请求方式
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Connection", "Keep-Alive");
-                connection.setConnectTimeout(5000);
-                connection.setReadTimeout(5000);
+                connection.setConnectTimeout(CONNECT_TIME_OUT);
+                connection.setReadTimeout(READ_TIME_OUT);
                 //连接
                 connection.connect();
                 //得到响应码
@@ -153,8 +153,8 @@ public class SimpleNetManager {
                 //设置请求方式
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Connection", "Keep-Alive");
-                connection.setConnectTimeout(5000);
-                connection.setReadTimeout(5000);
+                connection.setConnectTimeout(CONNECT_TIME_OUT);
+                connection.setReadTimeout(READ_TIME_OUT);
                 //连接
                 connection.connect();
                 //得到响应码
@@ -188,8 +188,8 @@ public class SimpleNetManager {
                 //设置请求方式
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Connection", "Keep-Alive");
-                connection.setConnectTimeout(5000);
-                connection.setReadTimeout(5000);
+                connection.setConnectTimeout(CONNECT_TIME_OUT);
+                connection.setReadTimeout(READ_TIME_OUT);
                 // 添加请求头
                 for (Map.Entry<String, String> entry : heads.entrySet()) {
                     connection.setRequestProperty(entry.getKey(), entry.getValue());
@@ -225,8 +225,8 @@ public class SimpleNetManager {
                 //设置请求方式
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Connection", "Keep-Alive");
-                connection.setConnectTimeout(5000);
-                connection.setReadTimeout(5000);
+                connection.setConnectTimeout(CONNECT_TIME_OUT);
+                connection.setReadTimeout(READ_TIME_OUT);
                 // 添加请求头
                 for (Map.Entry<String, String> entry : heads.entrySet()) {
                     connection.setRequestProperty(entry.getKey(), entry.getValue());
@@ -260,8 +260,8 @@ public class SimpleNetManager {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
+            connection.setConnectTimeout(CONNECT_TIME_OUT);
+            connection.setReadTimeout(READ_TIME_OUT);
             // 设置Content-Type
             connection.setRequestProperty("Content-Type", "application/json");
             // 设置是否向httpUrlConnection输出，post请求设置为true，默认是false
@@ -295,8 +295,8 @@ public class SimpleNetManager {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
+            connection.setConnectTimeout(CONNECT_TIME_OUT);
+            connection.setReadTimeout(READ_TIME_OUT);
             // 设置Content-Type
             connection.setRequestProperty("Content-Type", "application/json");
             // 添加请求头
@@ -335,8 +335,8 @@ public class SimpleNetManager {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Connection", "Keep-Alive");
-                connection.setConnectTimeout(5000);
-                connection.setReadTimeout(5000);
+                connection.setConnectTimeout(CONNECT_TIME_OUT);
+                connection.setReadTimeout(READ_TIME_OUT);
                 // 设置Content-Type
                 connection.setRequestProperty("Content-Type", "application/json");
                 // 设置是否向httpUrlConnection输出，post请求设置为true，默认是false
@@ -375,8 +375,8 @@ public class SimpleNetManager {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Connection", "Keep-Alive");
-                connection.setConnectTimeout(5000);
-                connection.setReadTimeout(5000);
+                connection.setConnectTimeout(CONNECT_TIME_OUT);
+                connection.setReadTimeout(READ_TIME_OUT);
                 // 设置Content-Type
                 connection.setRequestProperty("Content-Type", "application/json");
                 // 添加请求头

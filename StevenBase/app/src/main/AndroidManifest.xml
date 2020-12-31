@@ -10,8 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppLocalLaunchTheme">
-        <activity android:name=".ui.bingGallery.WanAndroidActivity"></activity>
-        <activity android:name=".ui.bingGallery.BingGalleryActivity"></activity>
+        <activity
+            android:name=".ui.bingGallery.WanAndroidActivity"/>
+        <activity
+            android:name=".ui.bingGallery.BingGalleryActivity"/>
         <activity
             android:name=".ui.main.WebActivity"
             android:theme="@style/MainIndexTheme" />

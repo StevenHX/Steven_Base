@@ -1,6 +1,5 @@
 package com.hx.stevenbase.http;
 
-import com.hx.steven.http.BaseApiService;
 import com.hx.steven.http.BaseBean;
 import com.hx.stevenbase.ui.Login.LoginBean;
 import com.hx.stevenbase.ui.Login.LoginDto;
@@ -20,7 +19,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface ApiService extends BaseApiService {
+public interface ApiService {
     /**
      * 登录
      * @param loginDto

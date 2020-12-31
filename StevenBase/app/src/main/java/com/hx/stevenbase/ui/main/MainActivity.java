@@ -1,6 +1,7 @@
 package com.hx.stevenbase.ui.main;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.widget.Button;
 
@@ -8,16 +9,23 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.hx.mediaselect.constract.AlbumBuilder;
 import com.hx.mediaselect.constract.Code;
 import com.hx.mediaselect.model.Photo;
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.FlowTag.FlowTagLayout;
 import com.hx.steven.component.ProgressBarView;
+import com.hx.steven.http.BaseBean;
+import com.hx.steven.manager.RetrofitNetManager;
 import com.hx.steven.util.BarColorUtils;
 import com.hx.steven.viewpageTransformer.ScaleInTransformer;
 import com.hx.stevenbase.BuildConfig;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.Realm.UserDB;
+import com.hx.stevenbase.http.ApiService;
+import com.hx.stevenbase.http.HttpCallback;
+import com.hx.stevenbase.ui.Set.SetActivity;
+import com.hx.stevenbase.ui.Set.home.homeBannerBean;
 import com.orhanobut.logger.Logger;
 import com.steven.updatetool.CheckAppVersionListener;
 import com.steven.updatetool.UpdateModel;
@@ -34,6 +42,8 @@ import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import retrofit2.Call;
+import retrofit2.Retrofit;
 
 public class MainActivity extends BaseActivity {
     {
@@ -154,12 +164,24 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.hello2)
     public void onViewClicked2() {
-        launch(this, WebActivity.class);
+//        launch(this, SetActivity.class);
 //        AlbumBuilder.with(this)
 //                .setCount(10)
 //                .setIsShowCamera(true)
 //                .setFileProviderAuthority("com.hx.stevenbase.fileProvider")
 //                .start(101);
+            ((ApiService)RetrofitNetManager.getInstance().getApiService())
+                    .getHomeBanners().enqueue(new HttpCallback<List<homeBannerBean>>() {
+                @Override
+                public void onSuccess(List<homeBannerBean> result) {
+
+                }
+
+                @Override
+                public void onFail(Call<BaseBean<List<homeBannerBean>>> call, Throwable t) {
+
+                }
+            });
     }
 
     //增

@@ -31,7 +31,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Api {
-    static final String BASE_URL = "http://www.wanandroid.com";
+    static final String BASE_URL = "https://www.wanandroid.com";
     private static final String TAG = "Api";
 
     private static Api mApiRetrofit;
@@ -131,7 +131,6 @@ public class Api {
         OkHttpClient okHttpClient = builder
                 .readTimeout(1000, TimeUnit.MILLISECONDS)
                 .connectTimeout(10000, TimeUnit.MILLISECONDS)
-                .sslSocketFactory(createSSLSocketFactory())
                 .hostnameVerifier(new HostnameVerifier() {
                     @Override
                     public boolean verify(String hostname, SSLSession session) {
@@ -154,25 +153,6 @@ public class Api {
         mApiService = retrofit.create(ApiService.class);
     }
 
-    /**
-     * 信任所有证书
-     *
-     * @return
-     */
-    private static SSLSocketFactory createSSLSocketFactory() {
-        SSLSocketFactory ssfFactory = null;
-
-        try {
-            SSLContext sc = SSLContext.getInstance("TLS");
-            sc.init(null, new TrustManager[]{new TrustAllCerts()}, new SecureRandom());
-
-            ssfFactory = sc.getSocketFactory();
-        } catch (Exception e) {
-        }
-
-        return ssfFactory;
-    }
-
     public static Api getInstance() {
         if (mApiRetrofit == null) {
             synchronized (Object.class) {
@@ -187,21 +167,4 @@ public class Api {
     public ApiService getApiService() {
         return mApiService;
     }
-
-    public static class TrustAllCerts implements X509TrustManager {
-        @Override
-        public void checkClientTrusted(X509Certificate[] chain, String authType) {
-        }
-
-        @Override
-        public void checkServerTrusted(X509Certificate[] chain, String authType) {
-        }
-
-        @Override
-        public X509Certificate[] getAcceptedIssuers() {
-            return new X509Certificate[0];
-        }
-    }
-
-
 }

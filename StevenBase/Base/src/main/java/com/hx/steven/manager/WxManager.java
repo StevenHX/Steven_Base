@@ -115,6 +115,7 @@ public class WxManager {
             case BaseResp.ErrCode.ERR_OK:
                 String code = resp.code;
                 //获取用户信息
+                // TODO: 2020/12/31 获取openId应该放到后端操作，前端不安全
                 getAccessToken(code);
                 break;
             case BaseResp.ErrCode.ERR_AUTH_DENIED://用户拒绝授权
