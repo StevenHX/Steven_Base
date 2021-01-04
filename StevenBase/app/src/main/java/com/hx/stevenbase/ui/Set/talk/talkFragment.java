@@ -1,13 +1,13 @@
 package com.hx.stevenbase.ui.Set.talk;
 
 
-import androidx.fragment.app.Fragment;
-
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.fragment.app.Fragment;
+
 import com.hx.steven.fragment.BaseLazyFragment;
-import com.hx.steven.util.WindowUtil;
+import com.hx.steven.util.AppUtils;
 import com.hx.stevenbase.R;
 import com.orhanobut.logger.Logger;
 
@@ -45,7 +45,7 @@ public class talkFragment extends BaseLazyFragment {
 
     @Override
     public void onUserVisible() {
-        Logger.d("screenWidth="+ WindowUtil.getScreenWidth(context)+",screenHeight="+WindowUtil.getScreenHeight(context));
+        Logger.d("screenWidth="+ AppUtils.getScreenWidth(context)+",screenHeight="+AppUtils.getScreenHeight(context));
         Logger.d("width="+img.getWidth()+",height="+img.getHeight());
     }
 

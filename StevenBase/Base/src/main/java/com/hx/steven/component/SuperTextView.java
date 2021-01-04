@@ -35,7 +35,7 @@ public class SuperTextView extends AppCompatTextView {
     public enum DynamicStyle{
         NORMAL(0),TYPEWRITING(1),CHANGE_COLOR(2);
 
-        private int mValue;
+        private  final int mValue;
         DynamicStyle(int value){
             this.mValue = value;
         }
@@ -94,7 +94,7 @@ public class SuperTextView extends AppCompatTextView {
         }
     }
 
-    private Runnable mRunnable = new Runnable() {
+    private final Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
             if(DynamicStyle.TYPEWRITING == mDynamicStyle){

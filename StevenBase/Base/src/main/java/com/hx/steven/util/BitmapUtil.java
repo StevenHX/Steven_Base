@@ -1,5 +1,6 @@
 package com.hx.steven.util;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +14,7 @@ import android.graphics.RectF;
 import android.view.View;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 /**
  * bitmap工具类
@@ -210,6 +212,33 @@ public class BitmapUtil {
         dView.setDrawingCacheEnabled(true);
         dView.buildDrawingCache();
         return Bitmap.createBitmap(dView.getDrawingCache());
+    }
+
+    /**
+     * 以最小内存读取本地资源图片
+     *
+     * @param context
+     * @param bitmapResId
+     * @return
+     */
+    public static Bitmap readBitmap(Context context, int bitmapResId) {
+        BitmapFactory.Options opt = new BitmapFactory.Options();
+        opt.inPreferredConfig = Bitmap.Config.RGB_565;
+        opt.inPurgeable = true;
+        opt.inInputShareable = true;
+        InputStream is = context.getResources().openRawResource(bitmapResId);
+        return BitmapFactory.decodeStream(is, null, opt);
+    }
+    /**
+     * 把Bitmap转Byte
+     *
+     * @param bitmap bitmap对象
+     * @return Bytes
+     */
+    public static byte[] bitmap2Bytes(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
 }
 

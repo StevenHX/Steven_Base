@@ -1,12 +1,13 @@
 package com.hx.stevenbase.ui.Set.home;
 
 import android.content.Context;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -14,11 +15,11 @@ import com.hx.steven.Mvp.BaseMvpModel;
 import com.hx.steven.fragment.BaseMvpLazyFragment;
 import com.hx.steven.util.ToastUtil;
 import com.hx.stevenbase.R;
+import com.hx.stevenbase.ui.Login.LoginActivity;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
@@ -33,9 +34,6 @@ import butterknife.Unbinder;
  */
 public class homeFragment extends BaseMvpLazyFragment<homePresenter> implements homeContract.View, BaseQuickAdapter.OnItemChildClickListener,
         BaseQuickAdapter.OnItemClickListener {
-    {
-        setEnableMultiple(true);
-    }
     @BindView(R.id.recycler_question)
     RecyclerView recyclerQuestion;
     @BindView(R.id.refreshLayout_question)
@@ -63,6 +61,11 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter> implements 
         /**设置事件监听*/
         adapter.setOnItemClickListener(this);
         adapter.setOnItemChildClickListener(this);
+        /**
+         * 设置骨架屏
+         */
+        setEnableSkeletonScreen(true,recyclerQuestion,adapter);
+
         /**设置RefreshLayout*/
         refreshLayoutQuestion.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
@@ -76,11 +79,6 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter> implements 
                 super.onLoadMore(refreshLayout);
                 mPresenter.loadMore();
             }
-        });
-        /**设置状态视图，错误时点击重试*/
-        getMultipleStatusView().setOnRetryClickListener(view1 -> {
-            showLoding("加载中");
-            mPresenter.reFresh();
         });
         /**banner Item点击事件*/
         mBannerAds.setOnBannerListener(position -> ToastUtil.showToast(context, "bannerClick"));
@@ -120,8 +118,11 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter> implements 
             case LoadType.TYPE_REFRESH_SUCCESS:
                 refreshLayoutQuestion.finishRefreshing();
                 adapter.setNewData(home.getDatas());
-                getMultipleStatusView().showContent();
-                dismissLoding();
+                try {
+                    hideSkeletonScreen();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case LoadType.TYPE_LOAD_MORE_SUCCESS:
                 if (home.getDatas() != null) {
@@ -135,7 +136,6 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter> implements 
                 }
                 break;
         }
-
     }
 
     @Override
@@ -160,8 +160,11 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter> implements 
     public void homeFail(String msg, int mLoadType) {
         switch (mLoadType) {
             case LoadType.TYPE_REFRESH_ERROR:
-                getMultipleStatusView().showError();
-                dismissLoding();
+                try {
+                    hideSkeletonScreen();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case LoadType.TYPE_LOAD_MORE_ERROR:
                 refreshLayoutQuestion.finishLoadmore();
@@ -171,7 +174,6 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter> implements 
 
     @Override
     public void onFirstUserVisible() {
-        getMultipleStatusView().showLoading();
         mPresenter.reFresh();
     }
 

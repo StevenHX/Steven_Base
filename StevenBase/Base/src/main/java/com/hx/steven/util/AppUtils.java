@@ -10,7 +10,11 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.core.app.ActivityCompat;
@@ -84,22 +88,6 @@ public class AppUtils {
     }
 
     /**
-     * 以最小内存读取本地资源图片
-     *
-     * @param context
-     * @param bitmapResId
-     * @return
-     */
-    public static Bitmap readBitmap(Context context, int bitmapResId) {
-        BitmapFactory.Options opt = new BitmapFactory.Options();
-        opt.inPreferredConfig = Bitmap.Config.RGB_565;
-        opt.inPurgeable = true;
-        opt.inInputShareable = true;
-        InputStream is = context.getResources().openRawResource(bitmapResId);
-        return BitmapFactory.decodeStream(is, null, opt);
-    }
-
-    /**
      * 关闭键盘
      *
      * @param activity Activity
@@ -123,20 +111,6 @@ public class AppUtils {
         DecimalFormat decimalFormat = new DecimalFormat(format);
         return decimalFormat.format(s);
     }
-
-
-    /**
-     * 把Bitmap转Byte
-     *
-     * @param bitmap bitmap对象
-     * @return Bytes
-     */
-    public static byte[] bitmap2Bytes(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        return byteArrayOutputStream.toByteArray();
-    }
-
 
     /**
      * MD5加密
@@ -232,5 +206,67 @@ public class AppUtils {
     public static int sp2px(Context context, float spValue) {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
+    }
+
+    /**
+     * 获取屏幕的宽
+     *
+     * @param context Context
+     * @return 屏幕的宽
+     */
+    public static int getScreenWidth(Context context) {
+        if (context == null) {
+            return 0;
+        }
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        return dm.widthPixels;
+    }
+
+    /**
+     * 获取屏幕的高
+     *
+     * @param context Context
+     * @return 屏幕的高
+     */
+    public static int getScreenHeight(Context context) {
+        if (context == null) {
+            return 0;
+        }
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        return dm.heightPixels;
+    }
+
+    /**
+     * 获取控件的位置
+     *
+     * @param view 控件View
+     * @return int[] x,y
+     */
+    public static int[] getViewLocation(View view) {
+        int[] location = new int[2]; //获取筛选按钮的x坐标
+        view.getLocationOnScreen(location);
+        return location;
+    }
+
+    /**
+     * 隐藏导航栏
+     * @param window
+     */
+    public static void setHideVirtualKey(Window window) {
+        //保持布局状态
+        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                //布局位于状态栏下方
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                //全屏
+                View.SYSTEM_UI_FLAG_FULLSCREEN |
+                //隐藏导航栏
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+        if (Build.VERSION.SDK_INT >= 19) {
+            uiOptions |= 0x00001000;
+        } else {
+            uiOptions |= View.SYSTEM_UI_FLAG_LOW_PROFILE;
+        }
+        window.getDecorView().setSystemUiVisibility(uiOptions);
     }
 }

@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hx.steven.app.BaseApplication;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
@@ -205,7 +206,7 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
             String time = formatter.format(new Date());
             String fileName = "crash-" + time + "-" + timestamp + ".log";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String path = Environment.getExternalStorageDirectory().getPath() + "/crash/";
+                String path = BaseApplication.getAppContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)+ "/crash/";
                 Logger.d("path=" + path);
                 File dir = new File(path);
                 if (!dir.exists()) {

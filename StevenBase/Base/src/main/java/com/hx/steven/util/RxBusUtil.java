@@ -4,22 +4,22 @@ import io.reactivex.Flowable;
 import io.reactivex.processors.FlowableProcessor;
 import io.reactivex.processors.PublishProcessor;
 
-public class RxBus {
-    private static volatile RxBus sRxBus;
+public class RxBusUtil {
+    private static volatile RxBusUtil sRxBus;
     // 主题
     private final FlowableProcessor<Object> mBus;
 
     // PublishSubject只会把在订阅发生的时间点之后来自原始Observable的数据发射给观察者
-    public RxBus() {
+    public RxBusUtil() {
         mBus = PublishProcessor.create().toSerialized();
     }
 
     // 单例RxBus
-    public static RxBus getInstance() {
+    public static RxBusUtil getInstance() {
         if (sRxBus == null) {
-            synchronized (RxBus.class) {
+            synchronized (RxBusUtil.class) {
                 if (sRxBus == null) {
-                    sRxBus = new RxBus();
+                    sRxBus = new RxBusUtil();
                 }
             }
         }

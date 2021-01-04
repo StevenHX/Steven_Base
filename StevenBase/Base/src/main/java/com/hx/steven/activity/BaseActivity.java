@@ -6,15 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.ethanhua.skeleton.Skeleton;
+import com.ethanhua.skeleton.SkeletonScreen;
 import com.hx.steven.R;
 import com.hx.steven.component.MProgressDialog;
 import com.hx.steven.component.MultipleStatusView;
@@ -41,6 +44,31 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 是否显示MultipleView
      */
     private boolean enableMultiple;
+    /**
+     * 骨架屏
+     */
+    private SkeletonScreen skeletonScreen;
+    /**
+     * 是否使用骨架屏
+     */
+    private boolean enableSkeletonScreen;
+    /**
+     * 骨架屏view
+     */
+    private View skeletonView;
+    /**
+     * 骨架屏recycle view
+     */
+    private RecyclerView skeletonRecyclerview;
+    /**
+     * 骨架屏recycle adapter
+     */
+    private RecyclerView.Adapter skeletonAdapter;
+
+    /**
+     * 显示骨架
+     */
+    private int skeletonLayout;
 
     @SuppressLint("StaticFieldLeak")
     private static BaseActivity baseActivity;
@@ -51,6 +79,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);//设置屏幕保持竖直
         initContainer();
         initView();
+        if (enableSkeletonScreen) this.initSkeleton();
     }
 
     @Override
@@ -76,6 +105,32 @@ public abstract class BaseActivity extends AppCompatActivity {
             mContainer.addView(multipleStatusView);
         } else {
             mContainer.addView(layout);
+        }
+    }
+
+    private void initSkeleton() {
+        if (skeletonRecyclerview != null && skeletonAdapter != null) {
+            skeletonScreen = Skeleton.bind(skeletonRecyclerview)
+                    .adapter(skeletonAdapter)//设置实际adapter
+                    .shimmer(true)//是否开启动画
+                    .angle(30)//shimmer的倾斜角度
+                    .frozen(true)//true则表示显示骨架屏时，RecyclerView不可滑动，否则可以滑动
+                    .duration(1200)//动画时间，以毫秒为单位
+                    .count(10)//显示骨架屏时item的个数
+                    .load(this.skeletonLayout == 0 ? R.layout.default_skeleton_news_item : this.skeletonLayout)//骨架屏UI
+                    .show(); //default count is 1
+        } else {
+            if (skeletonView == null) try {
+                throw new Exception("未设置骨架屏View");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            skeletonScreen = Skeleton.bind(skeletonView)
+                    .shimmer(true)//是否开启动画
+                    .angle(30)//shimmer的倾斜角度
+                    .duration(1200)//动画时间，以毫秒为单位
+                    .load(this.skeletonLayout == 0 ? R.layout.default_skeleton_news_item : this.skeletonLayout)//骨架屏UI
+                    .show(); //default count is 1
         }
     }
 
@@ -136,6 +191,41 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public void setEnableMultiple(boolean enableMultiple) {
         this.enableMultiple = enableMultiple;
+    }
+
+    /**
+     * 设置是否显示骨架屏
+     *
+     * @param enableSkeleton
+     */
+    public void setEnableSkeletonScreen(boolean enableSkeleton, RecyclerView recyclerView, RecyclerView.Adapter adapter) {
+        this.enableSkeletonScreen = enableSkeleton;
+        this.skeletonRecyclerview = recyclerView;
+        this.skeletonAdapter = adapter;
+    }
+
+    public void setEnableSkeletonScreen(boolean enableSkeleton, View view) {
+        this.enableSkeletonScreen = enableSkeleton;
+        this.skeletonView = view;
+    }
+
+    /**
+     * 设置显示骨架(需要在setEnableSkeletonScreen之前设置才有效)
+     *
+     * @param skeletonLayout
+     */
+    public void setSkeletonLayout(@LayoutRes int skeletonLayout) {
+        this.skeletonLayout = skeletonLayout;
+    }
+
+    /**
+     * 获取骨架屏对象
+     *
+     * @return
+     */
+    public void hideSkeletonScreen() throws Exception {
+        if (skeletonScreen == null) throw  new Exception("skeletonScreen为空");
+        skeletonScreen.hide();
     }
 
     /**

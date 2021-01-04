@@ -37,6 +37,7 @@ public class SetActivity extends BaseActivity implements BottomBarLayout.OnItemS
       mFragments.add(new MeFragment());
       setViewpager.setAdapter(new SetPageAdapter(getSupportFragmentManager(),mFragments));
       setViewpager.setOffscreenPageLimit(4);
+      setViewpager.setNoScroll(true);
      bottomBarLayout.setViewPager(setViewpager);
      bottomBarLayout.setOnItemSelectedListener(this);
      bottomBarLayout.setUnread(1,99);
