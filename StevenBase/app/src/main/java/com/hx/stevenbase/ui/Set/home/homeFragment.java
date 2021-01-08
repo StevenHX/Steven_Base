@@ -3,6 +3,7 @@ package com.hx.stevenbase.ui.Set.home;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterViewAnimator;
 import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.animation.AlphaInAnimation;
+import com.chad.library.adapter.base.animation.BaseAnimation;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.hx.steven.Mvp.BaseMvpModel;
 import com.hx.steven.fragment.BaseMvpLazyFragment;
 import com.hx.steven.util.ToastUtil;
@@ -32,8 +37,7 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class homeFragment extends BaseMvpLazyFragment<homePresenter> implements homeContract.View, BaseQuickAdapter.OnItemChildClickListener,
-        BaseQuickAdapter.OnItemClickListener {
+public class homeFragment extends BaseMvpLazyFragment<homePresenter> implements homeContract.View, OnItemClickListener, OnItemChildClickListener {
     @BindView(R.id.recycler_question)
     RecyclerView recyclerQuestion;
     @BindView(R.id.refreshLayout_question)
@@ -49,7 +53,7 @@ public class homeFragment extends BaseMvpLazyFragment<homePresenter> implements 
         /**设置RecyclerView adapter*/
         recyclerQuestion.setLayoutManager(new LinearLayoutManager(context));
         adapter = new homeAdapter(R.layout.home_recycle_item, null);
-        adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+        adapter.setAdapterAnimation(new AlphaInAnimation());
         recyclerQuestion.setAdapter(adapter);
         /**设置bannerView*/
         View mHomeBannerHeadView = LayoutInflater.from(context).inflate(R.layout.home_banner_head, null);

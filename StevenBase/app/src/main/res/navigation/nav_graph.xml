@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/banner_example_fragment">
+    <fragment android:id="@+id/banner_example_fragment"
+        android:name="com.hx.stevenbase.ui.ExamplePage.banner.BannerExampleFragment"
+        tools:layout="@layout/fragment_banner_example"
+        android:label="bannerExample">
+    </fragment>
+    <fragment android:id="@+id/dialog_example_fragment"
+        android:name="com.hx.stevenbase.ui.ExamplePage.dialog.DialogExampleFragment"
+        android:label="dialogExample"
+        tools:layout="@layout/fragment_dialog_example">
+    </fragment>
+    <fragment android:id="@+id/pick_example_fragment"
+        android:name="com.hx.stevenbase.ui.ExamplePage.pick.PickFragment"
+        android:label="pickExample"
+        tools:layout="@layout/fragment_pick">
+    </fragment>
+    <fragment android:id="@+id/flow_tag_example_fragment"
+        android:name="com.hx.stevenbase.ui.ExamplePage.flowTag.FlowTagExampleFragment"
+        android:label="flowTagExample"
+        tools:layout="@layout/fragment_flow_tag_example">
+    </fragment>
+    <fragment android:id="@+id/progress_example_fragment"
+        android:name="com.hx.stevenbase.ui.ExamplePage.progressDialog.ProgressExampleFragment"
+        android:label="progressDialogExample"
+        tools:layout="@layout/fragment_progress_example">
+    </fragment>
+    <fragment android:id="@+id/line_path_example_fragment"
+        android:name="com.hx.stevenbase.ui.ExamplePage.linePath.LinePathFragment"
+        android:label="linePathExample"
+        tools:layout="@layout/fragment_line_path">
+    </fragment>
+    <fragment android:id="@+id/pwd_example_fragment"
+        android:name="com.hx.stevenbase.ui.ExamplePage.pwd.PwdExampleFragment"
+        android:label="pwdExample"
+        tools:layout="@layout/fragment_pwd_example">
+    </fragment>
+</navigation>

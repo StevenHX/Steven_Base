@@ -452,6 +452,8 @@ public class PasswordView extends View {
 
     public void setPasswordLength(int passwordLength) {
         this.passwordLength = passwordLength;
+        this.password = null;
+        this.password = new String[this.passwordLength];
         postInvalidate();
     }
 

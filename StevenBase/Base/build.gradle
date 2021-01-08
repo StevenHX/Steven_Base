@@ -40,10 +40,9 @@ android {
     }
 
     buildFeatures {
-        dataBinding {
-            enabled = true
-        }
+        dataBinding  = true
     }
+    buildToolsVersion '30.0.1'
 }
 
 repositories {
@@ -91,6 +90,13 @@ dependencies {
     // 骨架屏
     implementation 'com.ethanhua:skeleton:1.1.2'
     implementation 'io.supercharge:shimmerlayout:2.1.0'
+    // xPopUp
+    api 'com.lxj:xpopup:2.2.13'
+    // adapter
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+    // navigation-fragment
+    api "androidx.navigation:navigation-fragment:2.3.1"
+    api "androidx.navigation:navigation-ui:2.3.1"
 }
 // 添加 maven 插件
 apply plugin: 'maven'

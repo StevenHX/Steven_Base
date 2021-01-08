@@ -8,11 +8,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.hx.stevenbase"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 100
         versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -88,10 +88,9 @@ android {
         }
     }
     buildFeatures {
-        dataBinding {
-            enabled = true
-        }
+        dataBinding = true
     }
+    buildToolsVersion '30.0.1'
 }
 repositories {
     flatDir {
@@ -105,7 +104,6 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'

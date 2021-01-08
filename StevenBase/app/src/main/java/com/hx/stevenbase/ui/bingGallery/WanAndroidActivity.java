@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.animation.AlphaInAnimation;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.ui.Set.home.homeAdapter;
 import com.hx.stevenbase.ui.Set.home.homeBannerBean;
@@ -44,7 +45,7 @@ public class WanAndroidActivity extends AppCompatActivity {
         recycler_wan = findViewById(R.id.recycler_wan);
         recycler_wan.setLayoutManager(new LinearLayoutManager(this));
         adapter = new homeAdapter(R.layout.home_recycle_item, null);
-        adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+        adapter.setAdapterAnimation(new AlphaInAnimation());
         recycler_wan.setAdapter(adapter);
 
         View mHomeBannerHeadView = LayoutInflater.from(this).inflate(R.layout.home_banner_head, null);

@@ -35,7 +35,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:src="@mipmap/wingtech"/>
+            android:src="@mipmap/wtlogo"/>
         <com.hx.steven.component.SuperTextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"

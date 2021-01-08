@@ -2,7 +2,6 @@ package com.hx.stevenbase.ui.Set.talk;
 
 
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
@@ -11,7 +10,6 @@ import com.hx.steven.util.AppUtils;
 import com.hx.stevenbase.R;
 import com.orhanobut.logger.Logger;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -19,15 +17,12 @@ import butterknife.Unbinder;
  * A simple {@link Fragment} subclass.
  */
 public class talkFragment extends BaseLazyFragment {
-    @BindView(R.id.img)
-    ImageView img;
 
     {
         setEnableMultiple(false);
     }
 
     private Unbinder unbinder;
-    Thread mThread;
 
     @Override
     protected void initView(View view) {
@@ -45,8 +40,7 @@ public class talkFragment extends BaseLazyFragment {
 
     @Override
     public void onUserVisible() {
-        Logger.d("screenWidth="+ AppUtils.getScreenWidth(context)+",screenHeight="+AppUtils.getScreenHeight(context));
-        Logger.d("width="+img.getWidth()+",height="+img.getHeight());
+        Logger.d("screenWidth=" + AppUtils.getScreenWidth(context) + ",screenHeight=" + AppUtils.getScreenHeight(context));
     }
 
     @Override
@@ -58,6 +52,7 @@ public class talkFragment extends BaseLazyFragment {
     public void onUserInvisible() {
 
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
