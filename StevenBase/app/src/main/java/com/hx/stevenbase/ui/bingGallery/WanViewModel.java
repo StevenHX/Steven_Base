@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.hx.steven.http.BaseBean;
 import com.hx.stevenbase.ui.Set.home.homeBannerBean;
-import com.hx.stevenbase.ui.Set.home.homeBean;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -16,9 +15,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class WanViewModel extends ViewModel {
-    MutableLiveData<List<homeBean.DatasBean>> homeData;
+    MutableLiveData<List<WanBean.DatasBean>> homeData;
     MutableLiveData<List<homeBannerBean>> bannerData;
-    private ImageRepertory mRepertory;
+    ImageRepertory mRepertory;
     int page;
 
     public WanViewModel() {
@@ -27,7 +26,7 @@ public class WanViewModel extends ViewModel {
         this.mRepertory = new ImageRepertory();
     }
 
-    public MutableLiveData<List<homeBean.DatasBean>> getHomeData() {
+    public MutableLiveData<List<WanBean.DatasBean>> getHomeData() {
         return homeData;
     }
 
@@ -39,14 +38,14 @@ public class WanViewModel extends ViewModel {
         mRepertory.getApiService().getHomeArticles(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<BaseBean<homeBean>>() {
+                .subscribe(new Observer<BaseBean<WanBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(BaseBean<homeBean> homeBeanBaseBean) {
+                    public void onNext(BaseBean<WanBean> homeBeanBaseBean) {
                         homeData.setValue(homeBeanBaseBean.getData().getDatas());
                     }
 
@@ -67,14 +66,14 @@ public class WanViewModel extends ViewModel {
         mRepertory.getApiService().getHomeArticles(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<BaseBean<homeBean>>() {
+                .subscribe(new Observer<BaseBean<WanBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(BaseBean<homeBean> homeBeanBaseBean) {
+                    public void onNext(BaseBean<WanBean> homeBeanBaseBean) {
                         homeData.setValue(homeBeanBaseBean.getData().getDatas());
                     }
 
@@ -95,15 +94,15 @@ public class WanViewModel extends ViewModel {
         mRepertory.getApiService().getHomeArticles(++page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<BaseBean<homeBean>>() {
+                .subscribe(new Observer<BaseBean<WanBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(BaseBean<homeBean> homeBeanBaseBean) {
-                        List<homeBean.DatasBean> datasBeanList = homeData.getValue();
+                    public void onNext(BaseBean<WanBean> homeBeanBaseBean) {
+                        List<WanBean.DatasBean> datasBeanList = homeData.getValue();
                         datasBeanList.addAll(homeBeanBaseBean.getData().getDatas());
                         homeData.setValue(datasBeanList);
                     }

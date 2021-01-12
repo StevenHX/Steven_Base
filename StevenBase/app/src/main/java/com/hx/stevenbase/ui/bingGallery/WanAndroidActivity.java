@@ -6,16 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.animation.AlphaInAnimation;
+import com.hx.steven.Mvvm.BaseMVVMActivity;
 import com.hx.stevenbase.R;
-import com.hx.stevenbase.ui.Set.home.homeAdapter;
+import com.hx.stevenbase.databinding.ActivityWanAndroidBinding;
 import com.hx.stevenbase.ui.Set.home.homeBannerBean;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
@@ -26,27 +23,28 @@ import com.youth.banner.loader.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WanAndroidActivity extends AppCompatActivity {
-    private RecyclerView recycler_wan;
-    private TwinklingRefreshLayout refreshLayout_wan;
-    private homeAdapter adapter;
-    private WanViewModel viewModel;
+public class WanAndroidActivity extends BaseMVVMActivity<ActivityWanAndroidBinding, WanViewModel> {
+    private WanAdapter adapter;
     private Banner mBannerAds;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected int getContentId() {
+        return R.layout.activity_wan_android;
+    }
+
+    @Override
+    public Class<WanViewModel> getViewModelClass() {
+        return WanViewModel.class;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wan_android);
 
-        viewModel = new ViewModelProvider(
-                this, new ViewModelProvider.AndroidViewModelFactory(getApplication())
-        ).get(WanViewModel.class);
-
-        recycler_wan = findViewById(R.id.recycler_wan);
-        recycler_wan.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new homeAdapter(R.layout.home_recycle_item, null);
+        getmBinding().recyclerWan.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new WanAdapter(R.layout.wan_recycle_item, null);
         adapter.setAdapterAnimation(new AlphaInAnimation());
-        recycler_wan.setAdapter(adapter);
+        getmBinding().recyclerWan.setAdapter(adapter);
 
         View mHomeBannerHeadView = LayoutInflater.from(this).inflate(R.layout.home_banner_head, null);
         mBannerAds = mHomeBannerHeadView.findViewById(R.id.banner_ads);
@@ -55,27 +53,26 @@ public class WanAndroidActivity extends AppCompatActivity {
         adapter.addHeaderView(mHomeBannerHeadView);
 
 
-        viewModel.getHomeData().observe(this, datasBeans -> {
-            refreshLayout_wan.finishRefreshing();
-            refreshLayout_wan.finishLoadmore();
+        getmViewModel().getHomeData().observe(this, datasBeans -> {
+            getmBinding().refreshLayoutWan.finishRefreshing();
+            getmBinding().refreshLayoutWan.finishLoadmore();
             adapter.setNewData(datasBeans);
         });
-        refreshLayout_wan = findViewById(R.id.refreshLayout_wan);
-        refreshLayout_wan.setOnRefreshListener(new RefreshListenerAdapter() {
+        getmBinding().refreshLayoutWan.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
                 super.onRefresh(refreshLayout);
-                viewModel.reFresh();
+                getmViewModel().reFresh();
             }
 
             @Override
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
-                viewModel.loadMore();
+                getmViewModel().loadMore();
             }
         });
 
-        viewModel.getBannerData().observe(this, homeBannerBeans -> {
+        getmViewModel().getBannerData().observe(this, homeBannerBeans -> {
             List<String> images = new ArrayList();
             for (homeBannerBean banner : homeBannerBeans) {
                 images.add(banner.getImagePath());
@@ -92,7 +89,7 @@ public class WanAndroidActivity extends AppCompatActivity {
                     .start();
         });
 
-        viewModel.loadHomeData();
-        viewModel.loadBanner();
+        getmViewModel().loadHomeData();
+        getmViewModel().loadBanner();
     }
 }

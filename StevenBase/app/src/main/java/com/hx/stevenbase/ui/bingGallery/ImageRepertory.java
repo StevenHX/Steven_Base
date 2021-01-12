@@ -33,7 +33,7 @@ public class ImageRepertory extends BaseRepertory<ImageRepertory.Service> {
         );
 
         @GET("https://wanandroid.com/article/listproject/{page}/json")
-        Observable<BaseBean<homeBean>> getHomeArticles(@Path("page") int page);
+        Observable<BaseBean<WanBean>> getHomeArticles(@Path("page") int page);
 
         @GET("https://www.wanandroid.com/banner/json")
         Observable<BaseBean<List<homeBannerBean>>> getHomeBanners();
