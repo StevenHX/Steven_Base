@@ -3,14 +3,14 @@
 
     <item android:state_pressed="true">
         <shape>
-            <solid android:color="#ed7913" />
+            <solid android:color="@color/gray_cc" />
             <corners
                 android:radius="9dp"/><!-- 设置圆角半径 -->
         </shape>
     </item>
     <item android:state_pressed="false">
         <shape>
-            <solid android:color="#5f5f5f" />
+            <solid android:color="@color/ghostwhite" />
             <corners
                 android:radius="9dp"/><!-- 设置圆角半径 -->
         </shape>

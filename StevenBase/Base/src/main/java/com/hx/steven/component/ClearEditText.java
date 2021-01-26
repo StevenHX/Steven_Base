@@ -2,12 +2,18 @@ package com.hx.steven.component;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+
 import androidx.appcompat.widget.AppCompatEditText;
+import androidx.core.content.ContextCompat;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -15,7 +21,11 @@ import android.view.animation.Animation;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
 
+import com.google.android.material.internal.ContextUtils;
 import com.hx.steven.R;
+import com.hx.steven.util.AppUtils;
+import com.hx.steven.util.UnitConverter;
+import com.orhanobut.logger.Logger;
 
 
 public class ClearEditText extends AppCompatEditText implements
@@ -27,11 +37,15 @@ public class ClearEditText extends AppCompatEditText implements
     /**
      * 控件是否有焦点
      */
-    private boolean hasFoucs;
+    private boolean hasFocus;
 
     private float mDrawableWidth;
     private float mDrawableHeight;
     private float mDrawableScale;
+    private int textSize;
+    private int textColor;
+    private int textHintColor;
+    private int background;
 
     public ClearEditText(Context context) {
         this(context, null);
@@ -44,7 +58,6 @@ public class ClearEditText extends AppCompatEditText implements
 
     public ClearEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-//        setBackgroundColor(0xffffffff);
         initLeftDrawable(context, attrs);
         initClearDrawable();
     }
@@ -55,10 +68,20 @@ public class ClearEditText extends AppCompatEditText implements
             return;
         }
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ClearEditText);
-        mDrawableWidth = typedArray.getDimension(R.styleable.ClearEditText_drawableWidth, 0);
-        mDrawableHeight = typedArray.getDimension(R.styleable.ClearEditText_drawableHeight, 0);
+        mDrawableWidth = typedArray.getDimension(R.styleable.ClearEditText_drawableWidth, UnitConverter.dpToPx(20));
+        mDrawableHeight = typedArray.getDimension(R.styleable.ClearEditText_drawableHeight, UnitConverter.dpToPx(20));
         mDrawableScale = typedArray.getFloat(R.styleable.ClearEditText_drawableScale, 0);
+        textSize =  typedArray.getDimensionPixelSize(R.styleable.ClearEditText_textSize, AppUtils.sp2px(context, 14));
+        textColor = typedArray.getColor(R.styleable.ClearEditText_textColor, ContextCompat.getColor(context, R.color.dimgray));
+        textHintColor = typedArray.getColor(R.styleable.ClearEditText_textHintColor, ContextCompat.getColor(context, R.color.dimgray));
+        background = typedArray.getResourceId(R.styleable.ClearEditText_background,R.drawable.line_bg);
         typedArray.recycle();
+
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+        setTextColor(textColor);
+        setHintTextColor(textHintColor);
+        setBackground(ContextCompat.getDrawable(getContext(),background));
+        setPadding(UnitConverter.dpToPx(5), 0, UnitConverter.dpToPx(5), 0);
 
         int width = leftDrawable.getIntrinsicWidth();
         int height = leftDrawable.getIntrinsicWidth();
@@ -76,6 +99,7 @@ public class ClearEditText extends AppCompatEditText implements
             leftDrawable.setBounds(rect);
             return;
         }
+
     }
 
 
@@ -84,7 +108,7 @@ public class ClearEditText extends AppCompatEditText implements
         mClearDrawable = getCompoundDrawables()[2];
         if (mClearDrawable == null) {
 //        	throw new NullPointerException("You can add drawableRight attribute in XML");
-            mClearDrawable = getResources().getDrawable(R.drawable.input_del);
+            mClearDrawable = ContextCompat.getDrawable(getContext(), R.drawable.input_del);
         }
 
 
@@ -127,7 +151,7 @@ public class ClearEditText extends AppCompatEditText implements
      */
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
-        this.hasFoucs = hasFocus;
+        this.hasFocus = hasFocus;
         if (hasFocus) {
             setClearIconVisible(getText().length() > 0);
         } else {
@@ -154,7 +178,7 @@ public class ClearEditText extends AppCompatEditText implements
     @Override
     public void onTextChanged(CharSequence s, int start, int count,
                               int after) {
-        if (hasFoucs) {
+        if (hasFocus) {
             setClearIconVisible(s.length() > 0);
         }
     }
@@ -192,7 +216,7 @@ public class ClearEditText extends AppCompatEditText implements
         return translateAnimation;
     }
 
-    public void setUnEdit(){
+    public void setUnEdit() {
         setFocusable(false);
         setEnabled(false);
         setKeyListener(null);

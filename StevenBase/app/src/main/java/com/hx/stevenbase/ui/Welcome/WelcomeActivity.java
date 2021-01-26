@@ -1,22 +1,17 @@
 package com.hx.stevenbase.ui.Welcome;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.SuperTextView;
 import com.hx.stevenbase.R;
-import com.hx.stevenbase.ui.ExamplePage.ExampleActivity;
-import com.hx.stevenbase.ui.main.MainActivity;
-import com.hx.stevenbase.ui.main.WebActivity;
+import com.hx.stevenbase.ui.Login.LoginActivity;
 
-public class WelcomeActivity extends AppCompatActivity {
-//    private ImageView launch_img;
+public class WelcomeActivity extends BaseActivity {
+    //    private ImageView launch_img;
 //    private TextView jumpAd_tv;
     private SuperTextView tvName;
     private Handler handler;
@@ -24,14 +19,10 @@ public class WelcomeActivity extends AppCompatActivity {
     Runnable runnable = this::openMain;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.welcome_activity);
+    protected void initView() {
 //        launch_img = findViewById(R.id.launch_img);
 //        jumpAd_tv = findViewById(R.id.jumpAd);
         tvName = findViewById(R.id.tvName);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
 //        Glide.with(this).load("http://p2.img.cctvpic.com/uploadimg/2020/05/27/1590545538454562.gif")
 //                .transition(DrawableTransitionOptions.with(
@@ -50,11 +41,11 @@ public class WelcomeActivity extends AppCompatActivity {
 //        handler.postDelayed(runnable, 6000);
 //        jumpAd_tv.setOnClickListener(v -> openMain());
 
-        Animation anim = AnimationUtils.loadAnimation(getBaseContext(),R.anim.splash);
+        Animation anim = AnimationUtils.loadAnimation(getBaseContext(), R.anim.splash);
         anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-               tvName.start();
+                tvName.start();
             }
 
             @Override
@@ -70,8 +61,13 @@ public class WelcomeActivity extends AppCompatActivity {
         tvName.startAnimation(anim);
     }
 
+    @Override
+    protected int getContentId() {
+        return R.layout.welcome_activity;
+    }
+
     private void openMain() {
-        Intent intent = new Intent(WelcomeActivity.this, ExampleActivity.class);
+        Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
         overridePendingTransition(0, 0);
