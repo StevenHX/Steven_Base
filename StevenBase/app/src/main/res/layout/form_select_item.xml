@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_48"
+    xmlns:tool="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/select_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:gravity="start"
+        android:textColor="@color/dimgray"
+        android:textSize="16sp">
+    </androidx.appcompat.widget.AppCompatTextView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/select_item_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_5"
+        android:layout_weight="1"
+        android:drawableEnd="@drawable/downarrow"
+        android:gravity="center_vertical|end"
+        android:text="请选择公司类型"
+        android:textSize="14sp">
+    </androidx.appcompat.widget.AppCompatTextView>
+</androidx.appcompat.widget.LinearLayoutCompat>

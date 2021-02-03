@@ -17,8 +17,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 
+import androidx.annotation.RawRes;
 import androidx.core.app.ActivityCompat;
 
+import com.hx.steven.R;
 import com.hx.steven.app.BaseApplication;
 import com.hx.steven.model.AppInfo;
 
@@ -27,6 +29,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
@@ -268,5 +271,41 @@ public class AppUtils {
             uiOptions |= View.SYSTEM_UI_FLAG_LOW_PROFILE;
         }
         window.getDecorView().setSystemUiVisibility(uiOptions);
+    }
+
+    /**
+     * 从assets 目录获取内容
+     */
+    public static String getFromAssets(Context context, String fileName){
+        try {
+            InputStreamReader inputReader = new InputStreamReader( context.getResources().getAssets().open(fileName) );
+            BufferedReader bufReader = new BufferedReader(inputReader);
+            String line="";
+            String Result="";
+            while((line = bufReader.readLine()) != null)
+                Result += line;
+            return Result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 从raw 获取内容
+     */
+    public static String getFromRaw(Context context, @RawRes int id){
+        try {
+            InputStreamReader inputReader = new InputStreamReader( context.getResources().openRawResource(id));
+            BufferedReader bufReader = new BufferedReader(inputReader);
+            String line="";
+            String Result="";
+            while((line = bufReader.readLine()) != null)
+                Result += line;
+            return Result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

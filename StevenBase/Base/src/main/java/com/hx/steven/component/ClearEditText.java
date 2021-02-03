@@ -2,14 +2,8 @@ package com.hx.steven.component;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.core.content.ContextCompat;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -21,11 +15,12 @@ import android.view.animation.Animation;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
 
-import com.google.android.material.internal.ContextUtils;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.core.content.ContextCompat;
+
 import com.hx.steven.R;
 import com.hx.steven.util.AppUtils;
 import com.hx.steven.util.UnitConverter;
-import com.orhanobut.logger.Logger;
 
 
 public class ClearEditText extends AppCompatEditText implements
@@ -63,26 +58,28 @@ public class ClearEditText extends AppCompatEditText implements
     }
 
     private void initLeftDrawable(Context context, AttributeSet attrs) {
-        Drawable leftDrawable = getCompoundDrawables()[0];
-        if (leftDrawable == null) {
-            return;
-        }
+
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ClearEditText);
         mDrawableWidth = typedArray.getDimension(R.styleable.ClearEditText_drawableWidth, UnitConverter.dpToPx(20));
         mDrawableHeight = typedArray.getDimension(R.styleable.ClearEditText_drawableHeight, UnitConverter.dpToPx(20));
         mDrawableScale = typedArray.getFloat(R.styleable.ClearEditText_drawableScale, 0);
-        textSize =  typedArray.getDimensionPixelSize(R.styleable.ClearEditText_textSize, AppUtils.sp2px(context, 14));
+        textSize = typedArray.getDimensionPixelSize(R.styleable.ClearEditText_textSize, AppUtils.sp2px(context, 14));
         textColor = typedArray.getColor(R.styleable.ClearEditText_textColor, ContextCompat.getColor(context, R.color.dimgray));
-        textHintColor = typedArray.getColor(R.styleable.ClearEditText_textHintColor, ContextCompat.getColor(context, R.color.dimgray));
-        background = typedArray.getResourceId(R.styleable.ClearEditText_background,R.drawable.line_bg);
+        textHintColor = typedArray.getColor(R.styleable.ClearEditText_textHintColor, ContextCompat.getColor(context, R.color.gray_8f));
+        background = typedArray.getResourceId(R.styleable.ClearEditText_background, 0);
         typedArray.recycle();
 
         setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         setTextColor(textColor);
+        setPadding(UnitConverter.dpToPx(5), 0, UnitConverter.dpToPx(10), 0);
         setHintTextColor(textHintColor);
-        setBackground(ContextCompat.getDrawable(getContext(),background));
-        setPadding(UnitConverter.dpToPx(5), 0, UnitConverter.dpToPx(5), 0);
+        if (background != 0)
+            setBackground(ContextCompat.getDrawable(getContext(), background));
 
+        Drawable leftDrawable = getCompoundDrawables()[0];
+        if (leftDrawable == null) {
+            return;
+        }
         int width = leftDrawable.getIntrinsicWidth();
         int height = leftDrawable.getIntrinsicWidth();
         Rect rect = new Rect();
@@ -112,7 +109,7 @@ public class ClearEditText extends AppCompatEditText implements
         }
 
 
-        mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
+        mClearDrawable.setBounds(UnitConverter.spToPx(5), 0, mClearDrawable.getIntrinsicWidth() + UnitConverter.spToPx(5), mClearDrawable.getIntrinsicHeight());
         //默认设置隐藏图标
         setClearIconVisible(false);
         //设置焦点改变的监听

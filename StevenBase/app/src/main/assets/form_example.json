@@ -1,0 +1,16 @@
+[
+  {
+    "name": "名称",
+    "type": "input"
+  },
+  {
+    "hint": "请选择公司类型",
+    "name": "公司类型",
+    "type": "select"
+  },
+  {
+    "hint": "请选择职位",
+    "name": "职位",
+    "type": "select"
+  }
+]

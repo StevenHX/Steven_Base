@@ -37,6 +37,8 @@ public class ExampleDetailActivity extends BaseActivity {
             case 6:
                 navGraph.setStartDestination(R.id.dialog_example_fragment);
                 break;
+            case 8:
+                navGraph.setStartDestination(R.id.form_example_fragment);
             default:
                 break;
         }

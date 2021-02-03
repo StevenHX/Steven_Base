@@ -8,7 +8,9 @@ import android.view.animation.AnimationUtils;
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.SuperTextView;
 import com.hx.stevenbase.R;
+import com.hx.stevenbase.ui.ExamplePage.ExampleActivity;
 import com.hx.stevenbase.ui.Login.LoginActivity;
+import com.hx.stevenbase.ui.main.MainActivity;
 
 public class WelcomeActivity extends BaseActivity {
     //    private ImageView launch_img;
@@ -67,7 +69,7 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     private void openMain() {
-        Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+        Intent intent = new Intent(WelcomeActivity.this, ExampleActivity.class);
         startActivity(intent);
         finish();
         overridePendingTransition(0, 0);

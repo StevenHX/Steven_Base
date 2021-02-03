@@ -39,4 +39,9 @@
         android:label="pwdExample"
         tools:layout="@layout/fragment_pwd_example">
     </fragment>
+    <fragment android:id="@+id/form_example_fragment"
+        android:name="com.hx.stevenbase.ui.ExamplePage.form.FormExampleFragment"
+        android:label="formExample"
+        tools:layout="@layout/fragment_form_example">
+    </fragment>
 </navigation>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_container"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_48"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/input_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:gravity="start"
+        android:text="名称"
+        android:textColor="@color/dimgray"
+        android:textSize="16sp">
+    </androidx.appcompat.widget.AppCompatTextView>
+
+    <com.hx.steven.component.ClearEditText
+        android:id="@+id/input_item_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_5"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center_vertical|end">
+    </com.hx.steven.component.ClearEditText>
+</androidx.appcompat.widget.LinearLayoutCompat>

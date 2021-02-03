@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.hx.steven.activity.BaseActivity;
 import com.hx.steven.component.DividerItemDecoration;
 import com.hx.stevenbase.R;
+import com.hx.stevenbase.ui.Login.LoginActivity;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
 import com.lxj.xpopup.enums.PopupAnimation;
@@ -41,6 +42,8 @@ public class ExampleActivity extends BaseActivity implements OnItemClickListener
         exampleData.add(new ExampleBean("手写签名"));
         exampleData.add(new ExampleBean("密码输入"));
         exampleData.add(new ExampleBean("弹窗"));
+        exampleData.add(new ExampleBean("登录"));
+        exampleData.add(new ExampleBean("表单组件"));
         recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         recyclerView.addItemDecoration(new DividerItemDecoration().setDrawOuterBorder(true));
         adapter = new ExampleAdapter(R.layout.example_item, exampleData);
@@ -61,6 +64,10 @@ public class ExampleActivity extends BaseActivity implements OnItemClickListener
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        if (position == 7) {
+            launch(this, LoginActivity.class);
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putInt("position",position);
         launch(this,bundle,ExampleDetailActivity.class);

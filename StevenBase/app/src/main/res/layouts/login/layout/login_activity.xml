@@ -27,6 +27,7 @@
         android:drawableLeft="@drawable/password"
         android:hint="请输入密码"
         android:inputType="textPassword"
+        app:background="@drawable/linebg"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_name" />
@@ -41,6 +42,7 @@
         android:drawableLeft="@drawable/user"
         android:hint="请输入账号"
         android:inputType="text"
+        app:background="@drawable/linebg"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_icon" />
