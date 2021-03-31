@@ -10,6 +10,7 @@ import com.hx.steven.component.SuperTextView;
 import com.hx.stevenbase.R;
 import com.hx.stevenbase.ui.ExamplePage.ExampleActivity;
 import com.hx.stevenbase.ui.Login.LoginActivity;
+import com.hx.stevenbase.ui.Set.SetActivity;
 import com.hx.stevenbase.ui.main.MainActivity;
 
 public class WelcomeActivity extends BaseActivity {
@@ -69,7 +70,7 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     private void openMain() {
-        Intent intent = new Intent(WelcomeActivity.this, ExampleActivity.class);
+        Intent intent = new Intent(WelcomeActivity.this, SetActivity.class);
         startActivity(intent);
         finish();
         overridePendingTransition(0, 0);

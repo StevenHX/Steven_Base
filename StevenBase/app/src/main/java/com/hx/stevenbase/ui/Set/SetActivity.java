@@ -9,7 +9,7 @@ import com.hx.stevenbase.R;
 import com.hx.stevenbase.ui.Set.about.aboutFragment;
 import com.hx.stevenbase.ui.Set.home.homeFragment;
 import com.hx.stevenbase.ui.Set.me.MeFragment;
-import com.hx.stevenbase.ui.Set.talk.talkFragment;
+import com.hx.stevenbase.ui.Set.talk.talkFragmentKt;
 
 import java.util.ArrayList;
 
@@ -33,7 +33,7 @@ public class SetActivity extends BaseActivity implements BottomBarLayout.OnItemS
         ButterKnife.bind(this);
       mFragments.add(new aboutFragment());
       mFragments.add(new homeFragment());
-      mFragments.add(new talkFragment());
+      mFragments.add(new talkFragmentKt());
       mFragments.add(new MeFragment());
       setViewpager.setAdapter(new SetPageAdapter(getSupportFragmentManager(),mFragments));
       setViewpager.setOffscreenPageLimit(4);
