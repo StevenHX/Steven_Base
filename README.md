@@ -1,4 +1,5 @@
 # 已放弃维护，原有的功能迁移到StevenComponentization组件化框架中
+https://github.com/StevenHX/StevenComponentization
 ##  StevenBase
 #### 简介
 - 集成webApp混合开发基类，几行代码即可运行web应用。
